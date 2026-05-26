@@ -1,5 +1,5 @@
 import torch
-from .truth_tables import generate_truth_table
+from truth_tables import generate_truth_table
 
 
 def truth_table_to_tensors(truth_table):
