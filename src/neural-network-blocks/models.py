@@ -58,3 +58,37 @@ class MLPGate(nn.Module):
 
     def forward(self, x):
         return self.net(x)
+
+class ComposedXOR(nn.Module):
+    """
+    XOR = AND(OR(x1, x2), NAND(x1, x2))
+    This is a compositional neural logic block.
+    """
+
+    def __init__(self, or_gate, nand_gate, and_gate):
+        super().__init__()
+        self.or_gate = or_gate
+        self.nand_gate = nand_gate
+        self.and_gate = and_gate
+
+    def forward(self, x):
+        h1 = self.or_gate(x)
+        h2 = self.nand_gate(x)
+        h = torch.cat([h1, h2], dim=1)
+        return self.and_gate(h)
+
+
+class ComposedXNOR(nn.Module):
+    """
+    XNOR = NOT(XOR)
+    """
+
+    def __init__(self, xor_gate, not_gate):
+        super().__init__()
+        self.xor_gate = xor_gate
+        self.not_gate = not_gate
+
+    def forward(self, x):
+        y = self.xor_gate(x)
+        return self.not_gate(y)
+

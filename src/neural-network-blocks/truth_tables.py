@@ -34,6 +34,12 @@ def gate_function(name, x):
     if name == "XNOR":
         return [int(x[0] == x[1])]
 
+    if name == "IMPLIES":
+        return [int(x[0] == 0 or x[1] == 1)]
+
+    if name == "EQUIVALENCE":
+        return [int(x[0] == x[1])]
+
     raise ValueError(f"Unknown gate: {name}")
 
 

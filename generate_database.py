@@ -31,8 +31,10 @@ GATES = [
     "OR",
     "NAND",
     "NOR",
-    #"XOR",
-    #"XNOR"
+    "XOR",
+    "XNOR",
+    "IMPLIES",
+    "EQUIVALENCE"
 ]
 
 
