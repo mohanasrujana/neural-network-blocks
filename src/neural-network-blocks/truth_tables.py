@@ -48,16 +48,61 @@ def gate_function(name, x):
 
     if name == "EQUIVALENCE":
         return [int(x[0] == x[1])]
+    
+    elif name == "HALF_ADDER":
+        a, b = x
+        sum_bit = a ^ b
+        carry = a & b
+        return [sum_bit, carry]
+
+    elif name == "FULL_ADDER":
+        a, b, cin = x
+        sum_bit = a ^ b ^ cin
+        carry = (
+            (a & b)
+            | (a & cin)
+            | (b & cin)
+        )
+        return [sum_bit, carry]
+
+    elif name == "MUX2":
+        d0, d1, s = x
+        y = (
+            (d0 and not s)
+                or
+                (d1 and s)
+            )
+        return [int(y)]
+
+    elif name == "MUX4":
+        d0, d1, d2, d3, s0, s1 = x
+        select = (s1 << 1) | s0
+        if select == 0:
+            y = d0
+        elif select == 1:
+            y = d1
+        elif select == 2:
+            y = d2
+        else:
+            y = d3
+        return [int(y)]
 
     raise ValueError(f"Unknown gate: {name}")
-
 
 def get_gate_arity(name):
     name = name.upper()
 
     if name == "NOT":
         return 1
-
+    elif name == "HALF_ADDER":
+        return 2
+    elif name == "FULL_ADDER":
+        return 3
+    elif name == "MUX2":
+        return 3
+    elif name == "MUX4":
+        return 6
+    
     return 2
 
 

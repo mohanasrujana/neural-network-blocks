@@ -8,8 +8,10 @@ if str(_PACKAGE_DIR) not in sys.path:
 
 from gates import (
     create_threshold_gate,
-    create_sigmoid_gate
+    create_sigmoid_gate,
+    create_composed_gate,
 )
+from circuits import HalfAdder
 from models import MLPGate
 from verify import (
     verify_model_against_truth_table,
@@ -25,6 +27,16 @@ from database import (
 )
 from truth_tables import get_gate_arity
 
+CIRCUITS_WITHOUT_THRESHOLD = {"FULL_ADDER", "MUX2", "MUX4"}
+CIRCUITS_WITHOUT_SIGMOID = {"FULL_ADDER", "MUX2", "MUX4"}
+
+
+def get_output_dim(gate_name):
+    if gate_name in {"HALF_ADDER", "FULL_ADDER"}:
+        return 2
+    return 1
+
+
 GATES = [
     "NOT",
     "AND",
@@ -34,7 +46,11 @@ GATES = [
     "XOR",
     "XNOR",
     "IMPLIES",
-    "EQUIVALENCE"
+    "EQUIVALENCE",
+    "HALF_ADDER",
+    "FULL_ADDER",
+    "MUX2",
+    "MUX4"
 ]
 
 
@@ -54,35 +70,55 @@ def generate_gate_entry(gate_name):
     implementations = []
 
     # 1. Exact threshold implementation
-    threshold_model = create_threshold_gate(gate_name)
-    threshold_verification = verify_model_against_truth_table(
-        threshold_model,
-        gate_name
-    )
-    implementations.append(
-        make_threshold_implementation_entry(
+    if gate_name in {"XOR", "XNOR"}:
+        threshold_model = create_composed_gate(
             gate_name,
-            threshold_verification
+            implementation="threshold"
         )
-    )
+    elif gate_name == "HALF_ADDER":
+        threshold_model = HalfAdder()
+    elif gate_name in CIRCUITS_WITHOUT_THRESHOLD:
+        threshold_model = None
+    else:
+        threshold_model = create_threshold_gate(gate_name)
+
+    if threshold_model is not None:
+        threshold_verification = verify_model_against_truth_table(
+            threshold_model,
+            gate_name
+        )
+        implementations.append(
+            make_threshold_implementation_entry(
+                gate_name,
+                threshold_verification
+            )
+        )
 
     # 2. Sigmoid differentiable implementation
-    sigmoid_model = create_sigmoid_gate(gate_name, sharpness=20.0)
-    sigmoid_verification = verify_model_against_truth_table(
-        sigmoid_model,
-        gate_name
-    )
-    implementations.append(
-        make_sigmoid_implementation_entry(
-            gate_name,
-            sigmoid_verification,
-            sharpness=20.0
+    if gate_name == "HALF_ADDER":
+        sigmoid_model = HalfAdder(implementation="sigmoid", sharpness=20.0)
+    elif gate_name not in CIRCUITS_WITHOUT_SIGMOID:
+        sigmoid_model = create_sigmoid_gate(gate_name, sharpness=20.0)
+    else:
+        sigmoid_model = None
+
+    if sigmoid_model is not None:
+        sigmoid_verification = verify_model_against_truth_table(
+            sigmoid_model,
+            gate_name
         )
-    )
+        implementations.append(
+            make_sigmoid_implementation_entry(
+                gate_name,
+                sigmoid_verification,
+                sharpness=20.0
+            )
+        )
 
     # 3. Trained MLP implementation
     input_dim = get_gate_arity(gate_name)
-    mlp_model = MLPGate(input_dim=input_dim, hidden_dim=4)
+    output_dim = get_output_dim(gate_name)
+    mlp_model = MLPGate(input_dim=input_dim, hidden_dim=4, output_dim=output_dim)
     mlp_model, mlp_verification = train_mlp(
         mlp_model,
         gate_name,
@@ -93,7 +129,8 @@ def generate_gate_entry(gate_name):
     mlp_entry = make_mlp_implementation_entry(
         gate_name,
         mlp_model,
-        mlp_verification
+        mlp_verification,
+        output_dim=output_dim,
     )
 
     mlp_weights_path = save_mlp_weights(gate_name, mlp_model)

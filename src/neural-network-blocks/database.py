@@ -101,7 +101,7 @@ def make_sigmoid_implementation_entry(gate_name, verification, sharpness=20.0):
     }
 
 
-def make_mlp_implementation_entry(gate_name, model, verification):
+def make_mlp_implementation_entry(gate_name, model, verification, output_dim=1):
     return {
         "id": f"{gate_name.lower()}_mlp_trained",
         "implementation_type": "trained_mlp",
@@ -110,7 +110,7 @@ def make_mlp_implementation_entry(gate_name, model, verification):
             "activation": "tanh_hidden_sigmoid_output",
             "input_dim": get_gate_arity(gate_name),
             "hidden_dim": 4,
-            "output_dim": 1
+            "output_dim": output_dim
         },
         "weights": "stored_in_pytorch_state_dict_format_in_future_version",
         "verification": {
