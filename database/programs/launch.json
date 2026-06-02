@@ -1,0 +1,97 @@
+{
+  "name": "launch",
+  "logic_type": "boolean",
+  "description": "Symbolic program: (a AND b) OR c",
+  "expression": "(a AND b) OR c",
+  "inputs": [
+    "a",
+    "b",
+    "c"
+  ],
+  "outputs": [
+    "y"
+  ],
+  "truth_table": [
+    {
+      "input": {
+        "a": 0,
+        "b": 0,
+        "c": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "a": 0,
+        "b": 0,
+        "c": 1
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "a": 0,
+        "b": 1,
+        "c": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "a": 0,
+        "b": 1,
+        "c": 1
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "a": 1,
+        "b": 0,
+        "c": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "a": 1,
+        "b": 0,
+        "c": 1
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "a": 1,
+        "b": 1,
+        "c": 0
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "a": 1,
+        "b": 1,
+        "c": 1
+      },
+      "output": 1
+    }
+  ],
+  "implementations": [
+    {
+      "id": "compiled_program",
+      "implementation_type": "compiled_neural_program",
+      "architecture": {
+        "type": "compiled_logic_graph",
+        "source": "(a AND b) OR c"
+      },
+      "weights": null,
+      "verification": {
+        "method": "program_equivalence",
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 8
+      }
+    }
+  ]
+}

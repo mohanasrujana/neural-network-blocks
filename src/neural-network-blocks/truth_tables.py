@@ -2,7 +2,7 @@ import itertools
 import re
 
 from evaluator import evaluate
-from parser import parse_expression
+from parser import parse_expression, normalize_expression
 
 DOMAINS = {
     "x": list(range(0, 11)),
@@ -157,11 +157,7 @@ def evaluate_expression(expression, assignment):
         0 or 1
     """
 
-    python_expr = expression
-
-    python_expr = python_expr.replace("AND", "and")
-    python_expr = python_expr.replace("OR", "or")
-    python_expr = python_expr.replace("NOT", "not")
+    python_expr = normalize_expression(expression)
 
     result = eval(
         python_expr,
@@ -189,7 +185,6 @@ def generate_equation_truth_table(
         expression,
         variable_domains
 ):
-
     graph = parse_expression(
         expression
     )
@@ -282,6 +277,15 @@ def generate_program_truth_table(expression):
         )
 
     return truth_table
+
+
+def program_truth_table(expression):
+    """Truth table for a symbolic program (Boolean or comparison)."""
+    variables = extract_variables(expression)
+    if any(op in expression for op in (">", "<", ">=", "<=")):
+        domains = {var: range(0, 11) for var in variables}
+        return generate_equation_truth_table(expression, domains)
+    return generate_program_truth_table(expression)
 
 
 # def print_truth_table(expression):

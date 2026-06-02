@@ -1,4 +1,5 @@
 import ast
+import re
 
 from logic_graph import (
     VariableNode,
@@ -80,10 +81,18 @@ class ExpressionParser(ast.NodeVisitor):
         raise ValueError("Unsupported unary op")
 
 
+def normalize_expression(expression):
+    expr = re.sub(r"\bAND\b", "and", expression)
+    expr = re.sub(r"\bOR\b", "or", expr)
+    expr = re.sub(r"\bNOT\b", "not", expr)
+    return expr
+
+
 def parse_expression(expression):
+    python_expr = normalize_expression(expression)
 
     tree = ast.parse(
-        expression,
+        python_expr,
         mode="eval"
     )
 

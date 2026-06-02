@@ -1,0 +1,97 @@
+{
+  "name": "alarm",
+  "logic_type": "boolean",
+  "description": "Symbolic program: (sensor AND door) AND NOT override",
+  "expression": "(sensor AND door) AND NOT override",
+  "inputs": [
+    "door",
+    "override",
+    "sensor"
+  ],
+  "outputs": [
+    "y"
+  ],
+  "truth_table": [
+    {
+      "input": {
+        "door": 0,
+        "override": 0,
+        "sensor": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "door": 0,
+        "override": 0,
+        "sensor": 1
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "door": 0,
+        "override": 1,
+        "sensor": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "door": 0,
+        "override": 1,
+        "sensor": 1
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "door": 1,
+        "override": 0,
+        "sensor": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "door": 1,
+        "override": 0,
+        "sensor": 1
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "door": 1,
+        "override": 1,
+        "sensor": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "door": 1,
+        "override": 1,
+        "sensor": 1
+      },
+      "output": 0
+    }
+  ],
+  "implementations": [
+    {
+      "id": "compiled_program",
+      "implementation_type": "compiled_neural_program",
+      "architecture": {
+        "type": "compiled_logic_graph",
+        "source": "(sensor AND door) AND NOT override"
+      },
+      "weights": null,
+      "verification": {
+        "method": "program_equivalence",
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 8
+      }
+    }
+  ]
+}

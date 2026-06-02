@@ -1,0 +1,97 @@
+{
+  "name": "emergency",
+  "logic_type": "boolean",
+  "description": "Symbolic program: (fire OR smoke) AND alarm",
+  "expression": "(fire OR smoke) AND alarm",
+  "inputs": [
+    "alarm",
+    "fire",
+    "smoke"
+  ],
+  "outputs": [
+    "y"
+  ],
+  "truth_table": [
+    {
+      "input": {
+        "alarm": 0,
+        "fire": 0,
+        "smoke": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "alarm": 0,
+        "fire": 0,
+        "smoke": 1
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "alarm": 0,
+        "fire": 1,
+        "smoke": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "alarm": 0,
+        "fire": 1,
+        "smoke": 1
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "alarm": 1,
+        "fire": 0,
+        "smoke": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "alarm": 1,
+        "fire": 0,
+        "smoke": 1
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "alarm": 1,
+        "fire": 1,
+        "smoke": 0
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "alarm": 1,
+        "fire": 1,
+        "smoke": 1
+      },
+      "output": 1
+    }
+  ],
+  "implementations": [
+    {
+      "id": "compiled_program",
+      "implementation_type": "compiled_neural_program",
+      "architecture": {
+        "type": "compiled_logic_graph",
+        "source": "(fire OR smoke) AND alarm"
+      },
+      "weights": null,
+      "verification": {
+        "method": "program_equivalence",
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 8
+      }
+    }
+  ]
+}

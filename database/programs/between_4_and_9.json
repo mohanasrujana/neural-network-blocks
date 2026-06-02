@@ -1,0 +1,97 @@
+{
+  "name": "between_4_and_9",
+  "logic_type": "comparison",
+  "description": "Symbolic program: (x > 4) AND (x < 9)",
+  "expression": "(x > 4) AND (x < 9)",
+  "inputs": [
+    "x"
+  ],
+  "outputs": [
+    "y"
+  ],
+  "truth_table": [
+    {
+      "input": {
+        "x": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 1
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 2
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 3
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 4
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 5
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 6
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 7
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 8
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 9
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 10
+      },
+      "output": 0
+    }
+  ],
+  "implementations": [
+    {
+      "id": "compiled_program",
+      "implementation_type": "compiled_neural_program",
+      "architecture": {
+        "type": "compiled_logic_graph",
+        "source": "(x > 4) AND (x < 9)"
+      },
+      "weights": null,
+      "verification": {
+        "method": "program_equivalence",
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 11
+      }
+    }
+  ]
+}

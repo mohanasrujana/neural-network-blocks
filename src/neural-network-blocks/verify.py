@@ -1,5 +1,5 @@
 import torch
-from truth_tables import generate_truth_table
+from truth_tables import generate_truth_table, extract_variables, program_truth_table
 
 
 def truth_table_to_tensors(truth_table):
@@ -66,4 +66,25 @@ def extract_state_dict_as_lists(model):
     return {
         key: value.detach().cpu().numpy().tolist()
         for key, value in state.items()
+    }
+
+def verify_program(model, expression):
+    table = program_truth_table(expression)
+    variables = extract_variables(expression)
+    X,y = [],[]
+
+    for row in table:
+        X.append([row["input"][v] for v in variables])
+        y.append([row["output"]])
+
+    X = torch.tensor(X, dtype=torch.float32)
+    y = torch.tensor(y, dtype=torch.float32)
+    pred = model(X)
+    pred = (pred > 0.5).float()
+    matches = (pred == y)
+
+    return {
+        "verified": bool(matches.all()),
+        "accuracy": matches.float().mean().item(),
+        "num_cases":len(table)
     }

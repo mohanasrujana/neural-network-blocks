@@ -6,25 +6,11 @@ _PACKAGE_DIR = Path(__file__).resolve().parent / "src" / "neural-network-blocks"
 if str(_PACKAGE_DIR) not in sys.path:
     sys.path.insert(0, str(_PACKAGE_DIR))
 
-from gates import (
-    create_threshold_gate,
-    create_sigmoid_gate,
-    create_composed_gate,
-)
+from gates import create_threshold_gate, create_sigmoid_gate, create_composed_gate
 from circuits import HalfAdder, FullAdder, MUX2, MUX4
 from models import MLPGate
-from verify import (
-    verify_model_against_truth_table,
-    train_mlp,
-    extract_state_dict_as_lists
-)
-from database import (
-    make_database_entry,
-    save_database_entry,
-    make_threshold_implementation_entry,
-    make_sigmoid_implementation_entry,
-    make_mlp_implementation_entry
-)
+from verify import verify_model_against_truth_table,train_mlp,extract_state_dict_as_lists
+from database import make_database_entry, save_database_entry, make_threshold_implementation_entry, make_sigmoid_implementation_entry, make_mlp_implementation_entry
 from truth_tables import get_gate_arity
 
 def get_output_dim(gate_name):

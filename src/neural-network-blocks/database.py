@@ -6,12 +6,8 @@ from truth_tables import generate_truth_table, get_gate_arity
 from gates import get_exact_params
 
 
-def make_database_entry(
-    gate_name,
-    implementation_entries
-):
+def make_database_entry(gate_name, implementation_entries):
     gate_name = gate_name.upper()
-
     return {
         "name": gate_name,
         "logic_type": "boolean",
@@ -100,6 +96,36 @@ def make_sigmoid_implementation_entry(gate_name, verification, sharpness=20.0):
         }
     }
 
+
+def create_program_entry(name, expression, variables, truth_table, implementation_entries):
+    has_comparison = any(op in expression for op in (">", "<", ">=", "<="))
+    return {
+        "name": name,
+        "logic_type": "comparison" if has_comparison else "boolean",
+        "description": f"Symbolic program: {expression}",
+        "expression": expression,
+        "inputs": variables,
+        "outputs": ["y"],
+        "truth_table": truth_table,
+        "implementations": implementation_entries
+    }
+
+def make_program_implementation_entry(expression, verification):
+    return {
+        "id": "compiled_program",
+        "implementation_type": "compiled_neural_program",
+        "architecture": {
+            "type": "compiled_logic_graph",
+            "source": expression
+        },
+        "weights": None,
+        "verification": {
+            "method": "program_equivalence",
+            "verified": verification["verified"],
+            "accuracy": verification["accuracy"],
+            "num_cases":verification["num_cases"]
+        }
+    }
 
 def make_mlp_implementation_entry(gate_name, model, verification, output_dim=1):
     return {
