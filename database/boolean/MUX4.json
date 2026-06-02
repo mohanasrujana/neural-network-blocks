@@ -849,6 +849,37 @@
   ],
   "implementations": [
     {
+      "id": "mux4_threshold_exact",
+      "implementation_type": "exact_threshold",
+      "architecture": {
+        "type": "compositional_threshold_network",
+        "note": "Built from smaller verified threshold gates"
+      },
+      "weights": null,
+      "verification": {
+        "method": "exhaustive_truth_table_equivalence",
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 64
+      }
+    },
+    {
+      "id": "mux4_sigmoid",
+      "implementation_type": "differentiable_sigmoid",
+      "architecture": {
+        "type": "compositional_sigmoid_network",
+        "note": "Built from smaller sigmoid gate approximations"
+      },
+      "weights": null,
+      "verification": {
+        "method": "truth_table_equivalence_after_thresholding",
+        "threshold": 0.5,
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 64
+      }
+    },
+    {
       "id": "mux4_mlp_trained",
       "implementation_type": "trained_mlp",
       "architecture": {

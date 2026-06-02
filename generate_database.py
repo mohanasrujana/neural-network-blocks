@@ -11,7 +11,7 @@ from gates import (
     create_sigmoid_gate,
     create_composed_gate,
 )
-from circuits import HalfAdder
+from circuits import HalfAdder, FullAdder, MUX2, MUX4
 from models import MLPGate
 from verify import (
     verify_model_against_truth_table,
@@ -26,10 +26,6 @@ from database import (
     make_mlp_implementation_entry
 )
 from truth_tables import get_gate_arity
-
-CIRCUITS_WITHOUT_THRESHOLD = {"FULL_ADDER", "MUX2", "MUX4"}
-CIRCUITS_WITHOUT_SIGMOID = {"FULL_ADDER", "MUX2", "MUX4"}
-
 
 def get_output_dim(gate_name):
     if gate_name in {"HALF_ADDER", "FULL_ADDER"}:
@@ -77,8 +73,12 @@ def generate_gate_entry(gate_name):
         )
     elif gate_name == "HALF_ADDER":
         threshold_model = HalfAdder()
-    elif gate_name in CIRCUITS_WITHOUT_THRESHOLD:
-        threshold_model = None
+    elif gate_name == "FULL_ADDER":
+        threshold_model = FullAdder()
+    elif gate_name == "MUX2":
+        threshold_model = MUX2()
+    elif gate_name == "MUX4":
+        threshold_model = MUX4()
     else:
         threshold_model = create_threshold_gate(gate_name)
 
@@ -97,10 +97,14 @@ def generate_gate_entry(gate_name):
     # 2. Sigmoid differentiable implementation
     if gate_name == "HALF_ADDER":
         sigmoid_model = HalfAdder(implementation="sigmoid", sharpness=20.0)
-    elif gate_name not in CIRCUITS_WITHOUT_SIGMOID:
-        sigmoid_model = create_sigmoid_gate(gate_name, sharpness=20.0)
+    elif gate_name == "FULL_ADDER":
+        sigmoid_model = FullAdder(implementation="sigmoid", sharpness=20.0)
+    elif gate_name == "MUX2":
+        sigmoid_model = MUX2(implementation="sigmoid", sharpness=20.0)
+    elif gate_name == "MUX4":
+        sigmoid_model = MUX4(implementation="sigmoid", sharpness=20.0)
     else:
-        sigmoid_model = None
+        sigmoid_model = create_sigmoid_gate(gate_name, sharpness=20.0)
 
     if sigmoid_model is not None:
         sigmoid_verification = verify_model_against_truth_table(
