@@ -6,7 +6,6 @@ class ThresholdGate(nn.Module):
     Exact threshold neural gate.
     Output is 0 or 1.
     """
-
     def __init__(self, weights, bias):
         super().__init__()
         self.register_buffer("weights", torch.as_tensor(weights, dtype=torch.float32).view(-1, 1))
@@ -22,7 +21,6 @@ class SigmoidGate(nn.Module):
     """
     Differentiable approximation of a threshold gate.
     """
-
     def __init__(self, weights, bias, sharpness=20.0):
         super().__init__()
         self.weights = torch.tensor(weights, dtype=torch.float32)
@@ -39,7 +37,6 @@ class MLPGate(nn.Module):
     """
     Trainable MLP for learning a logic gate from its truth table.
     """
-
     def __init__(self, input_dim, hidden_dim=4, output_dim=1):
         """
         Args:
@@ -64,7 +61,6 @@ class ComposedXOR(nn.Module):
     XOR = AND(OR(x1, x2), NAND(x1, x2))
     This is a compositional neural logic block.
     """
-
     def __init__(self, or_gate, nand_gate, and_gate):
         super().__init__()
         self.or_gate = or_gate
@@ -82,7 +78,6 @@ class ComposedXNOR(nn.Module):
     """
     XNOR = NOT(XOR)
     """
-
     def __init__(self, xor_gate, not_gate):
         super().__init__()
         self.xor_gate = xor_gate

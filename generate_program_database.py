@@ -17,7 +17,6 @@ PROGRAM_DB_DIR.mkdir(parents=True,exist_ok=True)
 
 def generate_program_entry(name, expression):
     variables = extract_variables(expression)
-
     truth_table = program_truth_table(expression)
     model = compile_program(expression)
     verification = verify_program(model, expression)

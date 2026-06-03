@@ -1,5 +1,37 @@
+import random
+
 import torch
+import torch.nn as nn
+
 from truth_tables import generate_truth_table, extract_variables, program_truth_table
+
+DEFAULT_MLP_BASE_SEED = 42
+DEFAULT_MLP_MAX_RETRIES = 5
+
+
+def gate_training_seed(gate_name, base_seed=DEFAULT_MLP_BASE_SEED):
+    """Stable per-gate seed (independent of Python's salted hash)."""
+    return base_seed + sum(ord(c) for c in gate_name.upper())
+
+
+def set_training_seed(seed):
+    random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+    try:
+        import numpy as np
+        np.random.seed(seed)
+    except ImportError:
+        pass
+
+
+def reset_module_parameters(module):
+    for m in module.modules():
+        if isinstance(m, nn.Linear):
+            nn.init.xavier_uniform_(m.weight)
+            if m.bias is not None:
+                nn.init.zeros_(m.bias)
 
 
 def truth_table_to_tensors(truth_table):
@@ -42,10 +74,7 @@ def verify_model_against_truth_table(model, gate_name, threshold=0.5):
     }
 
 
-def train_mlp(model, gate_name, epochs=2000, lr=0.05):
-    truth_table = generate_truth_table(gate_name)
-    X, y = truth_table_to_tensors(truth_table)
-
+def _train_mlp_once(model, X, y, epochs, lr):
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
     loss_fn = torch.nn.BCELoss()
 
@@ -56,9 +85,34 @@ def train_mlp(model, gate_name, epochs=2000, lr=0.05):
         loss.backward()
         optimizer.step()
 
-    verification = verify_model_against_truth_table(model, gate_name)
 
-    return model, verification
+def train_mlp(
+    model,
+    gate_name,
+    epochs=2000,
+    lr=0.05,
+    base_seed=DEFAULT_MLP_BASE_SEED,
+    max_retries=DEFAULT_MLP_MAX_RETRIES,
+):
+    truth_table = generate_truth_table(gate_name)
+    X, y = truth_table_to_tensors(truth_table)
+    gate_seed = gate_training_seed(gate_name, base_seed)
+
+    last_verification = None
+    for attempt in range(max_retries):
+        set_training_seed(gate_seed + attempt)
+        reset_module_parameters(model)
+        _train_mlp_once(model, X, y, epochs, lr)
+        verification = verify_model_against_truth_table(model, gate_name)
+        if verification["verified"]:
+            return model, verification
+        last_verification = verification
+
+    raise RuntimeError(
+        f"MLP training failed for {gate_name} after {max_retries} attempts "
+        f"(seeds {gate_seed}..{gate_seed + max_retries - 1}, "
+        f"last accuracy: {last_verification['accuracy']:.4f})"
+    )
 
 
 def extract_state_dict_as_lists(model):

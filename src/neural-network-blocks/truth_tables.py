@@ -158,13 +158,7 @@ def evaluate_expression(expression, assignment):
     """
 
     python_expr = normalize_expression(expression)
-
-    result = eval(
-        python_expr,
-        {},
-        assignment
-    )
-
+    result = eval(python_expr, {}, assignment)
     return int(bool(result))
 
 def generate_truth_table(name):
@@ -185,35 +179,13 @@ def generate_equation_truth_table(
         expression,
         variable_domains
 ):
-    graph = parse_expression(
-        expression
-    )
-
-    variables = sorted(
-        variable_domains.keys()
-    )
-
-    domains = [
-        variable_domains[v]
-        for v in variables
-    ]
-
+    graph = parse_expression(expression)
+    variables = sorted(variable_domains.keys())
+    domains = [variable_domains[v] for v in variables]
     truth_table = []
-
     for values in itertools.product(*domains):
-
-        assignment = dict(
-            zip(
-                variables,
-                values
-            )
-        )
-
-        output = evaluate(
-            graph,
-            assignment
-        )
-
+        assignment = dict(zip(variables, values))
+        output = evaluate(graph, assignment)
         truth_table.append(
             {
                 "input": assignment,
@@ -245,30 +217,12 @@ def generate_program_truth_table(expression):
             ...
         ]
     """
-
     variables = extract_variables(expression)
-
-    combinations = generate_binary_inputs(
-        len(variables)
-    )
-
+    combinations = generate_binary_inputs(len(variables))
     truth_table = []
-
     for combo in combinations:
-
-        assignment = {
-            var: value
-            for var, value in zip(
-                variables,
-                combo
-            )
-        }
-
-        output = evaluate_expression(
-            expression,
-            assignment
-        )
-
+        assignment = {var: value for var, value in zip(variables, combo)}
+        output = evaluate_expression(expression, assignment)
         truth_table.append(
             {
                 "input": assignment,

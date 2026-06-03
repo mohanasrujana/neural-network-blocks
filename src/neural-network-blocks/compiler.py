@@ -37,7 +37,7 @@ class CompiledProgram(nn.Module):
 
         if isinstance(node, GateNode):
             gate = node.gate.upper()
-            child_outputs = [ self.evaluate_node(child, assignment) for child in node.children ]
+            child_outputs = [self.evaluate_node(child, assignment) for child in node.children]
             if gate == "NOT":
                 model = create_threshold_gate("NOT")
                 return model(child_outputs[0])
