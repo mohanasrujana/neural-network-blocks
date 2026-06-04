@@ -8,20 +8,71 @@ if str(_PACKAGE_DIR) not in sys.path:
 
 from program_examples import PROGRAMS
 from truth_tables import extract_variables, program_truth_table
-from database import create_program_entry, make_program_implementation_entry
+from database import (
+    create_program_entry,
+    make_program_implementation_entry,
+    make_program_sigmoid_entry,
+    make_program_mlp_entry,
+)
 from compiler import compile_program
-from verify import verify_program
+from verify import verify_program, train_program_mlp, extract_state_dict_as_lists
 
 PROGRAM_DB_DIR = Path("database/programs")
+PROGRAM_WEIGHTS_DIR = PROGRAM_DB_DIR / "weights"
 PROGRAM_DB_DIR.mkdir(parents=True,exist_ok=True)
+
+MLP_HIDDEN_DIM = 8
+SIGMOID_SHARPNESS = 20.0
+
+
+def save_program_mlp_weights(name, model):
+    PROGRAM_WEIGHTS_DIR.mkdir(parents=True, exist_ok=True)
+    weights_path = PROGRAM_WEIGHTS_DIR / f"{name}_mlp_weights.json"
+    with open(weights_path, "w") as f:
+        json.dump(extract_state_dict_as_lists(model), f, indent=2)
+    return str(weights_path)
+
 
 def generate_program_entry(name, expression):
     variables = extract_variables(expression)
     truth_table = program_truth_table(expression)
-    model = compile_program(expression)
-    verification = verify_program(model, expression)
-    implementation_entries = [make_program_implementation_entry(expression, verification)]
-    return create_program_entry(name, expression, variables, truth_table, implementation_entries)
+    implementations = []
+
+    # 1. Compiled threshold network (exact, hard gates)
+    threshold_model = compile_program(expression, implementation="threshold")
+    threshold_verification = verify_program(threshold_model, expression)
+    implementations.append(
+        make_program_implementation_entry(expression, threshold_verification)
+    )
+
+    # 2. Compiled sigmoid network (differentiable approximation)
+    sigmoid_model = compile_program(
+        expression, implementation="sigmoid", sharpness=SIGMOID_SHARPNESS
+    )
+    sigmoid_verification = verify_program(sigmoid_model, expression)
+    implementations.append(
+        make_program_sigmoid_entry(
+            expression, sigmoid_verification, sharpness=SIGMOID_SHARPNESS
+        )
+    )
+
+    # 3. Trained MLP (learned from the program truth table)
+    mlp_model, mlp_verification, mlp_variables = train_program_mlp(
+        name, expression, hidden_dim=MLP_HIDDEN_DIM
+    )
+    weights_path = save_program_mlp_weights(name, mlp_model)
+    implementations.append(
+        make_program_mlp_entry(
+            name,
+            mlp_model,
+            mlp_verification,
+            mlp_variables,
+            weights_path,
+            hidden_dim=MLP_HIDDEN_DIM,
+        )
+    )
+
+    return create_program_entry(name, expression, variables, truth_table, implementations)
 
 def main():
     for name, expression in PROGRAMS.items():

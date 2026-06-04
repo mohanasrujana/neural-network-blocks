@@ -112,11 +112,12 @@ def create_program_entry(name, expression, variables, truth_table, implementatio
 
 def make_program_implementation_entry(expression, verification):
     return {
-        "id": "compiled_program",
+        "id": "compiled_threshold_program",
         "implementation_type": "compiled_neural_program",
         "architecture": {
             "type": "compiled_logic_graph",
-            "source": expression
+            "source": expression,
+            "gate_basis": "threshold"
         },
         "weights": None,
         "verification": {
@@ -124,6 +125,52 @@ def make_program_implementation_entry(expression, verification):
             "verified": verification["verified"],
             "accuracy": verification["accuracy"],
             "num_cases":verification["num_cases"]
+        }
+    }
+
+
+def make_program_sigmoid_entry(expression, verification, sharpness=20.0):
+    return {
+        "id": "compiled_sigmoid_program",
+        "implementation_type": "compiled_sigmoid_program",
+        "architecture": {
+            "type": "compiled_logic_graph",
+            "source": expression,
+            "gate_basis": "sigmoid",
+            "sharpness": sharpness
+        },
+        "weights": None,
+        "verification": {
+            "method": "program_equivalence_after_thresholding",
+            "threshold": 0.5,
+            "verified": verification["verified"],
+            "accuracy": verification["accuracy"],
+            "num_cases": verification["num_cases"]
+        }
+    }
+
+
+def make_program_mlp_entry(name, model, verification, variables, weights_path, hidden_dim=8, output_dim=1):
+    return {
+        "id": f"{name}_mlp_trained",
+        "implementation_type": "trained_mlp",
+        "architecture": {
+            "type": "mlp",
+            "activation": "tanh_hidden_sigmoid_output",
+            "input_dim": len(variables),
+            "hidden_dim": hidden_dim,
+            "output_dim": output_dim
+        },
+        "weights": {
+            "format": "json_state_dict",
+            "path": weights_path
+        },
+        "verification": {
+            "method": "post_training_truth_table_equivalence",
+            "threshold": 0.5,
+            "verified": verification["verified"],
+            "accuracy": verification["accuracy"],
+            "num_cases": verification["num_cases"]
         }
     }
 

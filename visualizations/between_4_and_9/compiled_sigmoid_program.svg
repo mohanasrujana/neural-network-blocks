@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="700" height="222" viewBox="0 0 700 222" font-family="Helvetica, Arial, sans-serif">
 <rect width="700" height="222" fill="#fafafa"/>
-<text x="350.0" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">between_4_and_9 - compiled_program</text>
-<text x="350.0" y="58" text-anchor="middle" font-size="13" fill="#666">(x &gt; 4) AND (x &lt; 9)  |  compiled_neural_program  |  accuracy 1.00</text>
+<text x="350.0" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">between_4_and_9 - compiled_sigmoid_program</text>
+<text x="350.0" y="58" text-anchor="middle" font-size="13" fill="#666">(x &gt; 4) AND (x &lt; 9)  |  compiled_sigmoid_program  |  accuracy 1.00</text>
 <line x1="130.0" y1="116.0" x2="275.0" y2="116.0" stroke="#999" stroke-width="1.6"/>
 <line x1="425.0" y1="116.0" x2="570.0" y2="116.0" stroke="#999" stroke-width="1.6"/>
 <rect x="275.0" y="81.0" width="150" height="70" rx="10" fill="#eef3fb" stroke="#2c7fb8" stroke-width="1.8"/>

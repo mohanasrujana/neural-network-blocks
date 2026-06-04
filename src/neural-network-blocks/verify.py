@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 
 from truth_tables import generate_truth_table, extract_variables, program_truth_table
+from models import MLPGate
 
 DEFAULT_MLP_BASE_SEED = 42
 DEFAULT_MLP_MAX_RETRIES = 5
@@ -142,3 +143,75 @@ def verify_program(model, expression):
         "accuracy": matches.float().mean().item(),
         "num_cases":len(table)
     }
+
+
+def program_to_tensors(expression):
+    table = program_truth_table(expression)
+    variables = extract_variables(expression)
+    X = torch.tensor(
+        [[float(row["input"][v]) for v in variables] for row in table],
+        dtype=torch.float32,
+    )
+    y = torch.tensor(
+        [[float(row["output"])] for row in table],
+        dtype=torch.float32,
+    )
+    return X, y, variables, table
+
+
+def verify_program_mlp(model, X, y, num_cases, threshold=0.5):
+    with torch.no_grad():
+        pred = (model(X) > threshold).float()
+    matches = (pred == y)
+    return {
+        "verified": bool(matches.all()),
+        "accuracy": matches.float().mean().item(),
+        "num_cases": num_cases,
+    }
+
+
+def _fold_input_scale(model, scale):
+    """Bake a per-feature input scaling into the first linear layer.
+
+    The MLP trains on inputs normalised to roughly [0, 1] for stable
+    optimisation, but the stored model should accept the raw integer inputs
+    used everywhere else. Since W @ (x / s) == (W / s) @ x, dividing the first
+    layer's weight columns by the scale yields an equivalent raw-input model.
+    """
+    with torch.no_grad():
+        for module in model.modules():
+            if isinstance(module, nn.Linear):
+                module.weight.div_(scale.view(1, -1))
+                break
+
+
+def train_program_mlp(
+    name,
+    expression,
+    hidden_dim=8,
+    epochs=4000,
+    lr=0.05,
+    base_seed=DEFAULT_MLP_BASE_SEED,
+    max_retries=DEFAULT_MLP_MAX_RETRIES,
+):
+    X, y, variables, table = program_to_tensors(expression)
+    scale = X.abs().max(dim=0).values.clamp(min=1.0)
+    X_norm = X / scale
+    seed = gate_training_seed(name, base_seed)
+
+    last_verification = None
+    for attempt in range(max_retries):
+        set_training_seed(seed + attempt)
+        model = MLPGate(input_dim=len(variables), hidden_dim=hidden_dim, output_dim=1)
+        reset_module_parameters(model)
+        _train_mlp_once(model, X_norm, y, epochs, lr)
+        _fold_input_scale(model, scale)
+        verification = verify_program_mlp(model, X, y, len(table))
+        if verification["verified"]:
+            return model, verification, variables
+        last_verification = verification
+
+    raise RuntimeError(
+        f"Program MLP training failed for '{name}' ({expression}) after "
+        f"{max_retries} attempts (last accuracy: {last_verification['accuracy']:.4f})"
+    )

@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="852" viewBox="0 0 700 852" font-family="Helvetica, Arial, sans-serif">
+<rect width="700" height="852" fill="#fafafa"/>
+<text x="350.0" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">launch - launch_mlp_trained</text>
+<text x="350.0" y="58" text-anchor="middle" font-size="13" fill="#666">(a AND b) OR c  |  trained_mlp  |  accuracy 1.00</text>
+<line x1="130.0" y1="341.0" x2="350.0" y2="116.0" stroke="#d7301f" stroke-width="1.47" stroke-opacity="0.75"/>
+<line x1="130.0" y1="431.0" x2="350.0" y2="116.0" stroke="#d7301f" stroke-width="1.53" stroke-opacity="0.75"/>
+<line x1="130.0" y1="521.0" x2="350.0" y2="116.0" stroke="#d7301f" stroke-width="2.19" stroke-opacity="0.75"/>
+<line x1="130.0" y1="341.0" x2="350.0" y2="206.0" stroke="#2c7fb8" stroke-width="1.08" stroke-opacity="0.75"/>
+<line x1="130.0" y1="431.0" x2="350.0" y2="206.0" stroke="#2c7fb8" stroke-width="1.21" stroke-opacity="0.75"/>
+<line x1="130.0" y1="521.0" x2="350.0" y2="206.0" stroke="#2c7fb8" stroke-width="0.97" stroke-opacity="0.75"/>
+<line x1="130.0" y1="341.0" x2="350.0" y2="296.0" stroke="#2c7fb8" stroke-width="1.16" stroke-opacity="0.75"/>
+<line x1="130.0" y1="431.0" x2="350.0" y2="296.0" stroke="#2c7fb8" stroke-width="0.93" stroke-opacity="0.75"/>
+<line x1="130.0" y1="521.0" x2="350.0" y2="296.0" stroke="#2c7fb8" stroke-width="1.36" stroke-opacity="0.75"/>
+<line x1="130.0" y1="341.0" x2="350.0" y2="386.0" stroke="#d7301f" stroke-width="2.29" stroke-opacity="0.75"/>
+<line x1="130.0" y1="431.0" x2="350.0" y2="386.0" stroke="#d7301f" stroke-width="2.29" stroke-opacity="0.75"/>
+<line x1="130.0" y1="521.0" x2="350.0" y2="386.0" stroke="#d7301f" stroke-width="4.11" stroke-opacity="0.75"/>
+<line x1="130.0" y1="341.0" x2="350.0" y2="476.0" stroke="#2c7fb8" stroke-width="1.59" stroke-opacity="0.75"/>
+<line x1="130.0" y1="431.0" x2="350.0" y2="476.0" stroke="#2c7fb8" stroke-width="1.48" stroke-opacity="0.75"/>
+<line x1="130.0" y1="521.0" x2="350.0" y2="476.0" stroke="#2c7fb8" stroke-width="2.78" stroke-opacity="0.75"/>
+<line x1="130.0" y1="341.0" x2="350.0" y2="566.0" stroke="#2c7fb8" stroke-width="1.36" stroke-opacity="0.75"/>
+<line x1="130.0" y1="431.0" x2="350.0" y2="566.0" stroke="#2c7fb8" stroke-width="1.46" stroke-opacity="0.75"/>
+<line x1="130.0" y1="521.0" x2="350.0" y2="566.0" stroke="#2c7fb8" stroke-width="2.17" stroke-opacity="0.75"/>
+<line x1="130.0" y1="341.0" x2="350.0" y2="656.0" stroke="#d7301f" stroke-width="1.49" stroke-opacity="0.75"/>
+<line x1="130.0" y1="431.0" x2="350.0" y2="656.0" stroke="#d7301f" stroke-width="1.49" stroke-opacity="0.75"/>
+<line x1="130.0" y1="521.0" x2="350.0" y2="656.0" stroke="#d7301f" stroke-width="2.66" stroke-opacity="0.75"/>
+<line x1="130.0" y1="341.0" x2="350.0" y2="746.0" stroke="#d7301f" stroke-width="1.92" stroke-opacity="0.75"/>
+<line x1="130.0" y1="431.0" x2="350.0" y2="746.0" stroke="#d7301f" stroke-width="1.90" stroke-opacity="0.75"/>
+<line x1="130.0" y1="521.0" x2="350.0" y2="746.0" stroke="#d7301f" stroke-width="3.45" stroke-opacity="0.75"/>
+<line x1="350.0" y1="116.0" x2="570.0" y2="431.0" stroke="#d7301f" stroke-width="1.61" stroke-opacity="0.75"/>
+<line x1="350.0" y1="206.0" x2="570.0" y2="431.0" stroke="#2c7fb8" stroke-width="1.10" stroke-opacity="0.75"/>
+<line x1="350.0" y1="296.0" x2="570.0" y2="431.0" stroke="#2c7fb8" stroke-width="1.38" stroke-opacity="0.75"/>
+<line x1="350.0" y1="386.0" x2="570.0" y2="431.0" stroke="#d7301f" stroke-width="4.20" stroke-opacity="0.75"/>
+<line x1="350.0" y1="476.0" x2="570.0" y2="431.0" stroke="#2c7fb8" stroke-width="2.84" stroke-opacity="0.75"/>
+<line x1="350.0" y1="566.0" x2="570.0" y2="431.0" stroke="#2c7fb8" stroke-width="3.47" stroke-opacity="0.75"/>
+<line x1="350.0" y1="656.0" x2="570.0" y2="431.0" stroke="#d7301f" stroke-width="2.95" stroke-opacity="0.75"/>
+<line x1="350.0" y1="746.0" x2="570.0" y2="431.0" stroke="#d7301f" stroke-width="3.28" stroke-opacity="0.75"/>
+<circle cx="130.0" cy="341.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
+<text x="130.0" y="345.0" text-anchor="middle" font-size="13" fill="#222">a</text>
+<circle cx="130.0" cy="431.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
+<text x="130.0" y="435.0" text-anchor="middle" font-size="13" fill="#222">b</text>
+<circle cx="130.0" cy="521.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
+<text x="130.0" y="525.0" text-anchor="middle" font-size="13" fill="#222">c</text>
+<text x="130.0" y="82.0" text-anchor="middle" font-size="12" fill="#888">input</text>
+<circle cx="350.0" cy="116.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="156.0" text-anchor="middle" font-size="10" fill="#555">b=1.65</text>
+<circle cx="350.0" cy="206.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="246.0" text-anchor="middle" font-size="10" fill="#555">b=-0.97</text>
+<circle cx="350.0" cy="296.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="336.0" text-anchor="middle" font-size="10" fill="#555">b=-0.76</text>
+<circle cx="350.0" cy="386.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="426.0" text-anchor="middle" font-size="10" fill="#555">b=3.21</text>
+<circle cx="350.0" cy="476.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="516.0" text-anchor="middle" font-size="10" fill="#555">b=-1.75</text>
+<circle cx="350.0" cy="566.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="606.0" text-anchor="middle" font-size="10" fill="#555">b=-1.49</text>
+<circle cx="350.0" cy="656.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="696.0" text-anchor="middle" font-size="10" fill="#555">b=1.65</text>
+<circle cx="350.0" cy="746.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="786.0" text-anchor="middle" font-size="10" fill="#555">b=2.48</text>
+<text x="350.0" y="82.0" text-anchor="middle" font-size="12" fill="#888">hidden (tanh)</text>
+<circle cx="570.0" cy="431.0" r="26" fill="#fdece8" stroke="#333333" stroke-width="1.6"/>
+<text x="570.0" y="435.0" text-anchor="middle" font-size="13" fill="#222">y</text>
+<text x="570.0" y="471.0" text-anchor="middle" font-size="10" fill="#555">b=-0.68</text>
+<text x="570.0" y="82.0" text-anchor="middle" font-size="12" fill="#888">output (sigmoid)</text>
+<line x1="130" y1="800" x2="164" y2="800" stroke="#2c7fb8" stroke-width="4"/>
+<text x="172" y="804" font-size="12" fill="#555">positive weight</text>
+<line x1="300" y1="800" x2="334" y2="800" stroke="#d7301f" stroke-width="4"/>
+<text x="342" y="804" font-size="12" fill="#555">negative weight</text>
+<text x="490" y="804" font-size="12" fill="#555">thickness &#8733; |weight|</text>
+</svg>
