@@ -19,42 +19,30 @@ def gate_function(name, x):
     x is a list of binary inputs.
     returns list output, e.g. [0] or [1].
     """
-
     name = name.upper()
-
     if name == "NOT":
         return [1 - x[0]]
-
     if name == "AND":
         return [int(x[0] == 1 and x[1] == 1)]
-
     if name == "OR":
         return [int(x[0] == 1 or x[1] == 1)]
-
     if name == "NAND":
         return [1 - int(x[0] == 1 and x[1] == 1)]
-
     if name == "NOR":
         return [1 - int(x[0] == 1 or x[1] == 1)]
-
     if name == "XOR":
         return [int(x[0] != x[1])]
-
     if name == "XNOR":
         return [int(x[0] == x[1])]
-
     if name == "IMPLIES":
         return [int(x[0] == 0 or x[1] == 1)]
-
     if name == "EQUIVALENCE":
         return [int(x[0] == x[1])]
-    
     elif name == "HALF_ADDER":
         a, b = x
         sum_bit = a ^ b
         carry = a & b
         return [sum_bit, carry]
-
     elif name == "FULL_ADDER":
         a, b, cin = x
         sum_bit = a ^ b ^ cin
@@ -64,7 +52,6 @@ def gate_function(name, x):
             | (b & cin)
         )
         return [sum_bit, carry]
-
     elif name == "MUX2":
         d0, d1, s = x
         y = (
@@ -73,7 +60,6 @@ def gate_function(name, x):
                 (d1 and s)
             )
         return [int(y)]
-
     elif name == "MUX4":
         d0, d1, d2, d3, s0, s1 = x
         select = (s1 << 1) | s0
@@ -86,12 +72,10 @@ def gate_function(name, x):
         else:
             y = d3
         return [int(y)]
-
     raise ValueError(f"Unknown gate: {name}")
 
 def get_gate_arity(name):
     name = name.upper()
-
     if name == "NOT":
         return 1
     elif name == "HALF_ADDER":
@@ -102,7 +86,6 @@ def get_gate_arity(name):
         return 3
     elif name == "MUX4":
         return 6
-    
     return 2
 
 
@@ -116,7 +99,6 @@ def extract_variables(expression):
     Returns:
         ["a", "b", "c"]
     """
-
     keywords = {
         "AND",
         "OR",
@@ -124,17 +106,8 @@ def extract_variables(expression):
         "TRUE",
         "FALSE"
     }
-
     tokens = re.findall(r"[A-Za-z_][A-Za-z0-9_]*", expression)
-
-    variables = sorted(
-        {
-            token
-            for token in tokens
-            if token.upper() not in keywords
-        }
-    )
-
+    variables = sorted({token for token in tokens if token.upper() not in keywords})
     return variables
 
 def evaluate_expression(expression, assignment):
@@ -156,7 +129,6 @@ def evaluate_expression(expression, assignment):
     Returns:
         0 or 1
     """
-
     python_expr = normalize_expression(expression)
     result = eval(python_expr, {}, assignment)
     return int(bool(result))
@@ -164,7 +136,6 @@ def evaluate_expression(expression, assignment):
 def generate_truth_table(name):
     n_inputs = get_gate_arity(name)
     inputs = generate_binary_inputs(n_inputs)
-
     table = []
     for x in inputs:
         y = gate_function(name, x)
@@ -172,13 +143,9 @@ def generate_truth_table(name):
             "input": x,
             "output": y
         })
-
     return table
 
-def generate_equation_truth_table(
-        expression,
-        variable_domains
-):
+def generate_equation_truth_table(expression, variable_domains):
     graph = parse_expression(expression)
     variables = sorted(variable_domains.keys())
     domains = [variable_domains[v] for v in variables]
@@ -192,7 +159,6 @@ def generate_equation_truth_table(
                 "output": output
             }
         )
-
     return truth_table
 
 def generate_program_truth_table(expression):
@@ -229,7 +195,6 @@ def generate_program_truth_table(expression):
                 "output": output
             }
         )
-
     return truth_table
 
 
@@ -240,32 +205,3 @@ def program_truth_table(expression):
         domains = {var: range(0, 11) for var in variables}
         return generate_equation_truth_table(expression, domains)
     return generate_program_truth_table(expression)
-
-
-# def print_truth_table(expression):
-#     """
-#     Pretty-print a truth table.
-#     """
-
-#     table = generate_program_truth_table(
-#         expression
-#     )
-
-#     variables = extract_variables(expression)
-
-#     header = variables + ["output"]
-
-#     print(header)
-
-#     for row in table:
-
-#         values = [
-#             row["input"][v]
-#             for v in variables
-#         ]
-
-#         values.append(
-#             row["output"]
-#         )
-
-#         print(values)

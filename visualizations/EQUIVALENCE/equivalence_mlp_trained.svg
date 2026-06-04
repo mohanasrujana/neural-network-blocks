@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="492" viewBox="0 0 700 492" font-family="Helvetica, Arial, sans-serif">
+<rect width="700" height="492" fill="#fafafa"/>
+<text x="350.0" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">EQUIVALENCE - equivalence_mlp_trained</text>
+<text x="350.0" y="58" text-anchor="middle" font-size="13" fill="#666">trained_mlp  |  accuracy 1.00</text>
+<line x1="130.0" y1="206.0" x2="350.0" y2="116.0" stroke="#2c7fb8" stroke-width="2.20" stroke-opacity="0.75"/>
+<text x="200.4" y="174.2" text-anchor="middle" font-size="9" fill="#2c7fb8">2.86</text>
+<line x1="130.0" y1="296.0" x2="350.0" y2="116.0" stroke="#2c7fb8" stroke-width="2.09" stroke-opacity="0.75"/>
+<text x="279.6" y="170.6" text-anchor="middle" font-size="9" fill="#2c7fb8">2.68</text>
+<line x1="130.0" y1="206.0" x2="350.0" y2="206.0" stroke="#2c7fb8" stroke-width="2.77" stroke-opacity="0.75"/>
+<text x="200.4" y="203.0" text-anchor="middle" font-size="9" fill="#2c7fb8">3.89</text>
+<line x1="130.0" y1="296.0" x2="350.0" y2="206.0" stroke="#d7301f" stroke-width="2.68" stroke-opacity="0.75"/>
+<text x="279.6" y="231.8" text-anchor="middle" font-size="9" fill="#d7301f">-3.73</text>
+<line x1="130.0" y1="206.0" x2="350.0" y2="296.0" stroke="#d7301f" stroke-width="2.64" stroke-opacity="0.75"/>
+<text x="200.4" y="231.8" text-anchor="middle" font-size="9" fill="#d7301f">-3.65</text>
+<line x1="130.0" y1="296.0" x2="350.0" y2="296.0" stroke="#2c7fb8" stroke-width="2.70" stroke-opacity="0.75"/>
+<text x="279.6" y="293.0" text-anchor="middle" font-size="9" fill="#2c7fb8">3.76</text>
+<line x1="130.0" y1="206.0" x2="350.0" y2="386.0" stroke="#d7301f" stroke-width="2.81" stroke-opacity="0.75"/>
+<text x="200.4" y="260.6" text-anchor="middle" font-size="9" fill="#d7301f">-3.96</text>
+<line x1="130.0" y1="296.0" x2="350.0" y2="386.0" stroke="#d7301f" stroke-width="2.86" stroke-opacity="0.75"/>
+<text x="279.6" y="354.2" text-anchor="middle" font-size="9" fill="#d7301f">-4.06</text>
+<line x1="350.0" y1="116.0" x2="570.0" y2="251.0" stroke="#2c7fb8" stroke-width="3.91" stroke-opacity="0.75"/>
+<text x="420.4" y="156.2" text-anchor="middle" font-size="9" fill="#2c7fb8">5.93</text>
+<line x1="350.0" y1="206.0" x2="570.0" y2="251.0" stroke="#2c7fb8" stroke-width="4.11" stroke-opacity="0.75"/>
+<text x="446.8" y="222.8" text-anchor="middle" font-size="9" fill="#2c7fb8">6.29</text>
+<line x1="350.0" y1="296.0" x2="570.0" y2="251.0" stroke="#2c7fb8" stroke-width="4.20" stroke-opacity="0.75"/>
+<text x="473.2" y="267.8" text-anchor="middle" font-size="9" fill="#2c7fb8">6.45</text>
+<line x1="350.0" y1="386.0" x2="570.0" y2="251.0" stroke="#2c7fb8" stroke-width="3.31" stroke-opacity="0.75"/>
+<text x="499.6" y="291.2" text-anchor="middle" font-size="9" fill="#2c7fb8">4.85</text>
+<circle cx="130.0" cy="206.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
+<text x="130.0" y="210.0" text-anchor="middle" font-size="13" fill="#222">x1</text>
+<circle cx="130.0" cy="296.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
+<text x="130.0" y="300.0" text-anchor="middle" font-size="13" fill="#222">x2</text>
+<text x="130.0" y="82.0" text-anchor="middle" font-size="12" fill="#888">input</text>
+<circle cx="350.0" cy="116.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="156.0" text-anchor="middle" font-size="10" fill="#555">b=-4.44</text>
+<circle cx="350.0" cy="206.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="246.0" text-anchor="middle" font-size="10" fill="#555">b=2.02</text>
+<circle cx="350.0" cy="296.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="336.0" text-anchor="middle" font-size="10" fill="#555">b=2.01</text>
+<circle cx="350.0" cy="386.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="426.0" text-anchor="middle" font-size="10" fill="#555">b=1.95</text>
+<text x="350.0" y="82.0" text-anchor="middle" font-size="12" fill="#888">hidden (tanh)</text>
+<circle cx="570.0" cy="251.0" r="26" fill="#fdece8" stroke="#333333" stroke-width="1.6"/>
+<text x="570.0" y="255.0" text-anchor="middle" font-size="13" fill="#222">y</text>
+<text x="570.0" y="291.0" text-anchor="middle" font-size="10" fill="#555">b=-0.94</text>
+<text x="570.0" y="82.0" text-anchor="middle" font-size="12" fill="#888">output (sigmoid)</text>
+<line x1="130" y1="440" x2="164" y2="440" stroke="#2c7fb8" stroke-width="4"/>
+<text x="172" y="444" font-size="12" fill="#555">positive weight</text>
+<line x1="300" y1="440" x2="334" y2="440" stroke="#d7301f" stroke-width="4"/>
+<text x="342" y="444" font-size="12" fill="#555">negative weight</text>
+<text x="490" y="444" font-size="12" fill="#555">thickness &#8733; |weight|</text>
+</svg>
