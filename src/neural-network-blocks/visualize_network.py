@@ -289,7 +289,7 @@ def network_to_svg(network, title, subtitle):
     parts = _svg_header(width, height, title, subtitle)
 
     max_w = _abs_max(dense_layers) if dense_layers else 1.0
-    show_weight_labels = sum(len(l["W"]) * len(l["W"][0]) for l in dense_layers) <= 18
+    show_weight_labels = sum(len(l["W"]) * len(l["W"][0]) for l in dense_layers) <= 40
 
     for li, layer in enumerate(dense_layers):
         W = layer["W"]
@@ -410,35 +410,174 @@ def visualize_file(json_path, out_dir):
     return written
 
 
-def write_index(out_dir, written):
-    by_entry = {}
-    for path in written:
-        by_entry.setdefault(path.parent.name, []).append(path)
+def category_label(target):
+    text = str(target).lower()
+    if "boolean" in text:
+        return "Boolean gates"
+    if "program" in text:
+        return "Programs"
+    stem = Path(target).stem
+    return stem.replace("_", " ").title() or "Networks"
 
-    rows = []
-    for entry in sorted(by_entry):
-        cards = "".join(
-            f'<figure><img src="{p.parent.name}/{p.name}" alt="{p.stem}"/>'
-            f"<figcaption>{p.stem}</figcaption></figure>"
-            for p in sorted(by_entry[entry])
+
+def impl_badge(stem):
+    s = stem.lower()
+    if "mlp" in s:
+        return "MLP", "mlp"
+    if "sigmoid" in s:
+        return "Sigmoid", "sigmoid"
+    if "threshold" in s:
+        return "Threshold", "threshold"
+    return "Compiled", "compiled"
+
+
+INDEX_STYLE = """
+:root{
+  --bg:#0f1320; --panel:#161b2e; --card:#1d2336; --border:#2a3350;
+  --text:#e8ecf5; --muted:#9aa6c4; --accent:#5b8cff;
+  --mlp:#6f7bf7; --sigmoid:#2bb3a3; --threshold:#e0813a; --compiled:#b65cd6;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.5}
+header{padding:40px 32px 28px;background:var(--panel);
+  border-bottom:1px solid var(--border)}
+header h1{margin:0;font-size:30px;letter-spacing:-.02em}
+header p{margin:8px 0 0;color:var(--muted);max-width:680px}
+.stats{margin-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+.stat{background:var(--card);border:1px solid var(--border);border-radius:999px;
+  padding:6px 14px;font-size:13px;color:var(--muted)}
+.stat b{color:var(--text)}
+.toolbar{position:sticky;top:0;z-index:5;display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+  padding:16px 32px;background:rgba(15,19,32,.85);backdrop-filter:blur(8px);border-bottom:1px solid var(--border)}
+#search{flex:1;min-width:200px;max-width:420px;padding:10px 14px;border-radius:10px;
+  border:1px solid var(--border);background:var(--card);color:var(--text);font-size:14px;outline:none}
+#search:focus{border-color:var(--accent)}
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{cursor:pointer;user-select:none;padding:7px 13px;border-radius:999px;font-size:13px;
+  border:1px solid var(--border);background:var(--card);color:var(--muted);transition:.15s}
+.chip:hover{color:var(--text)}
+.chip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+main{padding:8px 32px 64px}
+section{margin:34px 0 0}
+section>h2{font-size:15px;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);
+  border-bottom:1px solid var(--border);padding-bottom:8px;margin:0 0 4px}
+.entry{margin-top:22px}
+.entry h3{margin:0 0 12px;font-size:18px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  transition:transform .15s,border-color .15s,box-shadow .15s;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.card a{display:block;background:#fafafa}
+.card img{display:block;width:100%;height:auto}
+.card .meta{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:11px 14px}
+.card .name{font-size:13px;color:var(--muted);font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px;color:#fff;flex:none}
+.badge.mlp{background:var(--mlp)} .badge.sigmoid{background:var(--sigmoid)}
+.badge.threshold{background:var(--threshold)} .badge.compiled{background:var(--compiled)}
+.empty{display:none;color:var(--muted);padding:40px 0;text-align:center}
+"""
+
+INDEX_SCRIPT = """
+const search=document.getElementById('search');
+const chips=[...document.querySelectorAll('.chip')];
+const cards=[...document.querySelectorAll('.card')];
+let activeType='all';
+function apply(){
+  const q=search.value.trim().toLowerCase();
+  cards.forEach(c=>{
+    const okType=activeType==='all'||c.dataset.type===activeType;
+    const okText=!q||c.dataset.search.includes(q);
+    c.style.display=okType&&okText?'':'none';
+  });
+  document.querySelectorAll('.entry').forEach(e=>{
+    const any=[...e.querySelectorAll('.card')].some(c=>c.style.display!=='none');
+    e.style.display=any?'':'none';
+  });
+  document.querySelectorAll('section').forEach(s=>{
+    const any=[...s.querySelectorAll('.card')].some(c=>c.style.display!=='none');
+    s.style.display=any?'':'none';
+  });
+  const visible=cards.some(c=>c.style.display!=='none');
+  document.querySelector('.empty').style.display=visible?'none':'block';
+}
+search.addEventListener('input',apply);
+chips.forEach(ch=>ch.addEventListener('click',()=>{
+  chips.forEach(c=>c.classList.remove('active'));
+  ch.classList.add('active');activeType=ch.dataset.type;apply();
+}));
+"""
+
+
+def write_index(out_dir, sections):
+    total = sum(len(paths) for paths in sections.values())
+    type_counts = {"mlp": 0, "sigmoid": 0, "threshold": 0, "compiled": 0}
+
+    section_html = []
+    for label in sections:
+        paths = sections[label]
+        by_entry = {}
+        for p in paths:
+            by_entry.setdefault(p.parent.name, []).append(p)
+
+        entry_blocks = []
+        for entry in sorted(by_entry):
+            cards = []
+            for p in sorted(by_entry[entry]):
+                badge_text, badge_cls = impl_badge(p.stem)
+                type_counts[badge_cls] = type_counts.get(badge_cls, 0) + 1
+                src = f"{p.parent.name}/{p.name}"
+                search_key = _esc(f"{entry} {p.stem} {badge_text}".lower())
+                cards.append(
+                    f'<div class="card" data-type="{badge_cls}" data-search="{search_key}">'
+                    f'<a href="{src}">'
+                    f'<img src="{src}" alt="{_esc(p.stem)}" loading="lazy"/></a>'
+                    f'<div class="meta"><span class="name">{_esc(p.stem)}</span>'
+                    f'<span class="badge {badge_cls}">{badge_text}</span></div></div>'
+                )
+            entry_blocks.append(
+                f'<div class="entry"><h3>{_esc(entry)}</h3>'
+                f'<div class="grid">{"".join(cards)}</div></div>'
+            )
+        section_html.append(
+            f'<section><h2>{_esc(label)} ({len(paths)})</h2>{"".join(entry_blocks)}</section>'
         )
-        rows.append(f"<section><h2>{entry}</h2><div class='grid'>{cards}</div></section>")
+
+    stats = (
+        f'<span class="stat"><b>{total}</b> diagrams</span>'
+        f'<span class="stat"><b>{len(sections)}</b> categories</span>'
+        f'<span class="stat">MLP <b>{type_counts["mlp"]}</b></span>'
+        f'<span class="stat">Sigmoid <b>{type_counts["sigmoid"]}</b></span>'
+        f'<span class="stat">Threshold <b>{type_counts["threshold"]}</b></span>'
+    )
+
+    chips = (
+        '<div class="chips">'
+        '<span class="chip active" data-type="all">All</span>'
+        '<span class="chip" data-type="threshold">Threshold</span>'
+        '<span class="chip" data-type="sigmoid">Sigmoid</span>'
+        '<span class="chip" data-type="mlp">MLP</span>'
+        "</div>"
+    )
 
     html = (
-        "<!doctype html><html><head><meta charset='utf-8'>"
-        "<title>Neural Network Blocks - Visualizations</title><style>"
-        "body{font-family:Helvetica,Arial,sans-serif;margin:24px;background:#f4f4f4;color:#222}"
-        "h1{margin-bottom:4px}section{margin:28px 0}"
-        ".grid{display:flex;flex-wrap:wrap;gap:16px}"
-        "figure{margin:0;background:#fff;border:1px solid #ddd;border-radius:8px;padding:8px}"
-        "figure img{display:block;max-width:520px;height:auto}"
-        "figcaption{font-size:12px;color:#666;text-align:center;margin-top:6px}"
-        "</style></head><body>"
-        "<h1>Neural Network Blocks</h1>"
-        "<p>Neural networks reconstructed from the verified database.</p>"
-        + "".join(rows)
-        + "</body></html>"
+        "<!doctype html><html lang='en'><head><meta charset='utf-8'>"
+        "<meta name='viewport' content='width=device-width,initial-scale=1'>"
+        "<title>Neural Network Blocks - Visualizations</title>"
+        f"<style>{INDEX_STYLE}</style></head><body>"
+        "<header><h1>Neural Network Blocks</h1>"
+        "<p>Neural networks reconstructed from the verified symbolic database. "
+        "Blue edges are positive weights, red are negative, and thickness scales "
+        "with magnitude. Click any diagram to open it full size.</p>"
+        f"<div class='stats'>{stats}</div></header>"
+        f"<div class='toolbar'><input id='search' type='search' "
+        f"placeholder='Search gates, programs, implementations...'/>{chips}</div>"
+        f"<main>{''.join(section_html)}"
+        "<div class='empty'>No diagrams match your filters.</div></main>"
+        f"<script>{INDEX_SCRIPT}</script></body></html>"
     )
+
     index_path = Path(out_dir) / "index.html"
     index_path.write_text(html)
     return index_path
@@ -459,16 +598,20 @@ def main(argv):
     else:
         targets = ["database/boolean", "database/programs"]
 
+    sections = {}
     all_written = []
     for target in targets:
+        label = category_label(target)
         for json_path in _iter_json_files(target):
             if json_path.parent.name == "weights":
                 continue
             print(f"Visualizing {json_path}")
-            all_written.extend(visualize_file(json_path, out_dir))
+            written = visualize_file(json_path, out_dir)
+            sections.setdefault(label, []).extend(written)
+            all_written.extend(written)
 
     if all_written:
-        index_path = write_index(out_dir, all_written)
+        index_path = write_index(out_dir, sections)
         print(f"\nGallery: {index_path}")
     print(f"Done. {len(all_written)} diagram(s) written under '{out_dir}/'.")
 
