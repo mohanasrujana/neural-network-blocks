@@ -8,12 +8,7 @@ if str(_PACKAGE_DIR) not in sys.path:
 
 from program_examples import PROGRAMS
 from truth_tables import extract_variables, program_truth_table
-from database import (
-    create_program_entry,
-    make_program_implementation_entry,
-    make_program_sigmoid_entry,
-    make_program_mlp_entry,
-)
+from database import create_program_entry, make_program_implementation_entry, make_program_sigmoid_entry, make_program_mlp_entry
 from compiler import compile_program
 from verify import verify_program, train_program_mlp, extract_state_dict_as_lists
 

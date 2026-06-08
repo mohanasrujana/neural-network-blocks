@@ -72,6 +72,20 @@ def gate_function(name, x):
         else:
             y = d3
         return [int(y)]
+    elif name == "PRIORITY_ENCODER":
+        i0, i1, i2, i3 = x
+        a1 = i2 | i3
+        a0 = i3 | (i1 & (1 - i2))
+        valid = i0 | i1 | i2 | i3
+        return [a1, a0, valid]
+    elif name == "COMPARATOR_1BIT":
+        a, b = x
+        return [int(a > b), int(a == b), int(a < b)]
+    elif name == "COMPARATOR_2BIT":
+        a1, a0, b1, b0 = x
+        a = (a1 << 1) | a0
+        b = (b1 << 1) | b0
+        return [int(a > b), int(a == b), int(a < b)]
     raise ValueError(f"Unknown gate: {name}")
 
 def get_gate_arity(name):
@@ -86,6 +100,12 @@ def get_gate_arity(name):
         return 3
     elif name == "MUX4":
         return 6
+    elif name == "PRIORITY_ENCODER":
+        return 4
+    elif name == "COMPARATOR_1BIT":
+        return 2
+    elif name == "COMPARATOR_2BIT":
+        return 4
     return 2
 
 

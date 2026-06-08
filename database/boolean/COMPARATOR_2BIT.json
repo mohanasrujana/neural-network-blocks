@@ -1,0 +1,279 @@
+{
+  "name": "COMPARATOR_2BIT",
+  "logic_type": "boolean",
+  "description": "COMPARATOR_2BIT Boolean logic gate",
+  "inputs": [
+    "x1",
+    "x2",
+    "x3",
+    "x4"
+  ],
+  "outputs": [
+    "y"
+  ],
+  "truth_table": [
+    {
+      "input": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "output": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "input": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "output": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "input": [
+        0,
+        0,
+        1,
+        0
+      ],
+      "output": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "input": [
+        0,
+        0,
+        1,
+        1
+      ],
+      "output": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "input": [
+        0,
+        1,
+        0,
+        0
+      ],
+      "output": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        0,
+        1,
+        0,
+        1
+      ],
+      "output": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "input": [
+        0,
+        1,
+        1,
+        0
+      ],
+      "output": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "input": [
+        0,
+        1,
+        1,
+        1
+      ],
+      "output": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "input": [
+        1,
+        0,
+        0,
+        0
+      ],
+      "output": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        1,
+        0,
+        0,
+        1
+      ],
+      "output": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        1,
+        0,
+        1,
+        0
+      ],
+      "output": [
+        0,
+        1,
+        0
+      ]
+    },
+    {
+      "input": [
+        1,
+        0,
+        1,
+        1
+      ],
+      "output": [
+        0,
+        0,
+        1
+      ]
+    },
+    {
+      "input": [
+        1,
+        1,
+        0,
+        0
+      ],
+      "output": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        1,
+        1,
+        0,
+        1
+      ],
+      "output": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        1,
+        1,
+        1,
+        0
+      ],
+      "output": [
+        1,
+        0,
+        0
+      ]
+    },
+    {
+      "input": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "output": [
+        0,
+        1,
+        0
+      ]
+    }
+  ],
+  "implementations": [
+    {
+      "id": "comparator_2bit_threshold_exact",
+      "implementation_type": "exact_threshold",
+      "architecture": {
+        "type": "compositional_threshold_network",
+        "note": "Built from smaller verified threshold gates"
+      },
+      "weights": null,
+      "verification": {
+        "method": "exhaustive_truth_table_equivalence",
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 16
+      }
+    },
+    {
+      "id": "comparator_2bit_sigmoid",
+      "implementation_type": "differentiable_sigmoid",
+      "architecture": {
+        "type": "compositional_sigmoid_network",
+        "note": "Built from smaller sigmoid gate approximations"
+      },
+      "weights": null,
+      "verification": {
+        "method": "truth_table_equivalence_after_thresholding",
+        "threshold": 0.5,
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 16
+      }
+    },
+    {
+      "id": "comparator_2bit_mlp_trained",
+      "implementation_type": "trained_mlp",
+      "architecture": {
+        "type": "mlp",
+        "activation": "tanh_hidden_sigmoid_output",
+        "input_dim": 4,
+        "hidden_dim": 8,
+        "output_dim": 3
+      },
+      "weights": {
+        "format": "json_state_dict",
+        "path": "database/boolean/weights/comparator_2bit_mlp_weights.json"
+      },
+      "verification": {
+        "method": "post_training_truth_table_equivalence",
+        "threshold": 0.5,
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 16
+      }
+    }
+  ]
+}

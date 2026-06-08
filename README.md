@@ -8,7 +8,7 @@ This repository generates a database of small neural networks that implement bas
 - Exact threshold-based logic networks
 - Differentiable sigmoid-based logic networks
 - Trainable MLP logic networks
-- Compositional neural circuits (XOR, XNOR, half/full adders, multiplexers)
+- Compositional neural circuits (XOR, XNOR, half/full adders, multiplexers, priority encoder, comparators)
 - Boolean expression parsing and evaluation
 - Exhaustive truth-table verification
 - Structured JSON database generation
@@ -86,12 +86,15 @@ Database Entry
 
 ### Compositional Circuits
 
-| Circuit      | Inputs | Outputs        | Description                          |
-| ------------ | ------ | -------------- | ------------------------------------ |
-| HALF_ADDER   | 2      | sum, carry     | XOR + AND composition                |
-| FULL_ADDER   | 3      | sum, carry     | Two half adders + OR carry chain     |
-| MUX2         | 3      | 1              | 2-to-1 multiplexer (d0, d1, select)  |
-| MUX4         | 6      | 1              | 4-to-1 multiplexer (d0–d3, s0, s1)   |
+| Circuit          | Inputs | Outputs           | Description                                      |
+| ---------------- | ------ | ----------------- | ------------------------------------------------ |
+| HALF_ADDER       | 2      | sum, carry        | XOR + AND composition                            |
+| FULL_ADDER       | 3      | sum, carry        | Two half adders + OR carry chain                 |
+| MUX2             | 3      | 1                 | 2-to-1 multiplexer (d0, d1, select)              |
+| MUX4             | 6      | 1                 | 4-to-1 multiplexer (d0–d3, s0, s1)               |
+| PRIORITY_ENCODER | 4      | a1, a0, valid     | 4-to-2 priority encoder (i3 highest priority)    |
+| COMPARATOR_1BIT  | 2      | gt, eq, lt        | 1-bit magnitude comparator (a>b, a==b, a<b)      |
+| COMPARATOR_2BIT  | 4      | gt, eq, lt        | 2-bit magnitude comparator (A vs B)              |
 
 ---
 
@@ -144,9 +147,11 @@ XOR = AND(OR(x1, x2), NAND(x1, x2))
 HALF_ADDER = [XOR(a, b), AND(a, b)]
 FULL_ADDER = two half adders + OR carry
 MUX2 / MUX4 = AND/OR/NOT multiplexer trees
+PRIORITY_ENCODER = OR/AND/NOT priority resolution tree
+COMPARATOR_1BIT / COMPARATOR_2BIT = AND/OR/NOT/XNOR relation network
 ```
 
-Full adder and multiplexer circuits currently receive MLP implementations only; threshold and sigmoid variants are not generated for those blocks.
+Every compositional circuit is emitted with all three implementation types: exact threshold, differentiable sigmoid, and a trained MLP.
 
 ---
 
@@ -265,7 +270,7 @@ Each entry stores the symbolic specification, architecture metadata, neural para
 | `truth_tables.py`    | Gate truth tables, arity, expression-based table generation          |
 | `models.py`          | `ThresholdGate`, `SigmoidGate`, `MLPGate`, `ComposedXOR`, `ComposedXNOR` |
 | `gates.py`           | Factory functions and exact perceptron parameters                    |
-| `circuits.py`        | `HalfAdder`, `FullAdder`, `MUX2`, `MUX4` compositional modules     |
+| `circuits.py`        | `HalfAdder`, `FullAdder`, `MUX2`, `MUX4`, `PriorityEncoder`, `Comparator1Bit`, `Comparator2Bit` compositional modules |
 | `verify.py`          | Tensor conversion, exhaustive verification, MLP training             |
 | `database.py`        | JSON entry builders and file export                                  |
 | `parser.py`          | AST-based expression parsing                                         |
@@ -317,7 +322,6 @@ python generate_database.py
 
 - Boolean logic and small-scale circuits only
 - Exhaustive verification scales exponentially with input count
-- Full adder and multiplexers lack threshold/sigmoid database entries
 - Expression layer supports parsing and symbolic evaluation but is not yet wired into neural training
 - No automated test suite in the repository
 
@@ -325,7 +329,7 @@ python generate_database.py
 
 ## Planned Extensions
 
-- Comparators and majority circuits
+- Majority circuits and wider encoders/decoders
 - Neural training from parsed Boolean programs
 - First-order logic grounding
 - Temporal logic support
