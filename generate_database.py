@@ -9,7 +9,7 @@ if str(_PACKAGE_DIR) not in sys.path:
 from gates import create_threshold_gate, create_sigmoid_gate, create_composed_gate
 from circuits import HalfAdder, FullAdder, MUX2, MUX4, PriorityEncoder, Comparator1Bit, Comparator2Bit
 from models import MLPGate
-from verify import verify_model_against_truth_table,train_mlp,extract_state_dict_as_lists,DEFAULT_MLP_BASE_SEED,DEFAULT_MLP_MAX_RETRIES
+from verify import verify_model_against_truth_table,train_mlp,extract_state_dict_as_lists,save_model_state_dict,DEFAULT_MLP_BASE_SEED,DEFAULT_MLP_MAX_RETRIES
 from database import make_database_entry, save_database_entry, make_threshold_implementation_entry, make_sigmoid_implementation_entry, make_mlp_implementation_entry
 from truth_tables import get_gate_arity
 
@@ -68,6 +68,13 @@ def save_mlp_weights(gate_name, model):
     return str(weights_path)
 
 
+def save_mlp_model(gate_name, model):
+    weights_dir = Path("database/boolean/weights")
+    weights_dir.mkdir(parents=True, exist_ok=True)
+    model_path = weights_dir / f"{gate_name.lower()}_mlp.pt"
+    return save_model_state_dict(model, model_path)
+
+
 def generate_gate_entry(gate_name):
     implementations = []
     # 1. Exact threshold implementation
@@ -99,9 +106,12 @@ def generate_gate_entry(gate_name):
     mlp_entry = make_mlp_implementation_entry(gate_name, mlp_model, mlp_verification, output_dim=output_dim, hidden_dim=hidden_dim)
 
     mlp_weights_path = save_mlp_weights(gate_name, mlp_model)
+    mlp_model_path = save_mlp_model(gate_name, mlp_model)
     mlp_entry["weights"] = {
         "format": "json_state_dict",
-        "path": mlp_weights_path
+        "path": mlp_weights_path,
+        "pytorch_format": "pytorch_state_dict",
+        "pytorch_path": mlp_model_path
     }
 
     implementations.append(mlp_entry)

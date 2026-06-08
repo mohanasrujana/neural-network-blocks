@@ -10,7 +10,7 @@ from program_examples import PROGRAMS
 from truth_tables import extract_variables, program_truth_table
 from database import create_program_entry, make_program_implementation_entry, make_program_sigmoid_entry, make_program_mlp_entry
 from compiler import compile_program
-from verify import verify_program, train_program_mlp, extract_state_dict_as_lists
+from verify import verify_program, train_program_mlp, extract_state_dict_as_lists, save_model_state_dict
 
 PROGRAM_DB_DIR = Path("database/programs")
 PROGRAM_WEIGHTS_DIR = PROGRAM_DB_DIR / "weights"
@@ -26,6 +26,12 @@ def save_program_mlp_weights(name, model):
     with open(weights_path, "w") as f:
         json.dump(extract_state_dict_as_lists(model), f, indent=2)
     return str(weights_path)
+
+
+def save_program_mlp_model(name, model):
+    PROGRAM_WEIGHTS_DIR.mkdir(parents=True, exist_ok=True)
+    model_path = PROGRAM_WEIGHTS_DIR / f"{name}_mlp.pt"
+    return save_model_state_dict(model, model_path)
 
 
 def generate_program_entry(name, expression):
@@ -56,6 +62,7 @@ def generate_program_entry(name, expression):
         name, expression, hidden_dim=MLP_HIDDEN_DIM
     )
     weights_path = save_program_mlp_weights(name, mlp_model)
+    model_path = save_program_mlp_model(name, mlp_model)
     implementations.append(
         make_program_mlp_entry(
             name,
@@ -64,6 +71,7 @@ def generate_program_entry(name, expression):
             mlp_variables,
             weights_path,
             hidden_dim=MLP_HIDDEN_DIM,
+            pytorch_path=model_path,
         )
     )
 

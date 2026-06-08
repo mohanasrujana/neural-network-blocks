@@ -150,7 +150,14 @@ def make_program_sigmoid_entry(expression, verification, sharpness=20.0):
     }
 
 
-def make_program_mlp_entry(name, model, verification, variables, weights_path, hidden_dim=8, output_dim=1):
+def make_program_mlp_entry(name, model, verification, variables, weights_path, hidden_dim=8, output_dim=1, pytorch_path=None):
+    weights = {
+        "format": "json_state_dict",
+        "path": weights_path
+    }
+    if pytorch_path is not None:
+        weights["pytorch_format"] = "pytorch_state_dict"
+        weights["pytorch_path"] = pytorch_path
     return {
         "id": f"{name}_mlp_trained",
         "implementation_type": "trained_mlp",
@@ -161,10 +168,7 @@ def make_program_mlp_entry(name, model, verification, variables, weights_path, h
             "hidden_dim": hidden_dim,
             "output_dim": output_dim
         },
-        "weights": {
-            "format": "json_state_dict",
-            "path": weights_path
-        },
+        "weights": weights,
         "verification": {
             "method": "post_training_truth_table_equivalence",
             "threshold": 0.5,

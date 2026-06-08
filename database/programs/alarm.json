@@ -124,7 +124,9 @@
       },
       "weights": {
         "format": "json_state_dict",
-        "path": "database/programs/weights/alarm_mlp_weights.json"
+        "path": "database/programs/weights/alarm_mlp_weights.json",
+        "pytorch_format": "pytorch_state_dict",
+        "pytorch_path": "database/programs/weights/alarm_mlp.pt"
       },
       "verification": {
         "method": "post_training_truth_table_equivalence",

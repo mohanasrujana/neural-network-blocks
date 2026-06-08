@@ -135,7 +135,9 @@ Input → Linear → Tanh → Linear → Sigmoid
 ```
 
 - Trained for 3000 epochs with learning rate 0.05
-- Weights saved separately under `database/boolean/weights/`
+- Weights saved separately under `database/boolean/weights/` in two formats:
+  - `*_mlp_weights.json` — portable JSON state dict (used by the dependency-free visualizer)
+  - `*_mlp.pt` — native PyTorch state dict (`torch.save`), loadable with `torch.load`
 - Generated for all gates and circuits, including full adder and multiplexers
 
 ### 4. Compositional Neural Circuits
@@ -236,9 +238,22 @@ database/boolean/
 ├── MUX2.json
 ├── MUX4.json
 └── weights/
-    ├── and_mlp_weights.json
+    ├── and_mlp_weights.json     # JSON state dict
+    ├── and_mlp.pt               # PyTorch state dict
     ├── half_adder_mlp_weights.json
+    ├── half_adder_mlp.pt
     └── ...
+```
+
+Each trained MLP is saved both as a portable JSON state dict and as a native PyTorch `.pt` file. To load the PyTorch model:
+
+```python
+import torch
+from models import MLPGate
+
+model = MLPGate(input_dim=2, hidden_dim=4, output_dim=1)
+model.load_state_dict(torch.load("database/boolean/weights/and_mlp.pt"))
+model.eval()
 ```
 
 ### Example Database Entry

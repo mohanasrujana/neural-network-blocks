@@ -123,6 +123,13 @@ def extract_state_dict_as_lists(model):
         for key, value in state.items()
     }
 
+def save_model_state_dict(model, path):
+    """Save a model's parameters in native PyTorch format (``torch.save``).
+    Returns the path as a string so callers can record it in the database.
+    """
+    torch.save(model.state_dict(), path)
+    return str(path)
+
 def verify_program(model, expression):
     table = program_truth_table(expression)
     variables = extract_variables(expression)
