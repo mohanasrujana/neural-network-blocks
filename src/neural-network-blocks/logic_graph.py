@@ -23,3 +23,16 @@ class ComparisonNode(Node):
         self.operator = operator
         self.left = left
         self.right = right
+
+
+class ArithmeticNode(Node):
+    """Linear arithmetic on numeric operands (e.g. x + y, 2 * x).
+
+    Only appears on the numeric side of a comparison; it never produces a
+    Boolean value on its own.
+    """
+
+    def __init__(self, operator, left, right):
+        self.operator = operator
+        self.left = left
+        self.right = right

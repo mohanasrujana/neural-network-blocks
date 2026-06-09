@@ -123,6 +123,12 @@ def extract_variables(expression):
         "AND",
         "OR",
         "NOT",
+        "NAND",
+        "NOR",
+        "XOR",
+        "XNOR",
+        "IMPLIES",
+        "EQUIVALENCE",
         "TRUE",
         "FALSE"
     }
@@ -218,10 +224,25 @@ def generate_program_truth_table(expression):
     return truth_table
 
 
+NUMERIC_DOMAIN = range(0, 11)
+BOOLEAN_DOMAIN = range(0, 2)
+
+
+def is_numeric_program(expression):
+    """A program is numeric if it contains any comparison operator."""
+    return any(op in expression for op in (">", "<", "==", "!="))
+
+
 def program_truth_table(expression):
-    """Truth table for a symbolic program (Boolean or comparison)."""
+    """Truth table for a symbolic program (Boolean or comparison).
+
+    Both Boolean and comparison programs are evaluated through the parsed
+    logic graph, so every supported construct (derived gates, arithmetic,
+    comparisons) is handled by a single code path. Variables range over the
+    Boolean domain {0, 1} unless the expression contains a comparison, in
+    which case they range over the integer domain 0..10.
+    """
     variables = extract_variables(expression)
-    if any(op in expression for op in (">", "<", ">=", "<=")):
-        domains = {var: range(0, 11) for var in variables}
-        return generate_equation_truth_table(expression, domains)
-    return generate_program_truth_table(expression)
+    domain = NUMERIC_DOMAIN if is_numeric_program(expression) else BOOLEAN_DOMAIN
+    domains = {var: domain for var in variables}
+    return generate_equation_truth_table(expression, domains)

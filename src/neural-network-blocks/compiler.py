@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 from gates import create_threshold_gate, create_sigmoid_gate, create_composed_gate
 from models import ThresholdGate
-from logic_graph import VariableNode, ConstantNode, GateNode, ComparisonNode
+from logic_graph import VariableNode, ConstantNode, GateNode, ComparisonNode, ArithmeticNode
 from parser import parse_expression
 from truth_tables import extract_variables
 
@@ -49,6 +49,8 @@ class CompiledProgram(nn.Module):
                 return torch.sigmoid(k * (right - left + 0.5))
             if operator == "==":
                 return torch.sigmoid(k * (0.5 - (left - right).abs()))
+            if operator == "!=":
+                return torch.sigmoid(k * ((left - right).abs() - 0.5))
             raise NotImplementedError(operator)
 
         if operator == ">":
@@ -61,6 +63,8 @@ class CompiledProgram(nn.Module):
             return (left <= right).float()
         if operator == "==":
             return (left == right).float()
+        if operator == "!=":
+            return (left != right).float()
         raise NotImplementedError(operator)
 
     def evaluate_node(self, node, assignment):
@@ -70,6 +74,17 @@ class CompiledProgram(nn.Module):
 
         if isinstance(node, ConstantNode):
             return torch.full_like(next(iter(assignment.values())), float(node.value))
+
+        if isinstance(node, ArithmeticNode):
+            left = self.evaluate_node(node.left, assignment)
+            right = self.evaluate_node(node.right, assignment)
+            if node.operator == "+":
+                return left + right
+            if node.operator == "-":
+                return left - right
+            if node.operator == "*":
+                return left * right
+            raise NotImplementedError(node.operator)
 
         if isinstance(node, ComparisonNode):
             right = self.evaluate_node(node.right, assignment)

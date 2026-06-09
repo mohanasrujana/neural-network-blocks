@@ -167,9 +167,22 @@ Beyond fixed gate definitions, the codebase supports parsing and evaluating Bool
 
 **Truth tables** (`truth_tables.py`) — utilities for:
 
-- `generate_program_truth_table(expression)` — exhaustive Boolean program tables
-- `generate_equation_truth_table(expression, variable_domains)` — tables over numeric domains
+- `program_truth_table(expression)` — exhaustive table for any program, evaluated through the parsed logic graph
+- `generate_equation_truth_table(expression, variable_domains)` — tables over explicit numeric domains
 - `extract_variables(expression)` — variable discovery
+
+### Supported program constructs
+
+| Category    | Constructs                                                        | Example                       |
+| ----------- | ----------------------------------------------------------------- | ----------------------------- |
+| Boolean     | `AND`, `OR`, `NOT` (infix keywords)                               | `(a AND b) OR NOT c`          |
+| Derived     | `XOR`, `XNOR`, `NAND`, `NOR`, `IMPLIES`, `EQUIVALENCE` (call form) | `XOR(a, b)`, `IMPLIES(a, b)`  |
+| Comparison  | `>`, `<`, `>=`, `<=`, `==`, `!=`                                  | `x >= 5`, `x != y`            |
+| Arithmetic  | `+`, `-`, `*`, unary `-` (numeric side of a comparison)           | `(x + y) > 10`, `2 * x >= y`  |
+
+A program is treated as **numeric** (integer domain `0..10`) when it contains any
+comparison operator, and **Boolean** (domain `{0, 1}`) otherwise. Both kinds are
+evaluated, compiled, and verified through the same logic-graph path.
 
 Example programs are defined in `program_examples.py`:
 
@@ -177,8 +190,14 @@ Example programs are defined in `program_examples.py`:
 PROGRAMS = {
     "launch": "(a AND b) OR c",
     "alarm": "(sensor AND door) AND NOT override",
+    "xor_parity": "XOR(a, b)",
+    "three_way_parity": "XOR(XOR(a, b), c)",
+    "implication": "IMPLIES(a, b)",
     "greater_than_5": "x > 5",
-    "between_4_and_9": "(x > 4) AND (x < 9)",
+    "values_equal": "x == y",
+    "values_differ": "x != y",
+    "sum_exceeds_10": "(x + y) > 10",
+    "weighted_threshold": "(2 * x) >= (y + 3)",
 }
 ```
 
@@ -289,7 +308,7 @@ Each entry stores the symbolic specification, architecture metadata, neural para
 | `verify.py`          | Tensor conversion, exhaustive verification, MLP training             |
 | `database.py`        | JSON entry builders and file export                                  |
 | `parser.py`          | AST-based expression parsing                                         |
-| `logic_graph.py`     | Node types for variables, constants, gates, comparisons              |
+| `logic_graph.py`     | Node types for variables, constants, gates, comparisons, arithmetic  |
 | `evaluator.py`       | Recursive graph evaluation                                           |
 | `program_examples.py`| Sample Boolean and comparison programs                               |
 
