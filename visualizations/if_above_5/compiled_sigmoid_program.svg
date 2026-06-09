@@ -2,23 +2,23 @@
 <rect width="700" height="222" fill="#fafafa"/>
 <text x="350.0" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">if_above_5 - compiled_sigmoid_program</text>
 <text x="350.0" y="58" text-anchor="middle" font-size="13" fill="#666">
-if x &gt; 5:
-    y = 1
-else:
-    y = 0
-return y
-  |  compiled_sigmoid_program  |  accuracy 1.00</text>
+        if x &gt; 5:
+            y = 1
+        else:
+            y = 0
+        return y
+          |  compiled_sigmoid_program  |  accuracy 1.00</text>
 <line x1="130.0" y1="116.0" x2="275.0" y2="116.0" stroke="#999" stroke-width="1.6"/>
 <line x1="425.0" y1="116.0" x2="570.0" y2="116.0" stroke="#999" stroke-width="1.6"/>
 <rect x="275.0" y="81.0" width="150" height="70" rx="10" fill="#eef3fb" stroke="#2c7fb8" stroke-width="1.8"/>
 <text x="350.0" y="110.0" text-anchor="middle" font-size="12" fill="#2c7fb8" font-weight="bold">logic network</text>
 <text x="350.0" y="130.0" text-anchor="middle" font-size="11" fill="#444">
-if x &gt; 5:
-    y = 1
-else:
-    y = 0
-return y
-</text>
+        if x &gt; 5:
+            y = 1
+        else:
+            y = 0
+        return y
+        </text>
 <circle cx="130.0" cy="116.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
 <text x="130.0" y="120.0" text-anchor="middle" font-size="13" fill="#222">x</text>
 <circle cx="570.0" cy="116.0" r="26" fill="#fdece8" stroke="#333333" stroke-width="1.6"/>

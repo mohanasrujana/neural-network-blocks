@@ -1,8 +1,8 @@
 {
   "name": "while_countdown",
   "logic_type": "comparison",
-  "description": "Symbolic program: \nsteps = 0\nv = x\nwhile v > 0:\n    v = v - 2\n    steps = steps + 1\nreturn steps >= 3\n",
-  "expression": "\nsteps = 0\nv = x\nwhile v > 0:\n    v = v - 2\n    steps = steps + 1\nreturn steps >= 3\n",
+  "description": "Symbolic program: \n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps >= 3\n        ",
+  "expression": "\n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps >= 3\n        ",
   "inputs": [
     "x"
   ],
@@ -83,7 +83,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\nsteps = 0\nv = x\nwhile v > 0:\n    v = v - 2\n    steps = steps + 1\nreturn steps >= 3\n",
+        "source": "\n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps >= 3\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,7 +99,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\nsteps = 0\nv = x\nwhile v > 0:\n    v = v - 2\n    steps = steps + 1\nreturn steps >= 3\n",
+        "source": "\n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps >= 3\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

@@ -1,8 +1,8 @@
 {
   "name": "if_above_5",
   "logic_type": "comparison",
-  "description": "Symbolic program: \nif x > 5:\n    y = 1\nelse:\n    y = 0\nreturn y\n",
-  "expression": "\nif x > 5:\n    y = 1\nelse:\n    y = 0\nreturn y\n",
+  "description": "Symbolic program: \n        if x > 5:\n            y = 1\n        else:\n            y = 0\n        return y\n        ",
+  "expression": "\n        if x > 5:\n            y = 1\n        else:\n            y = 0\n        return y\n        ",
   "inputs": [
     "x"
   ],
@@ -83,7 +83,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\nif x > 5:\n    y = 1\nelse:\n    y = 0\nreturn y\n",
+        "source": "\n        if x > 5:\n            y = 1\n        else:\n            y = 0\n        return y\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,7 +99,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\nif x > 5:\n    y = 1\nelse:\n    y = 0\nreturn y\n",
+        "source": "\n        if x > 5:\n            y = 1\n        else:\n            y = 0\n        return y\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

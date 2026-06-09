@@ -166,6 +166,7 @@ class ProgramLowerer:
 
     def _exec_if(self, stmt, env):
         condition = self._expr(stmt.test, env)
+        before = dict(env)
         then_env = dict(env)
         else_env = dict(env)
         self._exec_block(stmt.body, then_env)
@@ -175,10 +176,14 @@ class ProgramLowerer:
             else_val = else_env.get(name)
             if then_val is else_val:
                 env[name] = then_val
-            elif then_val is None or else_val is None:
-                raise ValueError(
-                    f"'{name}' must be assigned in both branches or before the if"
-                )
+            elif then_val is None:
+                if name in before:
+                    env[name] = _select(condition, before[name], else_val)
+                # else: assigned only on the else branch (e.g. loop var), omit
+            elif else_val is None:
+                if name in before:
+                    env[name] = _select(condition, then_val, before[name])
+                # else: assigned only on the then branch (e.g. loop var), omit
             else:
                 env[name] = _select(condition, then_val, else_val)
 
