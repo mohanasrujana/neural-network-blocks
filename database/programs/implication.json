@@ -1,0 +1,103 @@
+{
+  "name": "implication",
+  "logic_type": "boolean",
+  "description": "Symbolic program: IMPLIES(a, b)",
+  "expression": "IMPLIES(a, b)",
+  "inputs": [
+    "a",
+    "b"
+  ],
+  "outputs": [
+    "y"
+  ],
+  "truth_table": [
+    {
+      "input": {
+        "a": 0,
+        "b": 0
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "a": 0,
+        "b": 1
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "a": 1,
+        "b": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "a": 1,
+        "b": 1
+      },
+      "output": 1
+    }
+  ],
+  "implementations": [
+    {
+      "id": "compiled_threshold_program",
+      "implementation_type": "compiled_neural_program",
+      "architecture": {
+        "type": "compiled_logic_graph",
+        "source": "IMPLIES(a, b)",
+        "gate_basis": "threshold"
+      },
+      "weights": null,
+      "verification": {
+        "method": "program_equivalence",
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 4
+      }
+    },
+    {
+      "id": "compiled_sigmoid_program",
+      "implementation_type": "compiled_sigmoid_program",
+      "architecture": {
+        "type": "compiled_logic_graph",
+        "source": "IMPLIES(a, b)",
+        "gate_basis": "sigmoid",
+        "sharpness": 20.0
+      },
+      "weights": null,
+      "verification": {
+        "method": "program_equivalence_after_thresholding",
+        "threshold": 0.5,
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 4
+      }
+    },
+    {
+      "id": "implication_mlp_trained",
+      "implementation_type": "trained_mlp",
+      "architecture": {
+        "type": "mlp",
+        "activation": "tanh_hidden_sigmoid_output",
+        "input_dim": 2,
+        "hidden_dim": 8,
+        "output_dim": 1
+      },
+      "weights": {
+        "format": "json_state_dict",
+        "path": "database/programs/weights/implication_mlp_weights.json",
+        "pytorch_format": "pytorch_state_dict",
+        "pytorch_path": "database/programs/weights/implication_mlp.pt"
+      },
+      "verification": {
+        "method": "post_training_truth_table_equivalence",
+        "threshold": 0.5,
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 4
+      }
+    }
+  ]
+}

@@ -3,8 +3,7 @@ import torch.nn as nn
 from gates import create_threshold_gate, create_sigmoid_gate, create_composed_gate
 from models import ThresholdGate
 from logic_graph import VariableNode, ConstantNode, GateNode, ComparisonNode, ArithmeticNode
-from parser import parse_expression
-from truth_tables import extract_variables
+from parser import parse_program
 
 COMPOSED_GATES = {"XOR", "XNOR", "EQUIVALENCE"}
 
@@ -67,7 +66,19 @@ class CompiledProgram(nn.Module):
             return (left != right).float()
         raise NotImplementedError(operator)
 
-    def evaluate_node(self, node, assignment):
+    def evaluate_node(self, node, assignment, memo=None):
+        # Memoized per forward pass: unrolled loop graphs share subgraphs
+        # heavily, so each shared node is computed only once.
+        if memo is None:
+            memo = {}
+        key = id(node)
+        if key in memo:
+            return memo[key]
+        result = self._evaluate_node(node, assignment, memo)
+        memo[key] = result
+        return result
+
+    def _evaluate_node(self, node, assignment, memo):
 
         if isinstance(node, VariableNode):
             return assignment[node.name]
@@ -76,8 +87,8 @@ class CompiledProgram(nn.Module):
             return torch.full_like(next(iter(assignment.values())), float(node.value))
 
         if isinstance(node, ArithmeticNode):
-            left = self.evaluate_node(node.left, assignment)
-            right = self.evaluate_node(node.right, assignment)
+            left = self.evaluate_node(node.left, assignment, memo)
+            right = self.evaluate_node(node.right, assignment, memo)
             if node.operator == "+":
                 return left + right
             if node.operator == "-":
@@ -87,13 +98,13 @@ class CompiledProgram(nn.Module):
             raise NotImplementedError(node.operator)
 
         if isinstance(node, ComparisonNode):
-            right = self.evaluate_node(node.right, assignment)
-            left = self.evaluate_node(node.left, assignment)
+            right = self.evaluate_node(node.right, assignment, memo)
+            left = self.evaluate_node(node.left, assignment, memo)
             return self.compare(node.operator, left, right)
 
         if isinstance(node, GateNode):
             gate = node.gate.upper()
-            child_outputs = [self.evaluate_node(child, assignment) for child in node.children]
+            child_outputs = [self.evaluate_node(child, assignment, memo) for child in node.children]
             model = self.make_gate(gate)
             if gate == "NOT":
                 return model(child_outputs[0])
@@ -110,8 +121,7 @@ class CompiledProgram(nn.Module):
 
 
 def compile_program(expression, implementation="threshold", sharpness=20.0):
-    graph = parse_expression(expression)
-    variables = extract_variables(expression)
+    graph, variables = parse_program(expression)
     model = CompiledProgram(
         graph, variables, implementation=implementation, sharpness=sharpness
     )

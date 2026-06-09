@@ -48,4 +48,31 @@ PROGRAMS = {
     "sum_high_or_equal":
         "((x + y) > 10) OR (x == y)",
 
+    # Control flow: if/else (branches merged into one logic graph)
+    "if_above_5": """
+if x > 5:
+    y = 1
+else:
+    y = 0
+return y
+""",
+
+    # Control flow: for loop (unrolled over a constant range)
+    "for_match_in_range": """
+hit = 0
+for i in range(3):
+    hit = hit OR (x == i)
+return hit
+""",
+
+    # Control flow: while loop (unrolled with the condition guarding updates)
+    "while_countdown": """
+steps = 0
+v = x
+while v > 0:
+    v = v - 2
+    steps = steps + 1
+return steps >= 3
+""",
+
 }

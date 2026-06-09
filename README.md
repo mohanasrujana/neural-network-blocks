@@ -179,10 +179,32 @@ Beyond fixed gate definitions, the codebase supports parsing and evaluating Bool
 | Derived     | `XOR`, `XNOR`, `NAND`, `NOR`, `IMPLIES`, `EQUIVALENCE` (call form) | `XOR(a, b)`, `IMPLIES(a, b)`  |
 | Comparison  | `>`, `<`, `>=`, `<=`, `==`, `!=`                                  | `x >= 5`, `x != y`            |
 | Arithmetic  | `+`, `-`, `*`, unary `-` (numeric side of a comparison)           | `(x + y) > 10`, `2 * x >= y`  |
+| Control flow | `=`, `if`/`else`, `for ... in range(...)`, `while`, `return`     | see below                     |
 
 A program is treated as **numeric** (integer domain `0..10`) when it contains any
 comparison operator, and **Boolean** (domain `{0, 1}`) otherwise. Both kinds are
 evaluated, compiled, and verified through the same logic-graph path.
+
+### Control-flow programs
+
+Multi-statement programs end with a `return` and are lowered to a single
+logic graph by symbolic execution: `for` loops are unrolled over their
+constant `range`, `while` loops are unrolled up to a fixed bound (11, enough
+for any countdown over the 0..10 domain) with the loop condition guarding
+each iteration's updates, and `if`/`else` branches are merged with arithmetic
+selects (`cond*then + (1-cond)*else`). The lowered graph then flows through
+the same compile/train/verify pipeline as plain expressions.
+
+```python
+"while_countdown": """
+steps = 0
+v = x
+while v > 0:
+    v = v - 2
+    steps = steps + 1
+return steps >= 3
+"""
+```
 
 Example programs are defined in `program_examples.py`:
 

@@ -1,8 +1,7 @@
 import itertools
-import re
 
 from evaluator import evaluate
-from parser import parse_expression, normalize_expression
+from parser import parse_expression, parse_program, normalize_expression
 
 DOMAINS = {
     "x": list(range(0, 11)),
@@ -111,7 +110,10 @@ def get_gate_arity(name):
 
 def extract_variables(expression):
     """
-    Extract variable names from a Boolean expression.
+    Extract the free input variables of a program.
+
+    Works for plain expressions and for statement programs (assigned
+    variables and loop variables are not inputs).
 
     Example:
         "(a AND b) OR c"
@@ -119,21 +121,7 @@ def extract_variables(expression):
     Returns:
         ["a", "b", "c"]
     """
-    keywords = {
-        "AND",
-        "OR",
-        "NOT",
-        "NAND",
-        "NOR",
-        "XOR",
-        "XNOR",
-        "IMPLIES",
-        "EQUIVALENCE",
-        "TRUE",
-        "FALSE"
-    }
-    tokens = re.findall(r"[A-Za-z_][A-Za-z0-9_]*", expression)
-    variables = sorted({token for token in tokens if token.upper() not in keywords})
+    _, variables = parse_program(expression)
     return variables
 
 def evaluate_expression(expression, assignment):
@@ -234,15 +222,21 @@ def is_numeric_program(expression):
 
 
 def program_truth_table(expression):
-    """Truth table for a symbolic program (Boolean or comparison).
+    """Truth table for a symbolic program (expression or statements).
 
-    Both Boolean and comparison programs are evaluated through the parsed
-    logic graph, so every supported construct (derived gates, arithmetic,
-    comparisons) is handled by a single code path. Variables range over the
-    Boolean domain {0, 1} unless the expression contains a comparison, in
-    which case they range over the integer domain 0..10.
+    Every program is lowered to a single logic graph, so all supported
+    constructs (derived gates, arithmetic, comparisons, if/for/while) are
+    handled by one code path. Variables range over the Boolean domain
+    {0, 1} unless the program contains a comparison, in which case they
+    range over the integer domain 0..10.
     """
-    variables = extract_variables(expression)
+    graph, variables = parse_program(expression)
     domain = NUMERIC_DOMAIN if is_numeric_program(expression) else BOOLEAN_DOMAIN
-    domains = {var: domain for var in variables}
-    return generate_equation_truth_table(expression, domains)
+    truth_table = []
+    for values in itertools.product(domain, repeat=len(variables)):
+        assignment = dict(zip(variables, values))
+        truth_table.append({
+            "input": assignment,
+            "output": evaluate(graph, assignment)
+        })
+    return truth_table
