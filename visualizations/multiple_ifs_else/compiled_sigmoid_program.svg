@@ -1,4 +1,19 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="700" height="222" viewBox="0 0 700 222" font-family="Helvetica, Arial, sans-serif">
+
+<style type="text/css"><![CDATA[
+  .edge { cursor: pointer; }
+  .edge-line { transition: stroke-width .15s, stroke-opacity .15s; }
+  .edge:hover .edge-line { stroke-opacity: 1; stroke-width: 5; }
+  .edge .wlabel { transition: opacity .15s; }
+  .edge:hover .wlabel rect { stroke-width: 2; }
+  .neuron { cursor: pointer; transition: stroke-width .15s; }
+  .neuron:hover { stroke-width: 3; }
+  .neuron.dim { opacity: .35; }
+  .edge.dim .edge-line { opacity: .2; }
+  .edge.dim .wlabel { opacity: .25; }
+  svg.hide-weights .wlabel { display: none; }
+  svg.hide-biases .bias-label { display: none; }
+]]></style>
 <rect width="700" height="222" fill="#fafafa"/>
 <text x="350.0" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">multiple_ifs_else - compiled_sigmoid_program</text>
 <text x="350.0" y="58" text-anchor="middle" font-size="13" fill="#666">
@@ -14,6 +29,7 @@
                     y = 0
         return y &gt;= 2
           |  compiled_sigmoid_program  |  accuracy 1.00</text>
+<g id="diagram">
 <line x1="130.0" y1="116.0" x2="275.0" y2="116.0" stroke="#999" stroke-width="1.6"/>
 <line x1="425.0" y1="116.0" x2="570.0" y2="116.0" stroke="#999" stroke-width="1.6"/>
 <rect x="275.0" y="81.0" width="150" height="70" rx="10" fill="#eef3fb" stroke="#2c7fb8" stroke-width="1.8"/>
@@ -38,4 +54,4 @@
 <text x="130.0" y="82.0" text-anchor="middle" font-size="12" fill="#888">input</text>
 <text x="570.0" y="82.0" text-anchor="middle" font-size="12" fill="#888">output</text>
 <text x="350.0" y="206" text-anchor="middle" font-size="12" fill="#a33">Compositional network built from verified sub-blocks (no flat weights stored).</text>
-</svg>
+</g></svg>

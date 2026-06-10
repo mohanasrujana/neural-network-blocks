@@ -1,102 +1,236 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="700" height="852" viewBox="0 0 700 852" font-family="Helvetica, Arial, sans-serif">
-<rect width="700" height="852" fill="#fafafa"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="1132" viewBox="0 0 700 1132" font-family="Helvetica, Arial, sans-serif">
+
+<style type="text/css"><![CDATA[
+  .edge { cursor: pointer; }
+  .edge-line { transition: stroke-width .15s, stroke-opacity .15s; }
+  .edge:hover .edge-line { stroke-opacity: 1; stroke-width: 5; }
+  .edge .wlabel { transition: opacity .15s; }
+  .edge:hover .wlabel rect { stroke-width: 2; }
+  .neuron { cursor: pointer; transition: stroke-width .15s; }
+  .neuron:hover { stroke-width: 3; }
+  .neuron.dim { opacity: .35; }
+  .edge.dim .edge-line { opacity: .2; }
+  .edge.dim .wlabel { opacity: .25; }
+  svg.hide-weights .wlabel { display: none; }
+  svg.hide-biases .bias-label { display: none; }
+]]></style>
+<rect width="700" height="1132" fill="#fafafa"/>
 <text x="350.0" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">three_way_parity - three_way_parity_mlp_trained</text>
 <text x="350.0" y="58" text-anchor="middle" font-size="13" fill="#666">XOR(XOR(a, b), c)  |  trained_mlp  |  accuracy 1.00</text>
-<line x1="130.0" y1="341.0" x2="350.0" y2="116.0" stroke="#d7301f" stroke-width="3.08" stroke-opacity="0.75"/>
-<text x="200.4" y="266.0" text-anchor="middle" font-size="9" fill="#d7301f">-3.61</text>
-<line x1="130.0" y1="431.0" x2="350.0" y2="116.0" stroke="#2c7fb8" stroke-width="2.92" stroke-opacity="0.75"/>
-<text x="240.0" y="270.5" text-anchor="middle" font-size="9" fill="#2c7fb8">3.38</text>
-<line x1="130.0" y1="521.0" x2="350.0" y2="116.0" stroke="#2c7fb8" stroke-width="3.58" stroke-opacity="0.75"/>
-<text x="279.6" y="242.6" text-anchor="middle" font-size="9" fill="#2c7fb8">4.34</text>
-<line x1="130.0" y1="341.0" x2="350.0" y2="206.0" stroke="#2c7fb8" stroke-width="1.54" stroke-opacity="0.75"/>
-<text x="200.4" y="294.8" text-anchor="middle" font-size="9" fill="#2c7fb8">1.37</text>
-<line x1="130.0" y1="431.0" x2="350.0" y2="206.0" stroke="#2c7fb8" stroke-width="1.22" stroke-opacity="0.75"/>
-<text x="240.0" y="315.5" text-anchor="middle" font-size="9" fill="#2c7fb8">0.90</text>
-<line x1="130.0" y1="521.0" x2="350.0" y2="206.0" stroke="#2c7fb8" stroke-width="1.69" stroke-opacity="0.75"/>
-<text x="279.6" y="303.8" text-anchor="middle" font-size="9" fill="#2c7fb8">1.59</text>
-<line x1="130.0" y1="341.0" x2="350.0" y2="296.0" stroke="#d7301f" stroke-width="2.77" stroke-opacity="0.75"/>
-<text x="200.4" y="323.6" text-anchor="middle" font-size="9" fill="#d7301f">-3.17</text>
-<line x1="130.0" y1="431.0" x2="350.0" y2="296.0" stroke="#d7301f" stroke-width="2.77" stroke-opacity="0.75"/>
-<text x="240.0" y="360.5" text-anchor="middle" font-size="9" fill="#d7301f">-3.16</text>
-<line x1="130.0" y1="521.0" x2="350.0" y2="296.0" stroke="#2c7fb8" stroke-width="2.90" stroke-opacity="0.75"/>
-<text x="279.6" y="365.0" text-anchor="middle" font-size="9" fill="#2c7fb8">3.35</text>
-<line x1="130.0" y1="341.0" x2="350.0" y2="386.0" stroke="#2c7fb8" stroke-width="1.69" stroke-opacity="0.75"/>
-<text x="200.4" y="352.4" text-anchor="middle" font-size="9" fill="#2c7fb8">1.59</text>
-<line x1="130.0" y1="431.0" x2="350.0" y2="386.0" stroke="#2c7fb8" stroke-width="2.43" stroke-opacity="0.75"/>
-<text x="240.0" y="405.5" text-anchor="middle" font-size="9" fill="#2c7fb8">2.67</text>
-<line x1="130.0" y1="521.0" x2="350.0" y2="386.0" stroke="#2c7fb8" stroke-width="1.77" stroke-opacity="0.75"/>
-<text x="279.6" y="426.2" text-anchor="middle" font-size="9" fill="#2c7fb8">1.70</text>
-<line x1="130.0" y1="341.0" x2="350.0" y2="476.0" stroke="#2c7fb8" stroke-width="1.63" stroke-opacity="0.75"/>
-<text x="200.4" y="381.2" text-anchor="middle" font-size="9" fill="#2c7fb8">1.50</text>
-<line x1="130.0" y1="431.0" x2="350.0" y2="476.0" stroke="#2c7fb8" stroke-width="2.27" stroke-opacity="0.75"/>
-<text x="240.0" y="450.5" text-anchor="middle" font-size="9" fill="#2c7fb8">2.43</text>
-<line x1="130.0" y1="521.0" x2="350.0" y2="476.0" stroke="#2c7fb8" stroke-width="1.69" stroke-opacity="0.75"/>
-<text x="279.6" y="487.4" text-anchor="middle" font-size="9" fill="#2c7fb8">1.59</text>
-<line x1="130.0" y1="341.0" x2="350.0" y2="566.0" stroke="#2c7fb8" stroke-width="2.89" stroke-opacity="0.75"/>
-<text x="200.4" y="410.0" text-anchor="middle" font-size="9" fill="#2c7fb8">3.34</text>
-<line x1="130.0" y1="431.0" x2="350.0" y2="566.0" stroke="#2c7fb8" stroke-width="2.71" stroke-opacity="0.75"/>
-<text x="240.0" y="495.5" text-anchor="middle" font-size="9" fill="#2c7fb8">3.07</text>
-<line x1="130.0" y1="521.0" x2="350.0" y2="566.0" stroke="#d7301f" stroke-width="2.93" stroke-opacity="0.75"/>
-<text x="279.6" y="548.6" text-anchor="middle" font-size="9" fill="#d7301f">-3.39</text>
-<line x1="130.0" y1="341.0" x2="350.0" y2="656.0" stroke="#d7301f" stroke-width="2.47" stroke-opacity="0.75"/>
-<text x="200.4" y="438.8" text-anchor="middle" font-size="9" fill="#d7301f">-2.73</text>
-<line x1="130.0" y1="431.0" x2="350.0" y2="656.0" stroke="#2c7fb8" stroke-width="2.69" stroke-opacity="0.75"/>
-<text x="240.0" y="540.5" text-anchor="middle" font-size="9" fill="#2c7fb8">3.05</text>
-<line x1="130.0" y1="521.0" x2="350.0" y2="656.0" stroke="#d7301f" stroke-width="2.54" stroke-opacity="0.75"/>
-<text x="279.6" y="609.8" text-anchor="middle" font-size="9" fill="#d7301f">-2.82</text>
-<line x1="130.0" y1="341.0" x2="350.0" y2="746.0" stroke="#2c7fb8" stroke-width="2.66" stroke-opacity="0.75"/>
-<text x="200.4" y="467.6" text-anchor="middle" font-size="9" fill="#2c7fb8">3.00</text>
-<line x1="130.0" y1="431.0" x2="350.0" y2="746.0" stroke="#d7301f" stroke-width="2.46" stroke-opacity="0.75"/>
-<text x="240.0" y="585.5" text-anchor="middle" font-size="9" fill="#d7301f">-2.71</text>
-<line x1="130.0" y1="521.0" x2="350.0" y2="746.0" stroke="#d7301f" stroke-width="2.79" stroke-opacity="0.75"/>
-<text x="279.6" y="671.0" text-anchor="middle" font-size="9" fill="#d7301f">-3.19</text>
-<line x1="350.0" y1="116.0" x2="570.0" y2="431.0" stroke="#2c7fb8" stroke-width="3.75" stroke-opacity="0.75"/>
-<text x="420.4" y="213.8" text-anchor="middle" font-size="9" fill="#2c7fb8">4.58</text>
-<line x1="350.0" y1="206.0" x2="570.0" y2="431.0" stroke="#2c7fb8" stroke-width="0.92" stroke-opacity="0.75"/>
-<text x="431.7" y="286.6" text-anchor="middle" font-size="9" fill="#2c7fb8">0.46</text>
-<line x1="350.0" y1="296.0" x2="570.0" y2="431.0" stroke="#d7301f" stroke-width="3.94" stroke-opacity="0.75"/>
-<text x="443.0" y="350.1" text-anchor="middle" font-size="9" fill="#d7301f">-4.86</text>
-<line x1="350.0" y1="386.0" x2="570.0" y2="431.0" stroke="#d7301f" stroke-width="3.90" stroke-opacity="0.75"/>
-<text x="454.3" y="404.3" text-anchor="middle" font-size="9" fill="#d7301f">-4.80</text>
-<line x1="350.0" y1="476.0" x2="570.0" y2="431.0" stroke="#d7301f" stroke-width="3.50" stroke-opacity="0.75"/>
-<text x="465.7" y="449.3" text-anchor="middle" font-size="9" fill="#d7301f">-4.23</text>
-<line x1="350.0" y1="566.0" x2="570.0" y2="431.0" stroke="#2c7fb8" stroke-width="3.42" stroke-opacity="0.75"/>
-<text x="477.0" y="485.1" text-anchor="middle" font-size="9" fill="#2c7fb8">4.11</text>
-<line x1="350.0" y1="656.0" x2="570.0" y2="431.0" stroke="#d7301f" stroke-width="4.20" stroke-opacity="0.75"/>
-<text x="488.3" y="511.6" text-anchor="middle" font-size="9" fill="#d7301f">-5.24</text>
-<line x1="350.0" y1="746.0" x2="570.0" y2="431.0" stroke="#d7301f" stroke-width="3.65" stroke-opacity="0.75"/>
-<text x="499.6" y="528.8" text-anchor="middle" font-size="9" fill="#d7301f">-4.44</text>
-<circle cx="130.0" cy="341.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
-<text x="130.0" y="345.0" text-anchor="middle" font-size="13" fill="#222">a</text>
-<circle cx="130.0" cy="431.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
-<text x="130.0" y="435.0" text-anchor="middle" font-size="13" fill="#222">b</text>
-<circle cx="130.0" cy="521.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
-<text x="130.0" y="525.0" text-anchor="middle" font-size="13" fill="#222">c</text>
+<g id="diagram">
+<g class="edge" data-layer="0" data-edge="0" data-weight="-3.6105" data-from="a" data-to="h1" data-sign="neg">
+<title>a → h1: -3.61</title>
+<line class="edge-line" x1="130.0" y1="441.0" x2="350.0" y2="116.0" stroke="#d7301f" stroke-width="4.10" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="1" data-weight="3.3751" data-from="b" data-to="h1" data-sign="pos">
+<title>b → h1: +3.38</title>
+<line class="edge-line" x1="130.0" y1="571.0" x2="350.0" y2="116.0" stroke="#2c7fb8" stroke-width="3.90" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="2" data-weight="4.3421" data-from="c" data-to="h1" data-sign="pos">
+<title>c → h1: +4.34</title>
+<line class="edge-line" x1="130.0" y1="701.0" x2="350.0" y2="116.0" stroke="#2c7fb8" stroke-width="4.73" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="3" data-weight="1.3721" data-from="a" data-to="h2" data-sign="pos">
+<title>a → h2: +1.37</title>
+<line class="edge-line" x1="130.0" y1="441.0" x2="350.0" y2="246.0" stroke="#2c7fb8" stroke-width="2.18" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="4" data-weight="0.8990" data-from="b" data-to="h2" data-sign="pos">
+<title>b → h2: +0.90</title>
+<line class="edge-line" x1="130.0" y1="571.0" x2="350.0" y2="246.0" stroke="#2c7fb8" stroke-width="1.77" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="5" data-weight="1.5932" data-from="c" data-to="h2" data-sign="pos">
+<title>c → h2: +1.59</title>
+<line class="edge-line" x1="130.0" y1="701.0" x2="350.0" y2="246.0" stroke="#2c7fb8" stroke-width="2.37" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="6" data-weight="-3.1675" data-from="a" data-to="h3" data-sign="neg">
+<title>a → h3: -3.17</title>
+<line class="edge-line" x1="130.0" y1="441.0" x2="350.0" y2="376.0" stroke="#d7301f" stroke-width="3.72" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="7" data-weight="-3.1612" data-from="b" data-to="h3" data-sign="neg">
+<title>b → h3: -3.16</title>
+<line class="edge-line" x1="130.0" y1="571.0" x2="350.0" y2="376.0" stroke="#d7301f" stroke-width="3.71" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="8" data-weight="3.3502" data-from="c" data-to="h3" data-sign="pos">
+<title>c → h3: +3.35</title>
+<line class="edge-line" x1="130.0" y1="701.0" x2="350.0" y2="376.0" stroke="#2c7fb8" stroke-width="3.88" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="9" data-weight="1.5922" data-from="a" data-to="h4" data-sign="pos">
+<title>a → h4: +1.59</title>
+<line class="edge-line" x1="130.0" y1="441.0" x2="350.0" y2="506.0" stroke="#2c7fb8" stroke-width="2.37" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="10" data-weight="2.6680" data-from="b" data-to="h4" data-sign="pos">
+<title>b → h4: +2.67</title>
+<line class="edge-line" x1="130.0" y1="571.0" x2="350.0" y2="506.0" stroke="#2c7fb8" stroke-width="3.29" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="11" data-weight="1.7015" data-from="c" data-to="h4" data-sign="pos">
+<title>c → h4: +1.70</title>
+<line class="edge-line" x1="130.0" y1="701.0" x2="350.0" y2="506.0" stroke="#2c7fb8" stroke-width="2.46" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="12" data-weight="1.5040" data-from="a" data-to="h5" data-sign="pos">
+<title>a → h5: +1.50</title>
+<line class="edge-line" x1="130.0" y1="441.0" x2="350.0" y2="636.0" stroke="#2c7fb8" stroke-width="2.29" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="13" data-weight="2.4254" data-from="b" data-to="h5" data-sign="pos">
+<title>b → h5: +2.43</title>
+<line class="edge-line" x1="130.0" y1="571.0" x2="350.0" y2="636.0" stroke="#2c7fb8" stroke-width="3.08" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="14" data-weight="1.5855" data-from="c" data-to="h5" data-sign="pos">
+<title>c → h5: +1.59</title>
+<line class="edge-line" x1="130.0" y1="701.0" x2="350.0" y2="636.0" stroke="#2c7fb8" stroke-width="2.36" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="15" data-weight="3.3389" data-from="a" data-to="h6" data-sign="pos">
+<title>a → h6: +3.34</title>
+<line class="edge-line" x1="130.0" y1="441.0" x2="350.0" y2="766.0" stroke="#2c7fb8" stroke-width="3.87" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="16" data-weight="3.0711" data-from="b" data-to="h6" data-sign="pos">
+<title>b → h6: +3.07</title>
+<line class="edge-line" x1="130.0" y1="571.0" x2="350.0" y2="766.0" stroke="#2c7fb8" stroke-width="3.64" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="17" data-weight="-3.3894" data-from="c" data-to="h6" data-sign="neg">
+<title>c → h6: -3.39</title>
+<line class="edge-line" x1="130.0" y1="701.0" x2="350.0" y2="766.0" stroke="#d7301f" stroke-width="3.91" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="18" data-weight="-2.7286" data-from="a" data-to="h7" data-sign="neg">
+<title>a → h7: -2.73</title>
+<line class="edge-line" x1="130.0" y1="441.0" x2="350.0" y2="896.0" stroke="#d7301f" stroke-width="3.34" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="19" data-weight="3.0480" data-from="b" data-to="h7" data-sign="pos">
+<title>b → h7: +3.05</title>
+<line class="edge-line" x1="130.0" y1="571.0" x2="350.0" y2="896.0" stroke="#2c7fb8" stroke-width="3.62" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="20" data-weight="-2.8201" data-from="c" data-to="h7" data-sign="neg">
+<title>c → h7: -2.82</title>
+<line class="edge-line" x1="130.0" y1="701.0" x2="350.0" y2="896.0" stroke="#d7301f" stroke-width="3.42" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="21" data-weight="2.9974" data-from="a" data-to="h8" data-sign="pos">
+<title>a → h8: +3.00</title>
+<line class="edge-line" x1="130.0" y1="441.0" x2="350.0" y2="1026.0" stroke="#2c7fb8" stroke-width="3.57" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="22" data-weight="-2.7063" data-from="b" data-to="h8" data-sign="neg">
+<title>b → h8: -2.71</title>
+<line class="edge-line" x1="130.0" y1="571.0" x2="350.0" y2="1026.0" stroke="#d7301f" stroke-width="3.32" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="0" data-edge="23" data-weight="-3.1851" data-from="c" data-to="h8" data-sign="neg">
+<title>c → h8: -3.19</title>
+<line class="edge-line" x1="130.0" y1="701.0" x2="350.0" y2="1026.0" stroke="#d7301f" stroke-width="3.73" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="1" data-edge="24" data-weight="4.5842" data-from="h1" data-to="y" data-sign="pos">
+<title>h1 → y: +4.58</title>
+<line class="edge-line" x1="350.0" y1="116.0" x2="570.0" y2="571.0" stroke="#2c7fb8" stroke-width="4.93" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="1" data-edge="25" data-weight="0.4633" data-from="h2" data-to="y" data-sign="pos">
+<title>h2 → y: +0.46</title>
+<line class="edge-line" x1="350.0" y1="246.0" x2="570.0" y2="571.0" stroke="#2c7fb8" stroke-width="1.40" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="1" data-edge="26" data-weight="-4.8577" data-from="h3" data-to="y" data-sign="neg">
+<title>h3 → y: -4.86</title>
+<line class="edge-line" x1="350.0" y1="376.0" x2="570.0" y2="571.0" stroke="#d7301f" stroke-width="5.17" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="1" data-edge="27" data-weight="-4.8033" data-from="h4" data-to="y" data-sign="neg">
+<title>h4 → y: -4.80</title>
+<line class="edge-line" x1="350.0" y1="506.0" x2="570.0" y2="571.0" stroke="#d7301f" stroke-width="5.12" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="1" data-edge="28" data-weight="-4.2250" data-from="h5" data-to="y" data-sign="neg">
+<title>h5 → y: -4.23</title>
+<line class="edge-line" x1="350.0" y1="636.0" x2="570.0" y2="571.0" stroke="#d7301f" stroke-width="4.63" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="1" data-edge="29" data-weight="4.1061" data-from="h6" data-to="y" data-sign="pos">
+<title>h6 → y: +4.11</title>
+<line class="edge-line" x1="350.0" y1="766.0" x2="570.0" y2="571.0" stroke="#2c7fb8" stroke-width="4.52" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="1" data-edge="30" data-weight="-5.2431" data-from="h7" data-to="y" data-sign="neg">
+<title>h7 → y: -5.24</title>
+<line class="edge-line" x1="350.0" y1="896.0" x2="570.0" y2="571.0" stroke="#d7301f" stroke-width="5.50" stroke-opacity="0.72"/>
+</g>
+<g class="edge" data-layer="1" data-edge="31" data-weight="-4.4446" data-from="h8" data-to="y" data-sign="neg">
+<title>h8 → y: -4.44</title>
+<line class="edge-line" x1="350.0" y1="1026.0" x2="570.0" y2="571.0" stroke="#d7301f" stroke-width="4.81" stroke-opacity="0.72"/>
+</g>
+<g class="neuron" data-neuron="a"><circle cx="130.0" cy="441.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
+<text x="130.0" y="445.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">a</text>
+</g>
+<g class="neuron" data-neuron="b"><circle cx="130.0" cy="571.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
+<text x="130.0" y="575.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">b</text>
+</g>
+<g class="neuron" data-neuron="c"><circle cx="130.0" cy="701.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
+<text x="130.0" y="705.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">c</text>
+</g>
 <text x="130.0" y="82.0" text-anchor="middle" font-size="12" fill="#888">input</text>
-<circle cx="350.0" cy="116.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
-<text x="350.0" y="156.0" text-anchor="middle" font-size="10" fill="#555">b=-1.99</text>
-<circle cx="350.0" cy="206.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
-<text x="350.0" y="246.0" text-anchor="middle" font-size="10" fill="#555">b=0.58</text>
-<circle cx="350.0" cy="296.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
-<text x="350.0" y="336.0" text-anchor="middle" font-size="10" fill="#555">b=1.50</text>
-<circle cx="350.0" cy="386.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
-<text x="350.0" y="426.0" text-anchor="middle" font-size="10" fill="#555">b=-2.91</text>
-<circle cx="350.0" cy="476.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
-<text x="350.0" y="516.0" text-anchor="middle" font-size="10" fill="#555">b=-2.67</text>
-<circle cx="350.0" cy="566.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
-<text x="350.0" y="606.0" text-anchor="middle" font-size="10" fill="#555">b=-1.50</text>
-<circle cx="350.0" cy="656.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
-<text x="350.0" y="696.0" text-anchor="middle" font-size="10" fill="#555">b=1.24</text>
-<circle cx="350.0" cy="746.0" r="26" fill="#ffffff" stroke="#333333" stroke-width="1.6"/>
-<text x="350.0" y="786.0" text-anchor="middle" font-size="10" fill="#555">b=1.40</text>
+<g class="neuron" data-neuron="h1"><circle cx="350.0" cy="116.0" r="26" fill="#f5f8ff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="120.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">h1</text>
+<text class="bias-label" x="350.0" y="156.0" text-anchor="middle" font-size="10" fill="#555">bias -1.99</text>
+</g>
+<g class="neuron" data-neuron="h2"><circle cx="350.0" cy="246.0" r="26" fill="#f5f8ff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="250.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">h2</text>
+<text class="bias-label" x="350.0" y="286.0" text-anchor="middle" font-size="10" fill="#555">bias +0.58</text>
+</g>
+<g class="neuron" data-neuron="h3"><circle cx="350.0" cy="376.0" r="26" fill="#f5f8ff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="380.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">h3</text>
+<text class="bias-label" x="350.0" y="416.0" text-anchor="middle" font-size="10" fill="#555">bias +1.50</text>
+</g>
+<g class="neuron" data-neuron="h4"><circle cx="350.0" cy="506.0" r="26" fill="#f5f8ff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="510.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">h4</text>
+<text class="bias-label" x="350.0" y="546.0" text-anchor="middle" font-size="10" fill="#555">bias -2.91</text>
+</g>
+<g class="neuron" data-neuron="h5"><circle cx="350.0" cy="636.0" r="26" fill="#f5f8ff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="640.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">h5</text>
+<text class="bias-label" x="350.0" y="676.0" text-anchor="middle" font-size="10" fill="#555">bias -2.67</text>
+</g>
+<g class="neuron" data-neuron="h6"><circle cx="350.0" cy="766.0" r="26" fill="#f5f8ff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="770.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">h6</text>
+<text class="bias-label" x="350.0" y="806.0" text-anchor="middle" font-size="10" fill="#555">bias -1.50</text>
+</g>
+<g class="neuron" data-neuron="h7"><circle cx="350.0" cy="896.0" r="26" fill="#f5f8ff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="900.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">h7</text>
+<text class="bias-label" x="350.0" y="936.0" text-anchor="middle" font-size="10" fill="#555">bias +1.24</text>
+</g>
+<g class="neuron" data-neuron="h8"><circle cx="350.0" cy="1026.0" r="26" fill="#f5f8ff" stroke="#333333" stroke-width="1.6"/>
+<text x="350.0" y="1030.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">h8</text>
+<text class="bias-label" x="350.0" y="1066.0" text-anchor="middle" font-size="10" fill="#555">bias +1.40</text>
+</g>
 <text x="350.0" y="82.0" text-anchor="middle" font-size="12" fill="#888">hidden (tanh)</text>
-<circle cx="570.0" cy="431.0" r="26" fill="#fdece8" stroke="#333333" stroke-width="1.6"/>
-<text x="570.0" y="435.0" text-anchor="middle" font-size="13" fill="#222">y</text>
-<text x="570.0" y="471.0" text-anchor="middle" font-size="10" fill="#555">b=-0.25</text>
+<g class="neuron" data-neuron="y"><circle cx="570.0" cy="571.0" r="26" fill="#fdece8" stroke="#333333" stroke-width="1.6"/>
+<text x="570.0" y="575.0" text-anchor="middle" font-size="13" font-weight="600" fill="#222">y</text>
+<text class="bias-label" x="570.0" y="611.0" text-anchor="middle" font-size="10" fill="#555">bias -0.25</text>
+</g>
 <text x="570.0" y="82.0" text-anchor="middle" font-size="12" fill="#888">output (sigmoid)</text>
-<line x1="130" y1="800" x2="164" y2="800" stroke="#2c7fb8" stroke-width="4"/>
-<text x="172" y="804" font-size="12" fill="#555">positive weight</text>
-<line x1="300" y1="800" x2="334" y2="800" stroke="#d7301f" stroke-width="4"/>
-<text x="342" y="804" font-size="12" fill="#555">negative weight</text>
-<text x="490" y="804" font-size="12" fill="#555">thickness &#8733; |weight|</text>
-</svg>
+<g class="label-layer">
+<g class="wlabel" data-edge="0" pointer-events="none"><rect x="176.4" y="346.6" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="199.9" y="359.6" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-3.61</text></g>
+<g class="wlabel" data-edge="1" pointer-events="none"><rect x="160.6" y="420.2" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="184.1" y="433.2" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+3.38</text></g>
+<g class="wlabel" data-edge="2" pointer-events="none"><rect x="191.5" y="511.4" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="215.0" y="524.4" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+4.34</text></g>
+<g class="wlabel" data-edge="3" pointer-events="none"><rect x="168.1" y="352.0" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="191.6" y="365.0" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+1.37</text></g>
+<g class="wlabel" data-edge="4" pointer-events="none"><rect x="193.2" y="451.7" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="216.7" y="464.7" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+0.90</text></g>
+<g class="wlabel" data-edge="5" pointer-events="none"><rect x="177.4" y="515.4" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="200.9" y="528.4" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+1.59</text></g>
+<g class="wlabel" data-edge="6" pointer-events="none"><rect x="197.9" y="421.7" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="221.4" y="434.7" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-3.17</text></g>
+<g class="wlabel" data-edge="7" pointer-events="none"><rect x="185.0" y="467.1" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="208.5" y="480.1" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-3.16</text></g>
+<g class="wlabel" data-edge="8" pointer-events="none"><rect x="210.1" y="556.9" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="233.6" y="569.9" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+3.35</text></g>
+<g class="wlabel" data-edge="9" pointer-events="none"><rect x="209.7" y="448.9" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="233.2" y="461.9" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+1.59</text></g>
+<g class="wlabel" data-edge="10" pointer-events="none"><rect x="214.7" y="546.7" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="238.2" y="559.7" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+2.67</text></g>
+<g class="wlabel" data-edge="11" pointer-events="none"><rect x="201.8" y="582.1" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="225.3" y="595.1" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+1.70</text></g>
+<g class="wlabel" data-edge="12" pointer-events="none"><rect x="212.0" y="538.8" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="235.5" y="551.8" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+1.50</text></g>
+<g class="wlabel" data-edge="13" pointer-events="none"><rect x="226.5" y="583.9" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="250.0" y="596.9" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+2.43</text></g>
+<g class="wlabel" data-edge="14" pointer-events="none"><rect x="231.6" y="671.7" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="255.1" y="684.7" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+1.59</text></g>
+<g class="wlabel" data-edge="15" pointer-events="none"><rect x="247.0" y="605.6" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="270.5" y="618.6" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+3.34</text></g>
+<g class="wlabel" data-edge="16" pointer-events="none"><rect x="228.8" y="683.8" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="252.3" y="696.8" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+3.07</text></g>
+<g class="wlabel" data-edge="17" pointer-events="none"><rect x="243.3" y="718.9" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="266.8" y="731.9" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-3.39</text></g>
+<g class="wlabel" data-edge="18" pointer-events="none"><rect x="229.5" y="723.0" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="253.0" y="736.0" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-2.73</text></g>
+<g class="wlabel" data-edge="19" pointer-events="none"><rect x="263.8" y="760.5" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="287.3" y="773.5" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+3.05</text></g>
+<g class="wlabel" data-edge="20" pointer-events="none"><rect x="245.6" y="828.7" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="269.1" y="841.7" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-2.82</text></g>
+<g class="wlabel" data-edge="21" pointer-events="none"><rect x="268.7" y="826.2" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="292.2" y="839.2" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+3.00</text></g>
+<g class="wlabel" data-edge="22" pointer-events="none"><rect x="246.3" y="887.9" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="269.8" y="900.9" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-2.71</text></g>
+<g class="wlabel" data-edge="23" pointer-events="none"><rect x="280.6" y="915.3" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="304.1" y="928.3" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-3.19</text></g>
+<g class="wlabel" data-edge="24" pointer-events="none"><rect x="379.1" y="238.8" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="402.6" y="251.8" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+4.58</text></g>
+<g class="wlabel" data-edge="25" pointer-events="none"><rect x="412.7" y="341.1" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="436.2" y="354.1" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+0.46</text></g>
+<g class="wlabel" data-edge="26" pointer-events="none"><rect x="405.1" y="458.1" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="428.6" y="471.1" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-4.86</text></g>
+<g class="wlabel" data-edge="27" pointer-events="none"><rect x="435.0" y="509.2" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="458.5" y="522.2" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-4.80</text></g>
+<g class="wlabel" data-edge="28" pointer-events="none"><rect x="446.2" y="602.0" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="469.7" y="615.0" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-4.23</text></g>
+<g class="wlabel" data-edge="29" pointer-events="none"><rect x="448.6" y="631.4" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#2c7fb8" stroke-width="1.2"/><text x="472.1" y="644.4" text-anchor="middle" font-size="11" font-weight="700" fill="#2c7fb8">+4.11</text></g>
+<g class="wlabel" data-edge="30" pointer-events="none"><rect x="484.3" y="682.4" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="507.8" y="695.4" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-5.24</text></g>
+<g class="wlabel" data-edge="31" pointer-events="none"><rect x="467.8" y="681.1" width="47.0" height="18" rx="5" fill="#ffffff" fill-opacity="0.95" stroke="#d7301f" stroke-width="1.2"/><text x="491.3" y="694.1" text-anchor="middle" font-size="11" font-weight="700" fill="#d7301f">-4.44</text></g>
+</g>
+<line x1="130" y1="1080" x2="164" y2="1080" stroke="#2c7fb8" stroke-width="4"/>
+<text x="172" y="1084" font-size="12" fill="#555">positive (+)</text>
+<line x1="280" y1="1080" x2="314" y2="1080" stroke="#d7301f" stroke-width="4"/>
+<text x="322" y="1084" font-size="12" fill="#555">negative (−)</text>
+<text x="450" y="1084" font-size="12" fill="#555">hover edge for details</text>
+</g></svg>
