@@ -271,18 +271,54 @@ def _svg_footer(note, width, height, legend_y, edges=None):
     return parts
 
 
+def _wrap_text_lines(text, max_chars=28):
+    words = str(text).split()
+    if not words:
+        return []
+    lines = []
+    current = []
+    for word in words:
+        candidate = " ".join(current + [word])
+        if len(candidate) <= max_chars:
+            current.append(word)
+        else:
+            if current:
+                lines.append(" ".join(current))
+            current = [word]
+    if current:
+        lines.append(" ".join(current))
+    return lines
+
+
+def _svg_multiline_text(x, y, lines, font_size=11, fill="#555", line_height=14):
+    if not lines:
+        return ""
+    parts = [
+        f'<text x="{x:.1f}" y="{y:.1f}" text-anchor="middle" '
+        f'font-size="{font_size}" fill="{fill}">'
+    ]
+    for i, line in enumerate(lines):
+        dy = line_height if i else 0
+        parts.append(f'<tspan x="{x:.1f}" dy="{dy}">{_esc(line)}</tspan>')
+    parts.append("</text>")
+    return "\n".join(parts)
+
+
 def schematic_to_svg(network, title, subtitle):
     input_labels = network["input_labels"]
     output_labels = network["output_labels"]
-    max_size = max(len(input_labels), len(output_labels))
-    content_h = (max_size - 1) * Y_GAP
-    width = MARGIN_X * 2 + 2 * X_GAP
-    height = TITLE_SPACE + content_h + 2 * RADIUS + LEGEND_SPACE
+    max_size = max(len(input_labels), len(output_labels), 1)
+    content_h = max(0, max_size - 1) * Y_GAP
 
     in_x = MARGIN_X
     block_x = MARGIN_X + X_GAP
     out_x = MARGIN_X + 2 * X_GAP
     block_y = TITLE_SPACE + RADIUS + content_h / 2
+
+    bw, bh = 150, 36
+    caption_lines = _wrap_text_lines(network.get("block_label", ""), max_chars=28)
+    caption_line_h = 14
+    caption_h = len(caption_lines) * caption_line_h if caption_lines else 0
 
     def y_positions(size):
         offset = (content_h - (size - 1) * Y_GAP) / 2
@@ -292,9 +328,20 @@ def schematic_to_svg(network, title, subtitle):
     in_y = y_positions(len(input_labels))
     out_y = y_positions(len(output_labels))
 
+    all_y = in_y + out_y
+    lowest_neuron_y = max(all_y) + RADIUS if all_y else block_y + RADIUS
+    caption_bottom = block_y + bh / 2 + 12 + caption_h
+    note = network.get("note")
+    footer_pad = 36 if note else 20
+    height = max(
+        TITLE_SPACE + content_h + 2 * RADIUS + LEGEND_SPACE,
+        lowest_neuron_y + 24,
+        caption_bottom + footer_pad,
+    )
+    width = MARGIN_X * 2 + 2 * X_GAP
+
     parts = _svg_header(width, height, title, subtitle)
 
-    bw, bh = 150, 70
     for y in in_y:
         parts.append(
             f'<line x1="{in_x:.1f}" y1="{y:.1f}" x2="{block_x - bw / 2:.1f}" '
@@ -311,13 +358,12 @@ def schematic_to_svg(network, title, subtitle):
         f'height="{bh}" rx="10" fill="#eef3fb" stroke="#2c7fb8" stroke-width="1.8"/>'
     )
     parts.append(
-        f'<text x="{block_x:.1f}" y="{block_y - 6:.1f}" text-anchor="middle" '
+        f'<text x="{block_x:.1f}" y="{block_y + 4:.1f}" text-anchor="middle" '
         f'font-size="12" fill="#2c7fb8" font-weight="bold">logic network</text>'
     )
-    parts.append(
-        f'<text x="{block_x:.1f}" y="{block_y + 14:.1f}" text-anchor="middle" '
-        f'font-size="11" fill="#444">{_esc(network["block_label"])}</text>'
-    )
+    if caption_lines:
+        caption_y = block_y + bh / 2 + 14
+        parts.append(_svg_multiline_text(block_x, caption_y, caption_lines))
 
     for label, x, y in (
         [(l, in_x, in_y[i]) for i, l in enumerate(input_labels)]
@@ -348,10 +394,10 @@ def schematic_to_svg(network, title, subtitle):
             f'font-size="12" fill="#888">{_esc(name)}</text>'
         )
 
-    if network.get("note"):
+    if note:
         parts.append(
             f'<text x="{width / 2}" y="{height - 16}" text-anchor="middle" '
-            f'font-size="12" fill="#a33">{_esc(network["note"])}</text>'
+            f'font-size="12" fill="#a33">{_esc(note)}</text>'
         )
 
     parts.append("</g></svg>")
@@ -730,18 +776,33 @@ function hideConn(){
   connMeta.textContent='Edge thickness scales with |weight|. Blue = positive, red = negative.';
 }
 
+function templateId(src){
+  return 'tpl-' + src.replace(/\\//g, '-').replace(/\\./g, '-');
+}
+
+function mountDiagram(src){
+  const tpl=document.getElementById(templateId(src));
+  if(!tpl) return null;
+  viewer.innerHTML='';
+  viewer.appendChild(tpl.content.cloneNode(true));
+  return viewer.querySelector('svg');
+}
+
 async function openModal(src, title){
   modalTitle.textContent=title;
   viewer.innerHTML='Loading…';
   modal.classList.add('open');
   setZoom(1);
   hideConn();
+  let svg=mountDiagram(src);
+  if(svg){bindSvg(svg);return;}
   try{
     const res=await fetch(src);
-    const text=await res.text();
-    viewer.innerHTML=text;
-    const svg=viewer.querySelector('svg');
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    viewer.innerHTML=await res.text();
+    svg=viewer.querySelector('svg');
     if(svg) bindSvg(svg);
+    else viewer.textContent='No diagram content found.';
   }catch(e){viewer.textContent='Failed to load diagram.';}
 }
 function closeModal(){modal.classList.remove('open');viewer.innerHTML='';}
@@ -767,6 +828,10 @@ function refreshToggles(){
 showWeights.addEventListener('change', refreshToggles);
 showBiases.addEventListener('change', refreshToggles);
 """
+
+
+def _template_id(src):
+    return "tpl-" + src.replace("/", "-").replace(".", "-")
 
 
 def write_index(out_dir, sections):
@@ -824,6 +889,20 @@ def write_index(out_dir, sections):
         "</div>"
     )
 
+    all_paths = sorted(
+        (p for paths in sections.values() for p in paths),
+        key=lambda p: (p.parent.name, p.name),
+    )
+    template_blocks = []
+    for p in all_paths:
+        src = f"{p.parent.name}/{p.name}"
+        template_blocks.append(
+            f'<template id="{_template_id(src)}">{p.read_text()}</template>'
+        )
+    templates_html = (
+        f'<div id="svg-templates" hidden aria-hidden="true">{"".join(template_blocks)}</div>'
+    )
+
     modal = (
         '<div id="modal"><div class="backdrop"></div><div class="panel">'
         '<div class="modal-head">'
@@ -864,7 +943,7 @@ def write_index(out_dir, sections):
         f"placeholder='Search gates, programs, implementations...'/>{chips}</div>"
         f"<main>{''.join(section_html)}"
         "<div class='empty'>No diagrams match your filters.</div></main>"
-        f"{modal}<script>{INDEX_SCRIPT}</script></body></html>"
+        f"{templates_html}{modal}<script>{INDEX_SCRIPT}</script></body></html>"
     )
 
     index_path = Path(out_dir) / "index.html"

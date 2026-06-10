@@ -25,9 +25,12 @@
 <line x1="130.0" y1="476.0" x2="275.0" y2="341.0" stroke="#999" stroke-width="1.6"/>
 <line x1="130.0" y1="566.0" x2="275.0" y2="341.0" stroke="#999" stroke-width="1.6"/>
 <line x1="425.0" y1="341.0" x2="570.0" y2="341.0" stroke="#999" stroke-width="1.6"/>
-<rect x="275.0" y="306.0" width="150" height="70" rx="10" fill="#eef3fb" stroke="#2c7fb8" stroke-width="1.8"/>
-<text x="350.0" y="335.0" text-anchor="middle" font-size="12" fill="#2c7fb8" font-weight="bold">logic network</text>
-<text x="350.0" y="355.0" text-anchor="middle" font-size="11" fill="#444">Built from smaller sigmoid gate approximations</text>
+<rect x="275.0" y="323.0" width="150" height="36" rx="10" fill="#eef3fb" stroke="#2c7fb8" stroke-width="1.8"/>
+<text x="350.0" y="345.0" text-anchor="middle" font-size="12" fill="#2c7fb8" font-weight="bold">logic network</text>
+<text x="350.0" y="373.0" text-anchor="middle" font-size="11" fill="#555">
+<tspan x="350.0" dy="0">Built from smaller sigmoid</tspan>
+<tspan x="350.0" dy="14">gate approximations</tspan>
+</text>
 <circle cx="130.0" cy="116.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
 <text x="130.0" y="120.0" text-anchor="middle" font-size="13" fill="#222">x1</text>
 <circle cx="130.0" cy="206.0" r="26" fill="#e8f4ea" stroke="#333333" stroke-width="1.6"/>
