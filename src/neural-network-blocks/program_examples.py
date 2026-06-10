@@ -198,4 +198,53 @@ PROGRAMS = {
         return y >= 2
         """,
 
+    # Classic algorithms (single input x, boolean threshold on the result)
+    "fibonacci": """
+        a = 0
+        b = 1
+        tmp = 0
+        n = x
+        while n > 0:
+            tmp = a + b
+            a = b
+            b = tmp
+            n = n - 1
+        return b >= 8
+        """,
+
+    "factorial": """
+        fact = 1
+        n = x
+        while n > 1:
+            fact = fact * n
+            n = n - 1
+        return fact >= 24
+        """,
+
+    "triangular_sum": """
+        total = 0
+        n = x
+        while n > 0:
+            total = total + n
+            n = n - 1
+        return total >= 10
+        """,
+
+    "power_of_two": """
+        p = 1
+        n = x
+        while n > 0:
+            p = p * 2
+            n = n - 1
+        return p >= 8
+        """,
+
+    "sum_of_squares": """
+        total = 0
+        for i in range(6):
+            if i < x:
+                total = total + i * i
+        return total >= 14
+        """,
+
 }
