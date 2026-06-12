@@ -1,8 +1,8 @@
 {
   "name": "while_countdown",
   "logic_type": "comparison",
-  "description": "Symbolic program: \n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps >= 3\n        ",
-  "expression": "\n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps >= 3\n        ",
+  "description": "Symbolic program: \n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps == 4\n        ",
+  "expression": "\n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps == 4\n        ",
   "inputs": [
     "x"
   ],
@@ -44,13 +44,13 @@
       "input": {
         "x": 5
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 6
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
@@ -68,13 +68,13 @@
       "input": {
         "x": 9
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 10
       },
-      "output": 1
+      "output": 0
     }
   ],
   "implementations": [
@@ -83,7 +83,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps >= 3\n        ",
+        "source": "\n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps == 4\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,7 +99,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps >= 3\n        ",
+        "source": "\n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps == 4\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

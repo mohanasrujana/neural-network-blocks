@@ -1,8 +1,8 @@
 {
   "name": "factorial",
   "logic_type": "comparison",
-  "description": "Symbolic program: \n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact >= 24\n        ",
-  "expression": "\n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact >= 24\n        ",
+  "description": "Symbolic program: \n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact == 120\n        ",
+  "expression": "\n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact == 120\n        ",
   "inputs": [
     "x"
   ],
@@ -38,7 +38,7 @@
       "input": {
         "x": 4
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
@@ -50,31 +50,31 @@
       "input": {
         "x": 6
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 7
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 8
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 9
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 10
       },
-      "output": 1
+      "output": 0
     }
   ],
   "implementations": [
@@ -83,7 +83,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact >= 24\n        ",
+        "source": "\n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact == 120\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,7 +99,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact >= 24\n        ",
+        "source": "\n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact == 120\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

@@ -1,8 +1,8 @@
 {
   "name": "for_then_while",
   "logic_type": "comparison",
-  "description": "Symbolic program: \n        total = 0\n        for i in range(3):\n            total = total + x\n        steps = 0\n        while total > 4:\n            total = total - 5\n            steps = steps + 1\n        return steps >= 2\n        ",
-  "expression": "\n        total = 0\n        for i in range(3):\n            total = total + x\n        steps = 0\n        while total > 4:\n            total = total - 5\n            steps = steps + 1\n        return steps >= 2\n        ",
+  "description": "Symbolic program: \n        total = 0\n        for i in range(3):\n            total = total + x\n        steps = 0\n        while total > 8:\n            total = total - 4\n            steps = steps + 1\n        return steps == 1\n        ",
+  "expression": "\n        total = 0\n        for i in range(3):\n            total = total + x\n        steps = 0\n        while total > 8:\n            total = total - 4\n            steps = steps + 1\n        return steps == 1\n        ",
   "inputs": [
     "x"
   ],
@@ -32,7 +32,7 @@
       "input": {
         "x": 3
       },
-      "output": 0
+      "output": 1
     },
     {
       "input": {
@@ -44,37 +44,37 @@
       "input": {
         "x": 5
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 6
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 7
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 8
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 9
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 10
       },
-      "output": 1
+      "output": 0
     }
   ],
   "implementations": [
@@ -83,7 +83,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        total = 0\n        for i in range(3):\n            total = total + x\n        steps = 0\n        while total > 4:\n            total = total - 5\n            steps = steps + 1\n        return steps >= 2\n        ",
+        "source": "\n        total = 0\n        for i in range(3):\n            total = total + x\n        steps = 0\n        while total > 8:\n            total = total - 4\n            steps = steps + 1\n        return steps == 1\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,7 +99,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        total = 0\n        for i in range(3):\n            total = total + x\n        steps = 0\n        while total > 4:\n            total = total - 5\n            steps = steps + 1\n        return steps >= 2\n        ",
+        "source": "\n        total = 0\n        for i in range(3):\n            total = total + x\n        steps = 0\n        while total > 8:\n            total = total - 4\n            steps = steps + 1\n        return steps == 1\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

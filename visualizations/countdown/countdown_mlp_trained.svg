@@ -17,13 +17,13 @@
 <rect width="700" height="1132" fill="#fafafa"/>
 <text x="350.0" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">countdown - countdown_mlp_trained</text>
 <text x="350.0" y="58" text-anchor="middle" font-size="13" fill="#666">
-steps = 0
-remaining = x
-while remaining &gt; 2:
-    remaining = remaining - 3
-    steps = steps + 1
-return steps &gt;= 2
-  |  trained_mlp  |  accuracy 1.00</text>
+        steps = 0
+        remaining = x
+        while remaining &gt; 2:
+            remaining = remaining - 3
+            steps = steps + 1
+        return steps &gt;= 2
+          |  trained_mlp  |  accuracy 1.00</text>
 <g id="diagram">
 <g class="edge" data-layer="0" data-edge="0" data-weight="-0.7420" data-from="x" data-to="h1" data-sign="neg">
 <title>x → h1: -0.74</title>

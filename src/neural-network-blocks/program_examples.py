@@ -48,31 +48,34 @@ PROGRAMS = {
     "sum_high_or_equal":
         "((x + y) > 10) OR (x == y)",
 
-    # Control flow: if/else (branches merged into one logic graph)
+    # Control flow: if/else (tiered classification, not a single threshold)
     "if_above_5": """
-        if x > 5:
-            y = 1
+        if x > 7:
+            tier = 2
         else:
-            y = 0
-        return y
+            if x > 3:
+                tier = 1
+            else:
+                tier = 0
+        return tier == 2
         """,
 
-    # Control flow: for loop (unrolled over a constant range)
+    # Control flow: for loop scans membership in {0, 1, 2, 3}
     "for_match_in_range": """
         hit = 0
-        for i in range(3):
+        for i in range(4):
             hit = hit OR (x == i)
         return hit
         """,
 
-    # Control flow: while loop (unrolled with the condition guarding updates)
+    # Control flow: while loop counts fixed-size decrements
     "while_countdown": """
         steps = 0
         v = x
         while v > 0:
             v = v - 2
             steps = steps + 1
-        return steps >= 3
+        return steps == 4
         """,
 
     # Loop combinations: nested for loops
@@ -91,10 +94,10 @@ PROGRAMS = {
         for i in range(3):
             total = total + x
         steps = 0
-        while total > 4:
-            total = total - 5
+        while total > 8:
+            total = total - 4
             steps = steps + 1
-        return steps >= 2
+        return steps == 1
         """,
 
     # Loop combinations: while loop with branching inside
@@ -124,14 +127,14 @@ PROGRAMS = {
     # if then while: branch picks starting value, while counts down
     "if_with_while": """
         if x > 5:
-            v = x
+            v = x - 3
         else:
-            v = 2
+            v = x + 2
         steps = 0
         while v > 0:
             v = v - 1
             steps = steps + 1
-        return steps >= 3
+        return steps >= 4
         """,
 
     # for with if: accumulate only when loop index is below x
@@ -143,9 +146,9 @@ PROGRAMS = {
         return total >= 2
         """,
 
-    # if with for: high x runs a counting loop, else skips it
+    # if with for: only large x executes the counting loop
     "if_with_for": """
-        if x > 3:
+        if x > 8:
             count = 0
             for i in range(3):
                 count = count + 1
@@ -160,18 +163,18 @@ PROGRAMS = {
         inner = 0
         w = 0
         v = x
-        while v > 4:
+        while v > 6:
             inner = 0
             w = v
-            while w > 0:
-                w = w - 2
+            while w > 1:
+                w = w - 3
                 inner = inner + 1
             outer = outer + inner
-            v = v - 3
-        return outer >= 2
+            v = v - 4
+        return outer == 2
         """,
 
-    # nested if: tiered thresholds on x
+    # nested if: middle tier only (strictly between 3 and 7)
     "nested_if": """
         if x > 3:
             if x > 7:
@@ -180,7 +183,7 @@ PROGRAMS = {
                 y = 1
         else:
             y = 0
-        return y >= 1
+        return y == 1
         """,
 
     # multiple if/else: elif-style ladder via nested else branches
@@ -195,7 +198,7 @@ PROGRAMS = {
                     y = 1
                 else:
                     y = 0
-        return y >= 2
+        return y >= 1
         """,
 
     # Classic algorithms (single input x, boolean threshold on the result)
@@ -209,7 +212,7 @@ PROGRAMS = {
             a = b
             b = tmp
             n = n - 1
-        return b >= 8
+        return b == 89
         """,
 
     "factorial": """
@@ -218,7 +221,7 @@ PROGRAMS = {
         while n > 1:
             fact = fact * n
             n = n - 1
-        return fact >= 24
+        return fact == 120
         """,
 
     "triangular_sum": """
@@ -227,7 +230,7 @@ PROGRAMS = {
         while n > 0:
             total = total + n
             n = n - 1
-        return total >= 10
+        return total == 6
         """,
 
     "power_of_two": """
@@ -236,7 +239,7 @@ PROGRAMS = {
         while n > 0:
             p = p * 2
             n = n - 1
-        return p >= 8
+        return p == 2
         """,
 
     "sum_of_squares": """
@@ -244,7 +247,166 @@ PROGRAMS = {
         for i in range(6):
             if i < x:
                 total = total + i * i
-        return total >= 14
+        return total == 14
+        """,
+
+    # More derived gates
+
+    "equivalence_check":
+        "EQUIVALENCE(a, b)",
+
+    "nor_gate":
+        "NOR(a, b)",
+
+    # Additional comparison operators
+    "at_least_5":
+        "x >= 5",
+
+    "at_most_7":
+        "x <= 7",
+
+    # Two-variable arithmetic comparisons
+    "abs_diff_small":
+        "(x - y) <= 2",
+
+    "product_exceeds_20":
+        "(x * y) > 20",
+
+    "sum_at_most_8":
+        "(x + y) <= 8",
+
+    # Multi-input Boolean patterns
+    "majority_vote":
+        "((a AND b) OR (a AND c)) OR (b AND c)",
+
+    "all_three_on":
+        "(a AND b) AND c",
+
+    # Arithmetic doubling with an exact target
+    "double_then_check": """
+        v = x + x
+        return v == 18
+        """,
+
+    "distance_from_five": """
+        d = x - 5
+        if d < 0:
+            d = 0 - d
+        return d <= 2
+        """,
+
+    # Two-variable control flow
+    "pick_larger": """
+        if x > y:
+            pick = x
+        else:
+            pick = y
+        return pick >= 7
+        """,
+
+    "both_above_threshold": """
+        if x > 4:
+            if y > 4:
+                flag = 1
+            else:
+                flag = 0
+        else:
+            flag = 0
+        return flag
+        """,
+
+    # for-loop accumulation with an exact sum target
+    "for_sum_threshold": """
+        total = 0
+        for i in range(5):
+            total = total + x
+        return total == 30
+        """,
+
+    "for_product_scan": """
+        hit = 0
+        for i in range(1, 4):
+            hit = hit OR (x == 2 * i)
+        return hit
+        """,
+
+    # Chained while loops
+    "double_countdown": """
+        v = x
+        while v > 6:
+            v = v - 2
+        while v > 0:
+            v = v - 1
+        return v == 0
+        """,
+
+    # Repeated subtraction (Euclidean-style reduction)
+    "subtract_reduce": """
+        a = x
+        b = y
+        while b > 0:
+            if a >= b:
+                a = a - b
+            else:
+                b = b - a
+        return a <= 1
+        """,
+
+    # Staircase threshold climbing
+    "staircase": """
+        level = 0
+        for i in range(0, 4):
+            if x > level + 1:
+                level = level + 1
+        return level == 1
+        """,
+
+    # Countdown with a coarser step size
+    "countdown": """
+        steps = 0
+        remaining = x
+        while remaining > 1:
+            remaining = remaining - 2
+            steps = steps + 1
+        return steps == 3
+        """,
+
+    # Two-variable accumulation until a target
+    "accumulate_until": """
+        total = 0
+        count = 0
+        while total < x:
+            total = total + y + 1
+            count = count + 1
+        return count <= 2
+        """,
+
+    # for then if: scan indices, then branch on the scan result
+    "for_then_if": """
+        seen = 0
+        for i in range(5):
+            seen = seen OR (x == i + 2)
+        return seen
+        """,
+
+    # if then for then if: count indices matching a linear pattern
+    "if_for_if_chain": """
+        match = 0
+        for i in range(3):
+            match = match OR (x == 2 * i + 1)
+        return match
+        """,
+
+    # while with nested for inside the loop body
+    "while_with_for": """
+        v = x
+        total = 0
+        i = 0
+        while v > 3:
+            for i in range(3):
+                total = total + 1
+            v = v - 2
+        return total == 9
         """,
 
 }

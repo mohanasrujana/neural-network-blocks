@@ -1,0 +1,922 @@
+{
+  "name": "abs_diff_small",
+  "logic_type": "comparison",
+  "description": "Symbolic program: (x - y) <= 2",
+  "expression": "(x - y) <= 2",
+  "inputs": [
+    "x",
+    "y"
+  ],
+  "outputs": [
+    "y"
+  ],
+  "truth_table": [
+    {
+      "input": {
+        "x": 0,
+        "y": 0
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 0,
+        "y": 1
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 0,
+        "y": 2
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 0,
+        "y": 3
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 0,
+        "y": 4
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 0,
+        "y": 5
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 0,
+        "y": 6
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 0,
+        "y": 7
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 0,
+        "y": 8
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 0,
+        "y": 9
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 0,
+        "y": 10
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 1,
+        "y": 0
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 1,
+        "y": 1
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 1,
+        "y": 2
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 1,
+        "y": 3
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 1,
+        "y": 4
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 1,
+        "y": 5
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 1,
+        "y": 6
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 1,
+        "y": 7
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 1,
+        "y": 8
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 1,
+        "y": 9
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 1,
+        "y": 10
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 2,
+        "y": 0
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 2,
+        "y": 1
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 2,
+        "y": 2
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 2,
+        "y": 3
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 2,
+        "y": 4
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 2,
+        "y": 5
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 2,
+        "y": 6
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 2,
+        "y": 7
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 2,
+        "y": 8
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 2,
+        "y": 9
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 2,
+        "y": 10
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": 1
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": 2
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": 3
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": 4
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": 5
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": 6
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": 7
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": 8
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": 9
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 3,
+        "y": 10
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 4,
+        "y": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 4,
+        "y": 1
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 4,
+        "y": 2
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 4,
+        "y": 3
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 4,
+        "y": 4
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 4,
+        "y": 5
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 4,
+        "y": 6
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 4,
+        "y": 7
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 4,
+        "y": 8
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 4,
+        "y": 9
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 4,
+        "y": 10
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 5,
+        "y": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 5,
+        "y": 1
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 5,
+        "y": 2
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 5,
+        "y": 3
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 5,
+        "y": 4
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 5,
+        "y": 5
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 5,
+        "y": 6
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 5,
+        "y": 7
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 5,
+        "y": 8
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 5,
+        "y": 9
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 5,
+        "y": 10
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 6,
+        "y": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 6,
+        "y": 1
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 6,
+        "y": 2
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 6,
+        "y": 3
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 6,
+        "y": 4
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 6,
+        "y": 5
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 6,
+        "y": 6
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 6,
+        "y": 7
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 6,
+        "y": 8
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 6,
+        "y": 9
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 6,
+        "y": 10
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 7,
+        "y": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 7,
+        "y": 1
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 7,
+        "y": 2
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 7,
+        "y": 3
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 7,
+        "y": 4
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 7,
+        "y": 5
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 7,
+        "y": 6
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 7,
+        "y": 7
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 7,
+        "y": 8
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 7,
+        "y": 9
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 7,
+        "y": 10
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 8,
+        "y": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 8,
+        "y": 1
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 8,
+        "y": 2
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 8,
+        "y": 3
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 8,
+        "y": 4
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 8,
+        "y": 5
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 8,
+        "y": 6
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 8,
+        "y": 7
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 8,
+        "y": 8
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 8,
+        "y": 9
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 8,
+        "y": 10
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 9,
+        "y": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 9,
+        "y": 1
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 9,
+        "y": 2
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 9,
+        "y": 3
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 9,
+        "y": 4
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 9,
+        "y": 5
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 9,
+        "y": 6
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 9,
+        "y": 7
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 9,
+        "y": 8
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 9,
+        "y": 9
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 9,
+        "y": 10
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 10,
+        "y": 0
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 10,
+        "y": 1
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 10,
+        "y": 2
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 10,
+        "y": 3
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 10,
+        "y": 4
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 10,
+        "y": 5
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 10,
+        "y": 6
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 10,
+        "y": 7
+      },
+      "output": 0
+    },
+    {
+      "input": {
+        "x": 10,
+        "y": 8
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 10,
+        "y": 9
+      },
+      "output": 1
+    },
+    {
+      "input": {
+        "x": 10,
+        "y": 10
+      },
+      "output": 1
+    }
+  ],
+  "implementations": [
+    {
+      "id": "compiled_threshold_program",
+      "implementation_type": "compiled_neural_program",
+      "architecture": {
+        "type": "compiled_logic_graph",
+        "source": "(x - y) <= 2",
+        "gate_basis": "threshold"
+      },
+      "weights": null,
+      "verification": {
+        "method": "program_equivalence",
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 121
+      }
+    },
+    {
+      "id": "compiled_sigmoid_program",
+      "implementation_type": "compiled_sigmoid_program",
+      "architecture": {
+        "type": "compiled_logic_graph",
+        "source": "(x - y) <= 2",
+        "gate_basis": "sigmoid",
+        "sharpness": 20.0
+      },
+      "weights": null,
+      "verification": {
+        "method": "program_equivalence_after_thresholding",
+        "threshold": 0.5,
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 121
+      }
+    },
+    {
+      "id": "abs_diff_small_mlp_trained",
+      "implementation_type": "trained_mlp",
+      "architecture": {
+        "type": "mlp",
+        "activation": "tanh_hidden_sigmoid_output",
+        "input_dim": 2,
+        "hidden_dim": 8,
+        "output_dim": 1
+      },
+      "weights": {
+        "format": "json_state_dict",
+        "path": "database/programs/weights/abs_diff_small_mlp_weights.json",
+        "pytorch_format": "pytorch_state_dict",
+        "pytorch_path": "database/programs/weights/abs_diff_small_mlp.pt"
+      },
+      "verification": {
+        "method": "post_training_truth_table_equivalence",
+        "threshold": 0.5,
+        "verified": true,
+        "accuracy": 1.0,
+        "num_cases": 121
+      }
+    }
+  ]
+}

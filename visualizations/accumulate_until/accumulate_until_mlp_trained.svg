@@ -17,13 +17,13 @@
 <rect width="700" height="1132" fill="#fafafa"/>
 <text x="350.0" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">accumulate_until - accumulate_until_mlp_trained</text>
 <text x="350.0" y="58" text-anchor="middle" font-size="13" fill="#666">
-total = 0
-count = 0
-while total &lt; x:
-    total = total + y + 1
-    count = count + 1
-return count &lt;= 2
-  |  trained_mlp  |  accuracy 1.00</text>
+        total = 0
+        count = 0
+        while total &lt; x:
+            total = total + y + 1
+            count = count + 1
+        return count &lt;= 2
+          |  trained_mlp  |  accuracy 1.00</text>
 <g id="diagram">
 <g class="edge" data-layer="0" data-edge="0" data-weight="0.2544" data-from="x" data-to="h1" data-sign="pos">
 <title>x → h1: +0.25</title>

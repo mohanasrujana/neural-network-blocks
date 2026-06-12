@@ -1,8 +1,8 @@
 {
   "name": "sum_of_squares",
   "logic_type": "comparison",
-  "description": "Symbolic program: \n        total = 0\n        for i in range(6):\n            if i < x:\n                total = total + i * i\n        return total >= 14\n        ",
-  "expression": "\n        total = 0\n        for i in range(6):\n            if i < x:\n                total = total + i * i\n        return total >= 14\n        ",
+  "description": "Symbolic program: \n        total = 0\n        for i in range(6):\n            if i < x:\n                total = total + i * i\n        return total == 14\n        ",
+  "expression": "\n        total = 0\n        for i in range(6):\n            if i < x:\n                total = total + i * i\n        return total == 14\n        ",
   "inputs": [
     "x"
   ],
@@ -44,37 +44,37 @@
       "input": {
         "x": 5
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 6
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 7
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 8
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 9
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 10
       },
-      "output": 1
+      "output": 0
     }
   ],
   "implementations": [
@@ -83,7 +83,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        total = 0\n        for i in range(6):\n            if i < x:\n                total = total + i * i\n        return total >= 14\n        ",
+        "source": "\n        total = 0\n        for i in range(6):\n            if i < x:\n                total = total + i * i\n        return total == 14\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,7 +99,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        total = 0\n        for i in range(6):\n            if i < x:\n                total = total + i * i\n        return total >= 14\n        ",
+        "source": "\n        total = 0\n        for i in range(6):\n            if i < x:\n                total = total + i * i\n        return total == 14\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

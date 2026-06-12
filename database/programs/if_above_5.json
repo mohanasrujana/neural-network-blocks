@@ -1,8 +1,8 @@
 {
   "name": "if_above_5",
   "logic_type": "comparison",
-  "description": "Symbolic program: \n        if x > 5:\n            y = 1\n        else:\n            y = 0\n        return y\n        ",
-  "expression": "\n        if x > 5:\n            y = 1\n        else:\n            y = 0\n        return y\n        ",
+  "description": "Symbolic program: \n        if x > 7:\n            tier = 2\n        else:\n            if x > 3:\n                tier = 1\n            else:\n                tier = 0\n        return tier == 2\n        ",
+  "expression": "\n        if x > 7:\n            tier = 2\n        else:\n            if x > 3:\n                tier = 1\n            else:\n                tier = 0\n        return tier == 2\n        ",
   "inputs": [
     "x"
   ],
@@ -50,13 +50,13 @@
       "input": {
         "x": 6
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 7
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
@@ -83,7 +83,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        if x > 5:\n            y = 1\n        else:\n            y = 0\n        return y\n        ",
+        "source": "\n        if x > 7:\n            tier = 2\n        else:\n            if x > 3:\n                tier = 1\n            else:\n                tier = 0\n        return tier == 2\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,7 +99,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        if x > 5:\n            y = 1\n        else:\n            y = 0\n        return y\n        ",
+        "source": "\n        if x > 7:\n            tier = 2\n        else:\n            if x > 3:\n                tier = 1\n            else:\n                tier = 0\n        return tier == 2\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

@@ -1,8 +1,8 @@
 {
   "name": "accumulate_until",
   "logic_type": "comparison",
-  "description": "Symbolic program: \ntotal = 0\ncount = 0\nwhile total < x:\n    total = total + y + 1\n    count = count + 1\nreturn count <= 2\n",
-  "expression": "\ntotal = 0\ncount = 0\nwhile total < x:\n    total = total + y + 1\n    count = count + 1\nreturn count <= 2\n",
+  "description": "Symbolic program: \n        total = 0\n        count = 0\n        while total < x:\n            total = total + y + 1\n            count = count + 1\n        return count <= 2\n        ",
+  "expression": "\n        total = 0\n        count = 0\n        while total < x:\n            total = total + y + 1\n            count = count + 1\n        return count <= 2\n        ",
   "inputs": [
     "x",
     "y"
@@ -865,7 +865,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\ntotal = 0\ncount = 0\nwhile total < x:\n    total = total + y + 1\n    count = count + 1\nreturn count <= 2\n",
+        "source": "\n        total = 0\n        count = 0\n        while total < x:\n            total = total + y + 1\n            count = count + 1\n        return count <= 2\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -881,7 +881,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\ntotal = 0\ncount = 0\nwhile total < x:\n    total = total + y + 1\n    count = count + 1\nreturn count <= 2\n",
+        "source": "\n        total = 0\n        count = 0\n        while total < x:\n            total = total + y + 1\n            count = count + 1\n        return count <= 2\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

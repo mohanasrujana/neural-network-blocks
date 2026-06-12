@@ -1,8 +1,8 @@
 {
   "name": "triangular_sum",
   "logic_type": "comparison",
-  "description": "Symbolic program: \n        total = 0\n        n = x\n        while n > 0:\n            total = total + n\n            n = n - 1\n        return total >= 10\n        ",
-  "expression": "\n        total = 0\n        n = x\n        while n > 0:\n            total = total + n\n            n = n - 1\n        return total >= 10\n        ",
+  "description": "Symbolic program: \n        total = 0\n        n = x\n        while n > 0:\n            total = total + n\n            n = n - 1\n        return total == 6\n        ",
+  "expression": "\n        total = 0\n        n = x\n        while n > 0:\n            total = total + n\n            n = n - 1\n        return total == 6\n        ",
   "inputs": [
     "x"
   ],
@@ -32,49 +32,49 @@
       "input": {
         "x": 3
       },
-      "output": 0
+      "output": 1
     },
     {
       "input": {
         "x": 4
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 5
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 6
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 7
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 8
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 9
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 10
       },
-      "output": 1
+      "output": 0
     }
   ],
   "implementations": [
@@ -83,7 +83,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        total = 0\n        n = x\n        while n > 0:\n            total = total + n\n            n = n - 1\n        return total >= 10\n        ",
+        "source": "\n        total = 0\n        n = x\n        while n > 0:\n            total = total + n\n            n = n - 1\n        return total == 6\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,7 +99,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        total = 0\n        n = x\n        while n > 0:\n            total = total + n\n            n = n - 1\n        return total >= 10\n        ",
+        "source": "\n        total = 0\n        n = x\n        while n > 0:\n            total = total + n\n            n = n - 1\n        return total == 6\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

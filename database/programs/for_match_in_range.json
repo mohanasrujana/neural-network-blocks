@@ -1,8 +1,8 @@
 {
   "name": "for_match_in_range",
   "logic_type": "boolean",
-  "description": "Symbolic program: \n        hit = 0\n        for i in range(3):\n            hit = hit OR (x == i)\n        return hit\n        ",
-  "expression": "\n        hit = 0\n        for i in range(3):\n            hit = hit OR (x == i)\n        return hit\n        ",
+  "description": "Symbolic program: \n        hit = 0\n        for i in range(4):\n            hit = hit OR (x == i)\n        return hit\n        ",
+  "expression": "\n        hit = 0\n        for i in range(4):\n            hit = hit OR (x == i)\n        return hit\n        ",
   "inputs": [
     "x"
   ],
@@ -32,7 +32,7 @@
       "input": {
         "x": 3
       },
-      "output": 0
+      "output": 1
     },
     {
       "input": {
@@ -83,7 +83,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        hit = 0\n        for i in range(3):\n            hit = hit OR (x == i)\n        return hit\n        ",
+        "source": "\n        hit = 0\n        for i in range(4):\n            hit = hit OR (x == i)\n        return hit\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,7 +99,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        hit = 0\n        for i in range(3):\n            hit = hit OR (x == i)\n        return hit\n        ",
+        "source": "\n        hit = 0\n        for i in range(4):\n            hit = hit OR (x == i)\n        return hit\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

@@ -1,8 +1,8 @@
 {
   "name": "nested_if",
   "logic_type": "comparison",
-  "description": "Symbolic program: \n        if x > 3:\n            if x > 7:\n                y = 2\n            else:\n                y = 1\n        else:\n            y = 0\n        return y >= 1\n        ",
-  "expression": "\n        if x > 3:\n            if x > 7:\n                y = 2\n            else:\n                y = 1\n        else:\n            y = 0\n        return y >= 1\n        ",
+  "description": "Symbolic program: \n        if x > 3:\n            if x > 7:\n                y = 2\n            else:\n                y = 1\n        else:\n            y = 0\n        return y == 1\n        ",
+  "expression": "\n        if x > 3:\n            if x > 7:\n                y = 2\n            else:\n                y = 1\n        else:\n            y = 0\n        return y == 1\n        ",
   "inputs": [
     "x"
   ],
@@ -62,19 +62,19 @@
       "input": {
         "x": 8
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 9
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 10
       },
-      "output": 1
+      "output": 0
     }
   ],
   "implementations": [
@@ -83,7 +83,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        if x > 3:\n            if x > 7:\n                y = 2\n            else:\n                y = 1\n        else:\n            y = 0\n        return y >= 1\n        ",
+        "source": "\n        if x > 3:\n            if x > 7:\n                y = 2\n            else:\n                y = 1\n        else:\n            y = 0\n        return y == 1\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,7 +99,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        if x > 3:\n            if x > 7:\n                y = 2\n            else:\n                y = 1\n        else:\n            y = 0\n        return y >= 1\n        ",
+        "source": "\n        if x > 3:\n            if x > 7:\n                y = 2\n            else:\n                y = 1\n        else:\n            y = 0\n        return y == 1\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

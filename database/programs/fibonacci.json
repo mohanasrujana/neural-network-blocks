@@ -1,8 +1,8 @@
 {
   "name": "fibonacci",
   "logic_type": "comparison",
-  "description": "Symbolic program: \n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return b >= 8\n        ",
-  "expression": "\n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return b >= 8\n        ",
+  "description": "Symbolic program: \n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return b == 89\n        ",
+  "expression": "\n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return b == 89\n        ",
   "inputs": [
     "x"
   ],
@@ -44,31 +44,31 @@
       "input": {
         "x": 5
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 6
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 7
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 8
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 9
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
@@ -83,7 +83,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return b >= 8\n        ",
+        "source": "\n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return b == 89\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,7 +99,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return b >= 8\n        ",
+        "source": "\n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return b == 89\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

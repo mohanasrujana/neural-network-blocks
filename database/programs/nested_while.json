@@ -1,8 +1,8 @@
 {
   "name": "nested_while",
   "logic_type": "comparison",
-  "description": "Symbolic program: \n        outer = 0\n        inner = 0\n        w = 0\n        v = x\n        while v > 4:\n            inner = 0\n            w = v\n            while w > 0:\n                w = w - 2\n                inner = inner + 1\n            outer = outer + inner\n            v = v - 3\n        return outer >= 2\n        ",
-  "expression": "\n        outer = 0\n        inner = 0\n        w = 0\n        v = x\n        while v > 4:\n            inner = 0\n            w = v\n            while w > 0:\n                w = w - 2\n                inner = inner + 1\n            outer = outer + inner\n            v = v - 3\n        return outer >= 2\n        ",
+  "description": "Symbolic program: \n        outer = 0\n        inner = 0\n        w = 0\n        v = x\n        while v > 6:\n            inner = 0\n            w = v\n            while w > 1:\n                w = w - 3\n                inner = inner + 1\n            outer = outer + inner\n            v = v - 4\n        return outer == 2\n        ",
+  "expression": "\n        outer = 0\n        inner = 0\n        w = 0\n        v = x\n        while v > 6:\n            inner = 0\n            w = v\n            while w > 1:\n                w = w - 3\n                inner = inner + 1\n            outer = outer + inner\n            v = v - 4\n        return outer == 2\n        ",
   "inputs": [
     "x"
   ],
@@ -44,13 +44,13 @@
       "input": {
         "x": 5
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 6
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
@@ -62,19 +62,19 @@
       "input": {
         "x": 8
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 9
       },
-      "output": 1
+      "output": 0
     },
     {
       "input": {
         "x": 10
       },
-      "output": 1
+      "output": 0
     }
   ],
   "implementations": [
@@ -83,7 +83,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        outer = 0\n        inner = 0\n        w = 0\n        v = x\n        while v > 4:\n            inner = 0\n            w = v\n            while w > 0:\n                w = w - 2\n                inner = inner + 1\n            outer = outer + inner\n            v = v - 3\n        return outer >= 2\n        ",
+        "source": "\n        outer = 0\n        inner = 0\n        w = 0\n        v = x\n        while v > 6:\n            inner = 0\n            w = v\n            while w > 1:\n                w = w - 3\n                inner = inner + 1\n            outer = outer + inner\n            v = v - 4\n        return outer == 2\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,7 +99,7 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        outer = 0\n        inner = 0\n        w = 0\n        v = x\n        while v > 4:\n            inner = 0\n            w = v\n            while w > 0:\n                w = w - 2\n                inner = inner + 1\n            outer = outer + inner\n            v = v - 3\n        return outer >= 2\n        ",
+        "source": "\n        outer = 0\n        inner = 0\n        w = 0\n        v = x\n        while v > 6:\n            inner = 0\n            w = v\n            while w > 1:\n                w = w - 3\n                inner = inner + 1\n            outer = outer + inner\n            v = v - 4\n        return outer == 2\n        ",
         "gate_basis": "sigmoid",
         "sharpness": 20.0
       },

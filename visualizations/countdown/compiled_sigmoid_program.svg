@@ -17,13 +17,13 @@
 <rect width="700" height="252.0" fill="#fafafa"/>
 <text x="350.0" y="34" text-anchor="middle" font-size="22" font-weight="bold" fill="#222">countdown - compiled_sigmoid_program</text>
 <text x="350.0" y="58" text-anchor="middle" font-size="13" fill="#666">
-steps = 0
-remaining = x
-while remaining &gt; 2:
-    remaining = remaining - 3
-    steps = steps + 1
-return steps &gt;= 2
-  |  compiled_sigmoid_program  |  accuracy 1.00</text>
+        steps = 0
+        remaining = x
+        while remaining &gt; 2:
+            remaining = remaining - 3
+            steps = steps + 1
+        return steps &gt;= 2
+          |  compiled_sigmoid_program  |  accuracy 1.00</text>
 <g id="diagram">
 <line x1="130.0" y1="116.0" x2="275.0" y2="116.0" stroke="#999" stroke-width="1.6"/>
 <line x1="425.0" y1="116.0" x2="570.0" y2="116.0" stroke="#999" stroke-width="1.6"/>
