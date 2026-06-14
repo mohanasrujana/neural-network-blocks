@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 from gates import create_threshold_gate, create_sigmoid_gate, create_composed_gate
-from models import ThresholdGate
 from logic_graph import VariableNode, ConstantNode, GateNode, ComparisonNode, ArithmeticNode
 from parser import parse_program
 
@@ -126,21 +125,3 @@ def compile_program(expression, implementation="threshold", sharpness=20.0):
         graph, variables, implementation=implementation, sharpness=sharpness
     )
     return model
-
-def compile_comparison(node):
-    if node.operator == ">":
-        threshold = node.right.value
-        return ThresholdGate(weights=[1.0], bias=-threshold)
-    if node.operator == "<":
-        threshold = node.right.value
-        return ThresholdGate(weights=[-1.0], bias=threshold)
-    if node.operator == ">=":
-        threshold = node.right.value
-        return ThresholdGate(weights=[1.0], bias=-threshold+1)
-    if node.operator == "<=":
-        threshold = node.right.value
-        return ThresholdGate(weights=[-1.0], bias=threshold)
-    if node.operator == "==":
-        threshold = node.right.value
-        return ThresholdGate(weights=[1.0], bias=-threshold+1)
-    raise NotImplementedError()

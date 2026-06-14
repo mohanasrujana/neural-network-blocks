@@ -1,12 +1,7 @@
 import itertools
 
 from evaluator import evaluate
-from parser import parse_expression, parse_program, normalize_expression
-
-DOMAINS = {
-    "x": list(range(0, 11)),
-    "temperature": list(range(0, 201))
-}
+from parser import parse_expression, parse_program
 
 
 def generate_binary_inputs(n_inputs: int):
@@ -124,29 +119,6 @@ def extract_variables(expression):
     _, variables = parse_program(expression)
     return variables
 
-def evaluate_expression(expression, assignment):
-    """
-    Evaluate a Boolean expression.
-
-    Example:
-
-        expression:
-            "(a AND b) OR c"
-
-        assignment:
-            {
-                "a": 1,
-                "b": 0,
-                "c": 1
-            }
-
-    Returns:
-        0 or 1
-    """
-    python_expr = normalize_expression(expression)
-    result = eval(python_expr, {}, assignment)
-    return int(bool(result))
-
 def generate_truth_table(name):
     n_inputs = get_gate_arity(name)
     inputs = generate_binary_inputs(n_inputs)
@@ -174,43 +146,6 @@ def generate_equation_truth_table(expression, variable_domains):
             }
         )
     return truth_table
-
-def generate_program_truth_table(expression):
-    """
-    Generate a complete truth table for a Boolean program.
-
-    Example:
-
-        "(a AND b) OR c"
-
-    Returns:
-
-        [
-            {
-                "input": {
-                    "a": 0,
-                    "b": 0,
-                    "c": 0
-                },
-                "output": 0
-            },
-            ...
-        ]
-    """
-    variables = extract_variables(expression)
-    combinations = generate_binary_inputs(len(variables))
-    truth_table = []
-    for combo in combinations:
-        assignment = {var: value for var, value in zip(variables, combo)}
-        output = evaluate_expression(expression, assignment)
-        truth_table.append(
-            {
-                "input": assignment,
-                "output": output
-            }
-        )
-    return truth_table
-
 
 NUMERIC_DOMAIN = range(0, 11)
 BOOLEAN_DOMAIN = range(0, 2)
