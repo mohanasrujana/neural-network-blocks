@@ -75,9 +75,8 @@ def verify_model_against_truth_table(model, gate_name, threshold=0.5):
     }
 
 
-def _train_mlp_once(model, X, y, epochs, lr):
+def _train_mlp_once_with_loss(model, X, y, epochs, lr, loss_fn):
     optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-    loss_fn = torch.nn.BCELoss()
 
     for _ in range(epochs):
         optimizer.zero_grad()
@@ -87,14 +86,7 @@ def _train_mlp_once(model, X, y, epochs, lr):
         optimizer.step()
 
 
-def train_mlp(
-    model,
-    gate_name,
-    epochs=2000,
-    lr=0.05,
-    base_seed=DEFAULT_MLP_BASE_SEED,
-    max_retries=DEFAULT_MLP_MAX_RETRIES,
-):
+def train_mlp(model, gate_name, epochs=2000, lr=0.05, base_seed=DEFAULT_MLP_BASE_SEED, max_retries=DEFAULT_MLP_MAX_RETRIES):
     truth_table = generate_truth_table(gate_name)
     X, y = truth_table_to_tensors(truth_table)
     gate_seed = gate_training_seed(gate_name, base_seed)
@@ -103,7 +95,7 @@ def train_mlp(
     for attempt in range(max_retries):
         set_training_seed(gate_seed + attempt)
         reset_module_parameters(model)
-        _train_mlp_once(model, X, y, epochs, lr)
+        _train_mlp_once_with_loss(model, X, y, epochs, lr, torch.nn.BCELoss())
         verification = verify_model_against_truth_table(model, gate_name)
         if verification["verified"]:
             return model, verification
@@ -130,6 +122,11 @@ def save_model_state_dict(model, path):
     torch.save(model.state_dict(), path)
     return str(path)
 
+
+def truth_table_has_boolean_outputs(table):
+    return all(row["output"] in (0, 1, False, True) for row in table)
+
+
 def verify_program(model, expression):
     table = program_truth_table(expression)
     variables = extract_variables(expression)
@@ -141,14 +138,21 @@ def verify_program(model, expression):
 
     X = torch.tensor(X, dtype=torch.float32)
     y = torch.tensor(y, dtype=torch.float32)
-    pred = model(X)
-    pred = (pred > 0.5).float()
-    matches = (pred == y)
+    pred_raw = model(X)
+    if truth_table_has_boolean_outputs(table):
+        pred = (pred_raw > 0.5).float()
+        matches = (pred == y)
+        comparison = "threshold_0.5"
+    else:
+        pred = torch.round(pred_raw)
+        matches = torch.isclose(pred, y, atol=1e-4, rtol=0.0)
+        comparison = "rounded_numeric_exact"
 
     return {
         "verified": bool(matches.all()),
         "accuracy": matches.float().mean().item(),
-        "num_cases":len(table)
+        "num_cases":len(table),
+        "comparison": comparison,
     }
 
 
@@ -166,10 +170,14 @@ def program_to_tensors(expression):
     return X, y, variables, table
 
 
-def verify_program_mlp(model, X, y, num_cases, threshold=0.5):
+def verify_program_mlp(model, X, y, num_cases, threshold=0.5, output_type="boolean"):
     with torch.no_grad():
-        pred = (model(X) > threshold).float()
-    matches = (pred == y)
+        pred_raw = model(X)
+        pred = (pred_raw > threshold).float() if output_type == "boolean" else pred_raw
+    if output_type == "boolean":
+        matches = (pred == y)
+    else:
+        matches = torch.isclose(pred, y, atol=0.5, rtol=0.01)
     return {
         "verified": bool(matches.all()),
         "accuracy": matches.float().mean().item(),
@@ -191,29 +199,43 @@ def _fold_input_scale(model, scale):
                 module.weight.div_(scale.view(1, -1))
                 break
 
+class OutputTransformWrapper(nn.Module):
+    def __init__(self, base_model, transform="identity"):
+        super().__init__()
+        self.base_model = base_model
+        self.transform = transform
 
-def train_program_mlp(
-    name,
-    expression,
-    hidden_dim=8,
-    epochs=4000,
-    lr=0.05,
-    base_seed=DEFAULT_MLP_BASE_SEED,
-    max_retries=DEFAULT_MLP_MAX_RETRIES,
-):
+    def forward(self, x):
+        y = self.base_model(x)
+        if self.transform == "expm1":
+            return torch.expm1(y)
+        return y
+
+def train_program_mlp(name, expression, hidden_dim=8, epochs=4000, lr=0.05, base_seed=DEFAULT_MLP_BASE_SEED, max_retries=DEFAULT_MLP_MAX_RETRIES):
     X, y, variables, table = program_to_tensors(expression)
     scale = X.abs().max(dim=0).values.clamp(min=1.0)
     X_norm = X / scale
+    is_boolean = truth_table_has_boolean_outputs(table)
+    if is_boolean:
+        y_train = y
+        output_activation = "sigmoid"
+        loss_fn = torch.nn.BCELoss()
+    else:
+        y_train = torch.log1p(y)
+        output_activation = "linear"
+        loss_fn = torch.nn.MSELoss()
     seed = gate_training_seed(name, base_seed)
 
     last_verification = None
     for attempt in range(max_retries):
         set_training_seed(seed + attempt)
-        model = MLPGate(input_dim=len(variables), hidden_dim=hidden_dim, output_dim=1)
+        model = MLPGate(input_dim=len(variables), hidden_dim=hidden_dim, output_dim=1, output_activation=output_activation,)
         reset_module_parameters(model)
-        _train_mlp_once(model, X_norm, y, epochs, lr)
+        _train_mlp_once_with_loss(model, X_norm, y_train, epochs, lr, loss_fn)
         _fold_input_scale(model, scale)
-        verification = verify_program_mlp(model, X, y, len(table))
+        if not is_boolean:
+            model = OutputTransformWrapper(model, transform="expm1")
+        verification = verify_program_mlp(model, X, y, len(table), output_type="boolean" if is_boolean else "numeric",)
         if verification["verified"]:
             return model, verification, variables
         last_verification = verification

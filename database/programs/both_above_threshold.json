@@ -1,6 +1,7 @@
 {
   "name": "both_above_threshold",
   "logic_type": "comparison",
+  "output_type": "boolean",
   "description": "Symbolic program: \n        if x > 4:\n            if y > 4:\n                flag = 1\n            else:\n                flag = 0\n        else:\n            flag = 0\n        return flag\n        ",
   "expression": "\n        if x > 4:\n            if y > 4:\n                flag = 1\n            else:\n                flag = 0\n        else:\n            flag = 0\n        return flag\n        ",
   "inputs": [
@@ -883,7 +884,7 @@
         "type": "compiled_logic_graph",
         "source": "\n        if x > 4:\n            if y > 4:\n                flag = 1\n            else:\n                flag = 0\n        else:\n            flag = 0\n        return flag\n        ",
         "gate_basis": "sigmoid",
-        "sharpness": 20.0
+        "sharpness": 40.0
       },
       "weights": null,
       "verification": {
@@ -902,7 +903,10 @@
         "activation": "tanh_hidden_sigmoid_output",
         "input_dim": 2,
         "hidden_dim": 8,
-        "output_dim": 1
+        "output_dim": 1,
+        "output_activation": "sigmoid",
+        "output_transform": null,
+        "target_transform": null
       },
       "weights": {
         "format": "json_state_dict",

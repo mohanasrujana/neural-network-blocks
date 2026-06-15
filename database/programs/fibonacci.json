@@ -1,8 +1,9 @@
 {
   "name": "fibonacci",
   "logic_type": "comparison",
-  "description": "Symbolic program: \n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return b == 89\n        ",
-  "expression": "\n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return b == 89\n        ",
+  "output_type": "numeric",
+  "description": "Symbolic program: \n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return a\n        ",
+  "expression": "\n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return a\n        ",
   "inputs": [
     "x"
   ],
@@ -20,61 +21,61 @@
       "input": {
         "x": 1
       },
-      "output": 0
+      "output": 1
     },
     {
       "input": {
         "x": 2
       },
-      "output": 0
+      "output": 1
     },
     {
       "input": {
         "x": 3
       },
-      "output": 0
+      "output": 2
     },
     {
       "input": {
         "x": 4
       },
-      "output": 0
+      "output": 3
     },
     {
       "input": {
         "x": 5
       },
-      "output": 0
+      "output": 5
     },
     {
       "input": {
         "x": 6
       },
-      "output": 0
+      "output": 8
     },
     {
       "input": {
         "x": 7
       },
-      "output": 0
+      "output": 13
     },
     {
       "input": {
         "x": 8
       },
-      "output": 0
+      "output": 21
     },
     {
       "input": {
         "x": 9
       },
-      "output": 0
+      "output": 34
     },
     {
       "input": {
         "x": 10
       },
-      "output": 1
+      "output": 55
     }
   ],
   "implementations": [
@@ -83,7 +84,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return b == 89\n        ",
+        "source": "\n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return a\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,9 +100,9 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return b == 89\n        ",
+        "source": "\n        a = 0\n        b = 1\n        tmp = 0\n        n = x\n        while n > 0:\n            tmp = a + b\n            a = b\n            b = tmp\n            n = n - 1\n        return a\n        ",
         "gate_basis": "sigmoid",
-        "sharpness": 20.0
+        "sharpness": 40.0
       },
       "weights": null,
       "verification": {
@@ -117,10 +118,13 @@
       "implementation_type": "trained_mlp",
       "architecture": {
         "type": "mlp",
-        "activation": "tanh_hidden_sigmoid_output",
+        "activation": "tanh_hidden_linear_output",
         "input_dim": 1,
         "hidden_dim": 8,
-        "output_dim": 1
+        "output_dim": 1,
+        "output_activation": "linear",
+        "output_transform": "expm1",
+        "target_transform": "log1p"
       },
       "weights": {
         "format": "json_state_dict",

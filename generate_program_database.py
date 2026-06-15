@@ -10,14 +10,18 @@ from program_examples import PROGRAMS
 from truth_tables import extract_variables, program_truth_table
 from database import create_program_entry, make_program_implementation_entry, make_program_sigmoid_entry, make_program_mlp_entry
 from compiler import compile_program
-from verify import verify_program, train_program_mlp, extract_state_dict_as_lists, save_model_state_dict
+from verify import verify_program, train_program_mlp, extract_state_dict_as_lists, save_model_state_dict, truth_table_has_boolean_outputs
 
 PROGRAM_DB_DIR = Path("database/programs")
 PROGRAM_WEIGHTS_DIR = PROGRAM_DB_DIR / "weights"
 PROGRAM_DB_DIR.mkdir(parents=True,exist_ok=True)
 
 MLP_HIDDEN_DIM = 8
-SIGMOID_SHARPNESS = 20.0
+SIGMOID_SHARPNESS = 40.0
+NUMERIC_MLP_HIDDEN_DIM = 8
+NUMERIC_MLP_EPOCHS = 40000
+NUMERIC_MLP_LR = 0.005
+NUMERIC_MLP_MAX_RETRIES = 3
 
 
 def save_program_mlp_weights(name, model):
@@ -37,6 +41,7 @@ def save_program_mlp_model(name, model):
 def generate_program_entry(name, expression):
     variables = extract_variables(expression)
     truth_table = program_truth_table(expression)
+    has_boolean_output = truth_table_has_boolean_outputs(truth_table)
     implementations = []
 
     # 1. Compiled threshold network (exact, hard gates)
@@ -57,9 +62,14 @@ def generate_program_entry(name, expression):
         )
     )
 
-    # 3. Trained MLP (learned from the program truth table)
+    # 3. Trained MLP (classification for boolean outputs, regression for numeric outputs)
     mlp_model, mlp_verification, mlp_variables = train_program_mlp(
-        name, expression, hidden_dim=MLP_HIDDEN_DIM
+        name,
+        expression,
+        hidden_dim=MLP_HIDDEN_DIM if has_boolean_output else NUMERIC_MLP_HIDDEN_DIM,
+        epochs=4000 if has_boolean_output else NUMERIC_MLP_EPOCHS,
+        lr=0.05 if has_boolean_output else NUMERIC_MLP_LR,
+        max_retries=5 if has_boolean_output else NUMERIC_MLP_MAX_RETRIES,
     )
     weights_path = save_program_mlp_weights(name, mlp_model)
     model_path = save_program_mlp_model(name, mlp_model)
@@ -70,11 +80,13 @@ def generate_program_entry(name, expression):
             mlp_verification,
             mlp_variables,
             weights_path,
-            hidden_dim=MLP_HIDDEN_DIM,
+            hidden_dim=MLP_HIDDEN_DIM if has_boolean_output else NUMERIC_MLP_HIDDEN_DIM,
+            output_activation="sigmoid" if has_boolean_output else "linear",
+            output_transform=None if has_boolean_output else "expm1",
+            target_transform=None if has_boolean_output else "log1p",
             pytorch_path=model_path,
         )
     )
-
     return create_program_entry(name, expression, variables, truth_table, implementations)
 
 def main():

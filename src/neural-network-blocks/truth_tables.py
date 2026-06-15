@@ -3,10 +3,8 @@ import itertools
 from evaluator import evaluate
 from parser import parse_expression, parse_program
 
-
 def generate_binary_inputs(n_inputs: int):
     return [list(x) for x in itertools.product([0, 1], repeat=n_inputs)]
-
 
 def gate_function(name, x):
     """

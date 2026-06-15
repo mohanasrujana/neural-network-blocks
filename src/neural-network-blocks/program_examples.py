@@ -201,7 +201,7 @@ PROGRAMS = {
         return y >= 1
         """,
 
-    # Classic algorithms (single input x, boolean threshold on the result)
+    # Classic algorithms (single input x, numeric outputs)
     "fibonacci": """
         a = 0
         b = 1
@@ -212,7 +212,7 @@ PROGRAMS = {
             a = b
             b = tmp
             n = n - 1
-        return b == 89
+        return a
         """,
 
     "factorial": """
@@ -221,7 +221,7 @@ PROGRAMS = {
         while n > 1:
             fact = fact * n
             n = n - 1
-        return fact == 120
+        return fact
         """,
 
     "triangular_sum": """
@@ -230,7 +230,7 @@ PROGRAMS = {
         while n > 0:
             total = total + n
             n = n - 1
-        return total == 6
+        return total
         """,
 
     "power_of_two": """
@@ -239,7 +239,7 @@ PROGRAMS = {
         while n > 0:
             p = p * 2
             n = n - 1
-        return p == 2
+        return p
         """,
 
     "sum_of_squares": """
@@ -247,7 +247,7 @@ PROGRAMS = {
         for i in range(6):
             if i < x:
                 total = total + i * i
-        return total == 14
+        return total
         """,
 
     # More derived gates

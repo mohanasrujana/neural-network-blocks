@@ -1,6 +1,7 @@
 {
   "name": "three_way_parity",
   "logic_type": "boolean",
+  "output_type": "boolean",
   "description": "Symbolic program: XOR(XOR(a, b), c)",
   "expression": "XOR(XOR(a, b), c)",
   "inputs": [
@@ -101,7 +102,7 @@
         "type": "compiled_logic_graph",
         "source": "XOR(XOR(a, b), c)",
         "gate_basis": "sigmoid",
-        "sharpness": 20.0
+        "sharpness": 40.0
       },
       "weights": null,
       "verification": {
@@ -120,7 +121,10 @@
         "activation": "tanh_hidden_sigmoid_output",
         "input_dim": 3,
         "hidden_dim": 8,
-        "output_dim": 1
+        "output_dim": 1,
+        "output_activation": "sigmoid",
+        "output_transform": null,
+        "target_transform": null
       },
       "weights": {
         "format": "json_state_dict",

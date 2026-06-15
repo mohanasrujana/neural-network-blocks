@@ -1,6 +1,7 @@
 {
   "name": "while_countdown",
   "logic_type": "comparison",
+  "output_type": "boolean",
   "description": "Symbolic program: \n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps == 4\n        ",
   "expression": "\n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps == 4\n        ",
   "inputs": [
@@ -101,7 +102,7 @@
         "type": "compiled_logic_graph",
         "source": "\n        steps = 0\n        v = x\n        while v > 0:\n            v = v - 2\n            steps = steps + 1\n        return steps == 4\n        ",
         "gate_basis": "sigmoid",
-        "sharpness": 20.0
+        "sharpness": 40.0
       },
       "weights": null,
       "verification": {
@@ -120,7 +121,10 @@
         "activation": "tanh_hidden_sigmoid_output",
         "input_dim": 1,
         "hidden_dim": 8,
-        "output_dim": 1
+        "output_dim": 1,
+        "output_activation": "sigmoid",
+        "output_transform": null,
+        "target_transform": null
       },
       "weights": {
         "format": "json_state_dict",

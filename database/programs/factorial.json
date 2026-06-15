@@ -1,8 +1,9 @@
 {
   "name": "factorial",
   "logic_type": "comparison",
-  "description": "Symbolic program: \n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact == 120\n        ",
-  "expression": "\n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact == 120\n        ",
+  "output_type": "numeric",
+  "description": "Symbolic program: \n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact\n        ",
+  "expression": "\n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact\n        ",
   "inputs": [
     "x"
   ],
@@ -14,67 +15,67 @@
       "input": {
         "x": 0
       },
-      "output": 0
+      "output": 1
     },
     {
       "input": {
         "x": 1
       },
-      "output": 0
+      "output": 1
     },
     {
       "input": {
         "x": 2
       },
-      "output": 0
+      "output": 2
     },
     {
       "input": {
         "x": 3
       },
-      "output": 0
+      "output": 6
     },
     {
       "input": {
         "x": 4
       },
-      "output": 0
+      "output": 24
     },
     {
       "input": {
         "x": 5
       },
-      "output": 1
+      "output": 120
     },
     {
       "input": {
         "x": 6
       },
-      "output": 0
+      "output": 720
     },
     {
       "input": {
         "x": 7
       },
-      "output": 0
+      "output": 5040
     },
     {
       "input": {
         "x": 8
       },
-      "output": 0
+      "output": 40320
     },
     {
       "input": {
         "x": 9
       },
-      "output": 0
+      "output": 362880
     },
     {
       "input": {
         "x": 10
       },
-      "output": 0
+      "output": 3628800
     }
   ],
   "implementations": [
@@ -83,7 +84,7 @@
       "implementation_type": "compiled_neural_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact == 120\n        ",
+        "source": "\n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact\n        ",
         "gate_basis": "threshold"
       },
       "weights": null,
@@ -99,9 +100,9 @@
       "implementation_type": "compiled_sigmoid_program",
       "architecture": {
         "type": "compiled_logic_graph",
-        "source": "\n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact == 120\n        ",
+        "source": "\n        fact = 1\n        n = x\n        while n > 1:\n            fact = fact * n\n            n = n - 1\n        return fact\n        ",
         "gate_basis": "sigmoid",
-        "sharpness": 20.0
+        "sharpness": 40.0
       },
       "weights": null,
       "verification": {
@@ -117,10 +118,13 @@
       "implementation_type": "trained_mlp",
       "architecture": {
         "type": "mlp",
-        "activation": "tanh_hidden_sigmoid_output",
+        "activation": "tanh_hidden_linear_output",
         "input_dim": 1,
         "hidden_dim": 8,
-        "output_dim": 1
+        "output_dim": 1,
+        "output_activation": "linear",
+        "output_transform": "expm1",
+        "target_transform": "log1p"
       },
       "weights": {
         "format": "json_state_dict",

@@ -31,27 +31,32 @@ class SigmoidGate(nn.Module):
         z = x @ self.weights.view(-1, 1) + self.bias
         return torch.sigmoid(self.sharpness * z)
 
-
-
 class MLPGate(nn.Module):
     """
-    Trainable MLP for learning a logic gate from its truth table.
+    Trainable MLP for learning a logic gate or program from its truth table.
     """
-    def __init__(self, input_dim, hidden_dim=4, output_dim=1):
+    def __init__(self, input_dim, hidden_dim=4, output_dim=1, output_activation="sigmoid"):
         """
         Args:
             input_dim: number of input features
             hidden_dim: number of hidden units
             output_dim: number of output units
+            output_activation: "sigmoid" for boolean outputs or "linear" for regression
         """
         super().__init__()
 
-        self.net = nn.Sequential(
+        if output_activation not in {"sigmoid", "linear"}:
+            raise ValueError(f"Unsupported output activation: {output_activation}")
+
+        layers = [
             nn.Linear(input_dim, hidden_dim),
             nn.Tanh(),
             nn.Linear(hidden_dim, output_dim),
-            nn.Sigmoid()
-        )
+        ]
+        if output_activation == "sigmoid":
+            layers.append(nn.Sigmoid())
+        self.output_activation = output_activation
+        self.net = nn.Sequential(*layers)
 
     def forward(self, x):
         return self.net(x)
@@ -72,7 +77,6 @@ class ComposedXOR(nn.Module):
         h2 = self.nand_gate(x)
         h = torch.cat([h1, h2], dim=1)
         return self.and_gate(h)
-
 
 class ComposedXNOR(nn.Module):
     """

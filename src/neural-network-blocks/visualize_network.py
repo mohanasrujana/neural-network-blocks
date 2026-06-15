@@ -149,9 +149,14 @@ def _activations_for(num_layers, architecture):
             return ["step"]
         if "sigmoid" in activation:
             return ["sigmoid"]
+        if "linear" in activation:
+            return ["linear"]
         return [activation or "linear"]
     labels = ["tanh"] * num_layers
-    labels[-1] = "sigmoid"
+    if "linear" in activation:
+        labels[-1] = "linear"
+    else:
+        labels[-1] = "sigmoid"
     return labels
 
 

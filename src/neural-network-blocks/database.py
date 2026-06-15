@@ -99,9 +99,11 @@ def make_sigmoid_implementation_entry(gate_name, verification, sharpness=20.0):
 
 def create_program_entry(name, expression, variables, truth_table, implementation_entries):
     has_comparison = any(op in expression for op in (">", "<", ">=", "<="))
+    has_boolean_output = all(row["output"] in (0, 1, False, True) for row in truth_table)
     return {
         "name": name,
         "logic_type": "comparison" if has_comparison else "boolean",
+        "output_type": "boolean" if has_boolean_output else "numeric",
         "description": f"Symbolic program: {expression}",
         "expression": expression,
         "inputs": variables,
@@ -150,7 +152,19 @@ def make_program_sigmoid_entry(expression, verification, sharpness=20.0):
     }
 
 
-def make_program_mlp_entry(name, model, verification, variables, weights_path, hidden_dim=8, output_dim=1, pytorch_path=None):
+def make_program_mlp_entry(
+    name,
+    model,
+    verification,
+    variables,
+    weights_path,
+    hidden_dim=8,
+    output_dim=1,
+    output_activation="sigmoid",
+    output_transform=None,
+    target_transform=None,
+    pytorch_path=None,
+):
     weights = {
         "format": "json_state_dict",
         "path": weights_path
@@ -163,10 +177,13 @@ def make_program_mlp_entry(name, model, verification, variables, weights_path, h
         "implementation_type": "trained_mlp",
         "architecture": {
             "type": "mlp",
-            "activation": "tanh_hidden_sigmoid_output",
+            "activation": f"tanh_hidden_{output_activation}_output",
             "input_dim": len(variables),
             "hidden_dim": hidden_dim,
-            "output_dim": output_dim
+            "output_dim": output_dim,
+            "output_activation": output_activation,
+            "output_transform": output_transform,
+            "target_transform": target_transform,
         },
         "weights": weights,
         "verification": {
