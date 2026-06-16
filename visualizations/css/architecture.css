@@ -1,0 +1,43 @@
+.architecture-overview {
+  padding: 28px 32px;
+}
+
+.architecture-overview h2 {
+  margin: 0 0 18px;
+  font-size: 18px;
+}
+
+.architecture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.architecture-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 20px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.architecture-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+}
+
+.architecture-icon {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.architecture-card h3 {
+  margin: 0 0 8px;
+}
+
+.architecture-card p {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 14px;
+}

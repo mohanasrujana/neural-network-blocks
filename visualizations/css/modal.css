@@ -1,0 +1,183 @@
+#modal {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+#modal.open {
+  display: flex;
+}
+#modal .backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(4px);
+}
+#modal .panel {
+  position: relative;
+  z-index: 1;
+  width: min(1200px, 96vw);
+  height: min(92vh, 900px);
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.55);
+}
+.modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.modal-head h2 {
+  margin: 0;
+  font-size: 16px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+.modal-tools {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.modal-tools button,
+.modal-tools label.btn {
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  font-size: 12px;
+  cursor: pointer;
+}
+.modal-tools button:hover,
+.modal-tools label.btn:hover {
+  border-color: var(--accent);
+}
+.modal-tools label.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.modal-tools input[type="checkbox"] {
+  accent-color: var(--accent);
+}
+.modal-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  min-height: 0;
+}
+
+.viewer-wrap {
+  overflow: auto;
+  background: #fafafa;
+  position: relative;
+}
+.viewer-wrap svg {
+  display: block;
+  margin: 0 auto;
+  transform-origin: top center;
+  transition: transform 0.12s ease;
+}
+.detail-pane {
+  border-left: 1px solid var(--border);
+  padding: 16px;
+  overflow: auto;
+  background: var(--card);
+  font-size: 13px;
+}
+.detail-pane h3 {
+  margin: 0 0 10px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.detail-pane .hint {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.detail-pane .conn {
+  margin-top: 14px;
+  padding: 12px;
+  border-radius: 10px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+}
+.detail-pane .conn .route {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+.detail-pane .conn .wval {
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+}
+.detail-pane .conn .wval.pos {
+  color: var(--pos);
+}
+.detail-pane .conn .wval.neg {
+  color: var(--neg);
+}
+.detail-pane .conn .meta2 {
+  margin-top: 8px;
+  color: var(--muted);
+  font-size: 12px;
+}
+.detail-pane .layer-list {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  max-height: 240px;
+  overflow: auto;
+}
+.detail-pane .layer-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  font-family: ui-monospace, Menlo, monospace;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+.detail-pane .layer-list li span.w {
+  font-weight: 700;
+}
+.detail-pane .layer-list li span.w.pos {
+  color: var(--pos);
+}
+.detail-pane .layer-list li span.w.neg {
+  color: var(--neg);
+}
+#closeModal {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 22px;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+#closeModal:hover {
+  color: var(--text);
+}
+@media (max-width: 900px) {
+  .modal-body {
+    grid-template-columns: 1fr;
+  }
+  .detail-pane {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+}

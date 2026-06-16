@@ -1,0 +1,15 @@
+:root {
+  --bg: #0f1320;
+  --panel: #161b2e;
+  --card: #1d2336;
+  --border: #2a3350;
+  --text: #e8ecf5;
+  --muted: #9aa6c4;
+  --accent: #5b8cff;
+  --pos: #2c7fb8;
+  --neg: #d7301f;
+  --mlp: #6f7bf7;
+  --sigmoid: #2bb3a3;
+  --threshold: #e0813a;
+}
+
